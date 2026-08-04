@@ -11,26 +11,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { theme } from "../theme";
+import { featuredStory, stories, type Story } from "../data/stories";
 
-const QUICK_READS = [
-  {
-    title: "Noah Counts the Rain",
-    blurb: "Two of every creature, one very long boat, and a promise in the sky…",
-    minutes: 4,
-    age: 2,
-    palette: "sea" as const,
-  },
-  {
-    title: "Francis Talks to a Wolf",
-    blurb: "A hungry wolf is frightening a whole village — until one gentle friar walks out to meet it.",
-    minutes: 4,
-    age: 2,
-    palette: "gold" as const,
-  },
-];
-
-export default function HomeScreen({ onOpenStory }: { onOpenStory: () => void }) {
+export default function HomeScreen({ onOpenStory }: { onOpenStory: (story: Story) => void }) {
   const [tab, setTab] = useState<TabId>("home");
+  const more = stories.slice(1);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -52,15 +37,12 @@ export default function HomeScreen({ onOpenStory }: { onOpenStory: () => void })
         </View>
 
         <View style={styles.featuredWrap}>
-          <SaintIllustration palette="ember" height={330}>
+          <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} height={330}>
             <View style={styles.featuredOverlay}>
               <Text style={styles.eyebrow}>Tonight's Saint</Text>
-              <Text style={styles.featuredTitle}>The Miracle of St Anthony</Text>
-              <Text style={styles.featuredBlurb}>
-                A quiet, bookish friar is too afraid to speak — until his shaky knees carry him toward the
-                biggest miracle of his life.
-              </Text>
-              <Pressable onPress={onOpenStory} style={styles.readBtn}>
+              <Text style={styles.featuredTitle}>{featuredStory.title}</Text>
+              <Text style={styles.featuredBlurb}>{featuredStory.blurb}</Text>
+              <Pressable onPress={() => onOpenStory(featuredStory)} style={styles.readBtn}>
                 <Play size={15} color={theme.colors.onGold} fill={theme.colors.onGold} />
                 <Text style={styles.readBtnText}>Read</Text>
               </Pressable>
@@ -69,11 +51,11 @@ export default function HomeScreen({ onOpenStory }: { onOpenStory: () => void })
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick bedtime reads</Text>
-          {QUICK_READS.map((s) => (
-            <Pressable key={s.title} onPress={onOpenStory} style={styles.readCard}>
+          <Text style={styles.sectionTitle}>More saint stories</Text>
+          {more.map((s) => (
+            <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.readCard}>
               <View style={styles.readThumb}>
-                <SaintIllustration palette={s.palette} height={88} />
+                <SaintIllustration palette={s.palette} art={s.art} height={88} />
                 <View style={styles.heartBtn}>
                   <Heart size={13} color={theme.colors.cream} />
                 </View>

@@ -5,9 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
 import { theme } from "../theme";
-import { featuredStory, stAnthonyPages } from "../data/stories";
+import type { Story } from "../data/stories";
 
 type StoryScreenProps = {
+  story: Story;
   onBack: () => void;
 };
 
@@ -62,7 +63,7 @@ function scoreVoice(v: { name: string; language: string; localService?: boolean 
   return s;
 }
 
-export default function StoryScreen({ onBack }: StoryScreenProps) {
+export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   const [page, setPage] = useState(0);
   const [reading, setReading] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -81,10 +82,10 @@ export default function StoryScreen({ onBack }: StoryScreenProps) {
   const advancedRef = useRef(false);
   const boundaryModeRef = useRef(false);
 
-  const total = stAnthonyPages.length;
+  const total = story.pages.length;
   const pct = Math.round(((page + 1) / total) * 100);
-  const firstChar = stAnthonyPages[page].charAt(0);
-  const rest = stAnthonyPages[page].slice(1);
+  const firstChar = story.pages[page].charAt(0);
+  const rest = story.pages[page].slice(1);
   const isLast = page + 1 === total;
 
   const words = useMemo(() => splitWords(rest), [rest]);
@@ -157,14 +158,14 @@ export default function StoryScreen({ onBack }: StoryScreenProps) {
   function startPage(p: number) {
     pageRef.current = p;
     boundaryModeRef.current = false;
-    offsetsRef.current = buildWordOffsets(stAnthonyPages[p]);
-    durationsRef.current = buildDurations(splitWords(stAnthonyPages[p]));
+    offsetsRef.current = buildWordOffsets(story.pages[p]);
+    durationsRef.current = buildDurations(splitWords(story.pages[p]));
     advancedRef.current = false;
     cancelledRef.current = false;
     speechStartRef.current = Date.now();
     consumedRef.current = 0;
 
-    Speech.speak(stAnthonyPages[p], {
+    Speech.speak(story.pages[p], {
       language: "en",
       voice,
       rate: RATE,
@@ -247,14 +248,14 @@ export default function StoryScreen({ onBack }: StoryScreenProps) {
         <Pressable onPress={onBack} style={styles.headerBtn} hitSlop={8}>
           <ChevronDown size={18} color={theme.colors.cream} />
         </Pressable>
-        <Text style={styles.headerTitle}>{featuredStory.title}</Text>
+        <Text style={styles.headerTitle}>{story.title}</Text>
         <Pressable style={styles.headerBtn} hitSlop={8}>
           <Settings size={17} color={theme.colors.cream} />
         </Pressable>
       </View>
 
       <View style={styles.artWrap}>
-        <SaintIllustration palette={featuredStory.palette} height={180} />
+        <SaintIllustration palette={story.palette} art={story.art} height={180} />
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
