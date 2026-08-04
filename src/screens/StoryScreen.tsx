@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings, Sparkles } from "lucide-react-native";
+import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
@@ -86,7 +86,6 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   const pct = Math.round(((page + 1) / total) * 100);
   const firstChar = story.pages[page].charAt(0);
   const rest = story.pages[page].slice(1);
-  const isLast = page + 1 === total;
 
   const words = useMemo(() => splitWords(rest), [rest]);
 
@@ -316,21 +315,6 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
           <RotateCw size={22} color={theme.colors.cream} />
         </Pressable>
       </View>
-
-      <View style={styles.ctaWrap}>
-        <Pressable onPress={goNext} style={[styles.cta, isLast && styles.ctaFinish]}>
-          {isLast ? (
-            <>
-              <Sparkles size={15} color={theme.colors.onGold} />
-              <Text style={[styles.ctaText, styles.ctaTextFinish]}>Start quiz</Text>
-            </>
-          ) : reading ? (
-            <Text style={styles.ctaText}>Skip to next page</Text>
-          ) : (
-            <Text style={styles.ctaText}>Next page</Text>
-          )}
-        </Pressable>
-      </View>
     </SafeAreaView>
   );
 }
@@ -469,32 +453,5 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.gold,
     alignItems: "center",
     justifyContent: "center",
-  },
-  ctaWrap: {
-    paddingHorizontal: 24,
-    paddingBottom: 24,
-  },
-  cta: {
-    height: 52,
-    borderRadius: theme.radius.pill,
-    backgroundColor: theme.colors.bgCard,
-    borderWidth: 1,
-    borderColor: theme.colors.ring,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    gap: 8,
-  },
-  ctaFinish: {
-    backgroundColor: theme.colors.gold,
-    borderWidth: 0,
-  },
-  ctaText: {
-    fontFamily: theme.fonts.uiBold,
-    fontSize: 15,
-    color: theme.colors.gold,
-  },
-  ctaTextFinish: {
-    color: theme.colors.onGold,
   },
 });

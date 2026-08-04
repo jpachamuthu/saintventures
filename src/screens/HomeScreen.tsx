@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Pressable,
   ScrollView,
@@ -13,8 +13,7 @@ import BottomNav, { type TabId } from "../components/BottomNav";
 import { theme } from "../theme";
 import { featuredStory, stories, type Story } from "../data/stories";
 
-export default function HomeScreen({ onOpenStory }: { onOpenStory: (story: Story) => void }) {
-  const [tab, setTab] = useState<TabId>("home");
+export default function HomeScreen({ onOpenStory, onFooterTab }: { onOpenStory: (story: Story) => void; onFooterTab: (tab: TabId) => void }) {
   const more = stories.slice(1);
 
   return (
@@ -78,7 +77,7 @@ export default function HomeScreen({ onOpenStory }: { onOpenStory: (story: Story
         </View>
       </ScrollView>
 
-      <BottomNav active={tab} onTab={setTab} />
+      <BottomNav active="home" onTab={onFooterTab} />
     </SafeAreaView>
   );
 }
