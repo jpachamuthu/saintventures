@@ -13,8 +13,19 @@ import BottomNav, { type TabId } from "../components/BottomNav";
 import { theme } from "../theme";
 import { featuredStory, stories, type Story } from "../data/stories";
 
-export default function HomeScreen({ onOpenStory, onFooterTab }: { onOpenStory: (story: Story) => void; onFooterTab: (tab: TabId) => void }) {
+export default function HomeScreen({
+  onOpenStory,
+  onFooterTab,
+  favouriteIds,
+  onToggleFavourite,
+}: {
+  onOpenStory: (story: Story) => void;
+  onFooterTab: (tab: TabId) => void;
+  favouriteIds: string[];
+  onToggleFavourite: (id: string) => void;
+}) {
   const more = stories.slice(1);
+  const favourites = stories.filter((s) => favouriteIds.includes(s.id));
 
   return (
     <SafeAreaView style={styles.root}>
@@ -49,15 +60,71 @@ export default function HomeScreen({ onOpenStory, onFooterTab }: { onOpenStory: 
           </SaintIllustration>
         </View>
 
+        <View style={styles.favouritesSection}>
+          <View style={styles.sectionHead}>
+            <Text style={styles.sectionTitle}>Favourite stories</Text>
+            {favourites.length > 0 && (
+              <Text style={styles.favCount}>{favourites.length} 💛</Text>
+            )}
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.favRail}
+          >
+            {favourites.map((s) => (
+              <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.favCard}>
+                <View style={styles.favThumb}>
+                  <SaintIllustration palette={s.palette} art={s.art} height={150} />
+                  <Pressable
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      onToggleFavourite(s.id);
+                    }}
+                    hitSlop={8}
+                    style={styles.heartBtn}
+                  >
+                    <Heart size={13} color={theme.colors.gold} fill={theme.colors.gold} />
+                  </Pressable>
+                </View>
+                <View style={styles.favInfo}>
+                  <Text style={styles.favSaint}>{s.saint}</Text>
+                  <View style={styles.favMeta}>
+                    <View style={styles.ageBadge}>
+                      <Text style={styles.ageText}>{s.age}</Text>
+                    </View>
+                    <View style={styles.metaItem}>
+                      <Clock size={11} color={theme.colors.mutedDim} />
+                      <Text style={styles.metaText}>{s.minutes} min</Text>
+                    </View>
+                  </View>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
+        </View>
+
+        {favourites.length > 0 && <View style={styles.blank} />}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>More saint stories</Text>
           {more.map((s) => (
             <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.readCard}>
               <View style={styles.readThumb}>
                 <SaintIllustration palette={s.palette} art={s.art} height={88} />
-                <View style={styles.heartBtn}>
-                  <Heart size={13} color={theme.colors.cream} />
-                </View>
+                <Pressable
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    onToggleFavourite(s.id);
+                  }}
+                  hitSlop={8}
+                  style={styles.heartBtn}
+                >
+                  <Heart
+                    size={13}
+                    color={favouriteIds.includes(s.id) ? theme.colors.gold : theme.colors.cream}
+                    fill={favouriteIds.includes(s.id) ? theme.colors.gold : "transparent"}
+                  />
+                </Pressable>
               </View>
               <View style={styles.readInfo}>
                 <Text style={styles.readTitle}>{s.title}</Text>
@@ -262,5 +329,56 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.ui,
     fontSize: 12,
     color: theme.colors.mutedDim,
+  },
+  favouritesSection: {
+    marginTop: 26,
+  },
+  sectionHead: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    paddingHorizontal: 18,
+    marginBottom: 12,
+  },
+  favCount: {
+    fontFamily: theme.fonts.uiBold,
+    fontSize: 11,
+    color: theme.colors.gold,
+  },
+  favRail: {
+    paddingHorizontal: 18,
+    gap: 12,
+  },
+  favCard: {
+    width: 148,
+    backgroundColor: theme.colors.bgCard,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: theme.colors.ring,
+    overflow: "hidden",
+  },
+  favThumb: {
+    height: 150,
+    overflow: "hidden",
+  },
+  favInfo: {
+    paddingHorizontal: 11,
+    paddingTop: 9,
+    paddingBottom: 11,
+  },
+  favSaint: {
+    fontFamily: theme.fonts.displayBold,
+    fontSize: 15,
+    lineHeight: 19,
+    color: theme.colors.cream,
+  },
+  favMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 7,
+  },
+  blank: {
+    height: 6,
   },
 });

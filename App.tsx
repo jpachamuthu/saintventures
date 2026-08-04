@@ -22,6 +22,7 @@ import StoryScreen from "./src/screens/StoryScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
 import type { TabId } from "./src/components/BottomNav";
+import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -41,6 +42,8 @@ export default function App() {
     CormorantGaramond_600SemiBold,
     CormorantGaramond_700Bold,
   });
+
+  const { favourites, isFavourite, toggleFavourite } = useFavourites();
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -69,10 +72,20 @@ export default function App() {
         {screen === "splash" && <SplashView onDone={() => setScreen("login")} />}
         {screen === "login" && <LoginScreen onLogin={() => setScreen("home")} />}
         {screen === "home" && (
-          <HomeScreen onOpenStory={(s) => openStory(s, "home")} onFooterTab={handleFooterTab} />
+          <HomeScreen
+            onOpenStory={(s) => openStory(s, "home")}
+            onFooterTab={handleFooterTab}
+            favouriteIds={favourites}
+            onToggleFavourite={toggleFavourite}
+          />
         )}
         {screen === "library" && (
-          <LibraryScreen onOpenStory={(s) => openStory(s, "library")} onFooterTab={handleFooterTab} />
+          <LibraryScreen
+            onOpenStory={(s) => openStory(s, "library")}
+            onFooterTab={handleFooterTab}
+            favouriteIds={favourites}
+            onToggleFavourite={toggleFavourite}
+          />
         )}
         {screen === "story" && (
           <StoryScreen story={story} onBack={() => setScreen(storyOrigin)} />

@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { ArrowUpDown, Clock, Search } from "lucide-react-native";
+import { ArrowUpDown, Clock, Heart, Search } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import BottomNav, { type TabId } from "../components/BottomNav";
@@ -17,6 +17,8 @@ import { stories, type Story } from "../data/stories";
 type LibraryScreenProps = {
   onOpenStory: (story: Story) => void;
   onFooterTab: (tab: TabId) => void;
+  favouriteIds: string[];
+  onToggleFavourite: (id: string) => void;
 };
 
 function Highlighted({ text, query, style }: { text: string; query: string; style: any }) {
@@ -32,7 +34,7 @@ function Highlighted({ text, query, style }: { text: string; query: string; styl
   );
 }
 
-export default function LibraryScreen({ onOpenStory, onFooterTab }: LibraryScreenProps) {
+export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, onToggleFavourite }: LibraryScreenProps) {
   const [query, setQuery] = useState("");
   const [asc, setAsc] = useState(true);
 
@@ -91,6 +93,20 @@ export default function LibraryScreen({ onOpenStory, onFooterTab }: LibraryScree
             <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.card}>
               <View style={styles.thumb}>
                 <SaintIllustration palette={s.palette} art={s.art} height={150} />
+                <Pressable
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    onToggleFavourite(s.id);
+                  }}
+                  hitSlop={8}
+                  style={styles.heartBtn}
+                >
+                  <Heart
+                    size={15}
+                    color={favouriteIds.includes(s.id) ? theme.colors.gold : theme.colors.cream}
+                    fill={favouriteIds.includes(s.id) ? theme.colors.gold : "transparent"}
+                  />
+                </Pressable>
               </View>
               <View style={styles.info}>
                 <Highlighted style={styles.saint} text={s.saint} query={query.trim()} />
@@ -222,6 +238,17 @@ const styles = StyleSheet.create({
   thumb: {
     aspectRatio: 1,
     overflow: "hidden",
+  },
+  heartBtn: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "rgba(20,13,9,0.62)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   info: {
     paddingHorizontal: 12,
