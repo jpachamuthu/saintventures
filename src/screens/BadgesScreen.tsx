@@ -71,7 +71,7 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
               accessibilityLabel={`${story.title}, earned ${formatDate(earnedAt)}`}
             >
               <View style={styles.thumb}>
-                <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={150} />
+                <SaintIllustration palette={story.palette} art={story.art} image={story.imageSmall ?? story.hero} height={150} />
                 <View style={styles.medalBadge}>
                   <Medal size={15} color={colors.onGold} fill={colors.onGold} />
                 </View>

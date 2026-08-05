@@ -11,6 +11,7 @@ export type Story = {
   palette: StoryPalette;
   art: ArtVariant;
   hero?: number;
+  imageSmall?: number;
   source: string;
   pages: string[];
 };
@@ -27,6 +28,7 @@ export const stories: Story[] = [
     palette: "ember",
     art: "saint",
     hero: require("../../assets/St_Anthony.png"),
+    imageSmall: require("../../assets/St_Anthony_Small.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in a sunny city called Lisbon, there lived a boy named Fernando. He loved two things more than anything: listening to stories from the Bible, and asking why. Why did the stars stay up at night? Why did birds never get lost? His father was a soldier and hoped Fernando would be one too — but Fernando's heart kept turning, quietly, toward God.",
