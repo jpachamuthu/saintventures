@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings } from "../hooks/useRatings";
+import { getBestVoice } from "../audio/voice";
 import { fonts, radius, type ThemeColors } from "../theme";
 import type { Story } from "../data/stories";
 
@@ -63,22 +64,6 @@ function wordIndexFromChar(charIndex: number, offsets: number[]): number {
   return offsets.length - 1;
 }
 
-function scoreVoice(v: { name: string; language: string; localService?: boolean }): number {
-  const n = v.name;
-  let s = 0;
-  if (/online|natural|neural/i.test(n)) s += 4;
-  if (v.localService === false) s += 1;
-  if (/female|aria|jenny|michelle|ana|ava|erika|zira|samantha|susan|hazel|serena|libby|katherine|karen|moira|sonia|tessa|veena/i.test(n)) s += 3;
-  if (/male|david|mark|guy|george|daniel|ryan|james|alex|christopher|eric|thomas|fred|liam|matthew/i.test(n)) s -= 4;
-  if (/en[-_ ]?(US|USA)/i.test(v.language)) s += 2;
-  else if (/^en/i.test(v.language)) s += 1;
-  if (Platform.OS === "android") {
-    if (/en[-_ ]?(US|USA)/i.test(v.language)) s += 2;
-    if (/google/i.test(n)) s += 1;
-  }
-  return s;
-}
-
 export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
@@ -117,20 +102,9 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
 
   useEffect(() => {
     let mounted = true;
-    Speech.getAvailableVoicesAsync()
-      .then((voices) => {
-        if (!mounted) return;
-        if (voices.length === 0) return;
-        let best = voices[0];
-        let bestScore = -Infinity;
-        for (const v of voices) {
-          const s = scoreVoice(v);
-          if (s > bestScore) {
-            bestScore = s;
-            best = v;
-          }
-        }
-        setVoice(best.identifier || best.name);
+    getBestVoice()
+      .then((v) => {
+        if (mounted && v) setVoice(v);
       })
       .catch(() => {});
     return () => {

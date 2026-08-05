@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import * as Speech from "expo-speech";
+import { speakWithBestVoice } from "./voice";
 
 export function playCelebrationSound() {
   if (
@@ -32,9 +32,9 @@ export function playCelebrationSound() {
       /* fall through to speech */
     }
   }
-  Speech.speak("Yay!", { language: "en", rate: 1.1, pitch: 1.4 });
+  speakWithBestVoice("Yay!", { rate: 1.1, pitch: 1.4 });
 }
 
 export function sayTryAgain() {
-  Speech.speak("Try again", { language: "en", rate: 0.8, pitch: 1.05 });
+  speakWithBestVoice("Try again", { rate: 0.8, pitch: 1.05 });
 }

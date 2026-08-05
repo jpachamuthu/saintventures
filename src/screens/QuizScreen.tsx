@@ -150,7 +150,7 @@ export default function QuizScreen({ story, onExit }: QuizScreenProps) {
                   <Text
                     style={[
                       styles.optLetterText,
-                      result === "correct" && i === q.correct && { color: colors.onGold },
+                      result === "correct" && i === q.correct && { color: colors.white },
                     ]}
                   >
                     {String.fromCharCode(65 + i)}
@@ -263,8 +263,8 @@ function createStyles(colors: ThemeColors) {
       marginBottom: 12,
     },
     optRight: {
-      backgroundColor: colors.gold,
-      borderColor: colors.gold,
+      backgroundColor: colors.success,
+      borderColor: colors.success,
     },
     optWrong: {
       borderColor: colors.martyrRed,
