@@ -166,7 +166,7 @@ export default function HomeScreen({
                     style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
                   >
                     <View style={styles.favThumb}>
-                      <SaintIllustration palette={s.palette} art={s.art} image={s.hero} height={150} />
+                      <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} />
                       <AnimatedHeartButton
                         active
                         onPress={() => handleToggle(s)}
