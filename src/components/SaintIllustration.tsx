@@ -120,7 +120,10 @@ export default function SaintIllustration({ palette = "gold", art = "saint", hei
   return (
     <View style={[styles.root, { height, backgroundColor: "transparent" }]}>
       {image ? (
-        <Image source={image} style={StyleSheet.absoluteFill} resizeMode="cover" />
+        <View style={[styles.gradient, { backgroundColor: c1 }]}>
+          <View style={[styles.aurora, { backgroundColor: c2, opacity: 0.5 }]} />
+          <Image source={image} style={StyleSheet.absoluteFill} resizeMode="contain" />
+        </View>
       ) : (
         <View style={[styles.gradient, { backgroundColor: c1 }]}>
           <View style={[styles.aurora, { backgroundColor: c2, opacity: 0.5 }]} />
