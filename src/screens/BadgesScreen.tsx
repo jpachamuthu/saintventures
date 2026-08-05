@@ -24,16 +24,18 @@ function formatDate(ts: number): string {
   return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
+type BadgeEntry = { earnedAt: number; story: Story };
+
 export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const { list } = useBadges();
 
-  const badgeItems = useMemo(
+  const badgeItems = useMemo<BadgeEntry[]>(
     () =>
       list()
-        .map((b) => ({ badge: b, story: stories.find((s) => s.id === b.id) }))
-        .filter((item): item is { badge: { id: string; earnedAt: number }; story: Story } => Boolean(item.story)),
+        .map((b) => ({ earnedAt: b.earnedAt, story: stories.find((s) => s.id === b.id) }))
+        .filter((item): item is BadgeEntry => Boolean(item.story)),
     [list]
   );
 
@@ -56,34 +58,35 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
         <View style={styles.empty}>
           <Medal size={52} color={colors.mutedDim} />
           <Text style={styles.emptyTitle}>No badges yet</Text>
-          <Text style={styles.emptyHint}>
-            Finish a story quiz to earn your first badge!
-          </Text>
+          <Text style={styles.emptyHint}>Finish a story quiz to earn your first badge!</Text>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
-          {badgeItems.map(({ badge, story }) => (
+        <ScrollView contentContainerStyle={styles.grid} showsVerticalScrollIndicator={false}>
+          {badgeItems.map(({ earnedAt, story }) => (
             <Pressable
-              key={badge.id}
+              key={story.id}
               onPress={() => onOpenStory(story)}
               style={({ pressed }) => [styles.card, pressed && styles.pressed]}
               accessibilityRole="button"
-              accessibilityLabel={`Open ${story.title}`}
+              accessibilityLabel={`${story.title}, earned ${formatDate(earnedAt)}`}
             >
               <View style={styles.thumb}>
-                <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={68} />
+                <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={150} />
+                <View style={styles.medalBadge}>
+                  <Medal size={15} color={colors.onGold} fill={colors.onGold} />
+                </View>
               </View>
               <View style={styles.info}>
-                <View style={styles.storyRow}>
-                  <Medal size={15} color={colors.gold} fill={colors.gold} />
-                  <Text style={styles.storyTitle} numberOfLines={2}>
-                    {story.title}
-                  </Text>
+                <Text style={styles.saint} numberOfLines={1}>
+                  {story.saint}
+                </Text>
+                <Text style={styles.gtitle} numberOfLines={2}>
+                  {story.title}
+                </Text>
+                <View style={styles.meta}>
+                  <Text style={styles.metaText}>Earned {formatDate(earnedAt)}</Text>
+                  <Medal size={13} color={colors.gold} fill={colors.gold} />
                 </View>
-                <Text style={styles.earned}>Earned {formatDate(badge.earnedAt)}</Text>
-              </View>
-              <View style={styles.badgeDot}>
-                <Medal size={18} color={colors.onGold} fill={colors.onGold} />
               </View>
             </Pressable>
           ))}
@@ -100,29 +103,31 @@ function createStyles(colors: ThemeColors) {
     root: {
       flex: 1,
       backgroundColor: colors.bg,
+      paddingBottom: 120,
     },
     header: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingHorizontal: 20,
-      paddingTop: 14,
-      paddingBottom: 6,
+      paddingHorizontal: 18,
+      paddingTop: 10,
+      paddingBottom: 4,
     },
     titleBlock: {
-      flexDirection: "column",
+      flexShrink: 0,
     },
     title: {
       fontFamily: fonts.displayBold,
       fontSize: 30,
+      lineHeight: 32,
       color: colors.cream,
     },
     subtitle: {
-      fontFamily: fonts.metaBold,
-      fontSize: 10,
-      letterSpacing: 1.4,
+      fontFamily: fonts.uiBold,
+      fontSize: 11,
+      letterSpacing: 1.5,
       color: colors.gold,
-      marginTop: 2,
+      marginTop: 1,
     },
     countBadge: {
       flexDirection: "row",
@@ -140,58 +145,70 @@ function createStyles(colors: ThemeColors) {
       fontSize: 13,
       color: colors.cream,
     },
-    list: {
-      paddingHorizontal: 20,
-      paddingTop: 16,
-      paddingBottom: 120,
-      gap: 12,
+    grid: {
+      paddingHorizontal: 18,
+      paddingTop: 14,
+      paddingBottom: 20,
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      rowGap: 14,
     },
     card: {
-      flexDirection: "row",
-      alignItems: "center",
+      width: "48%",
       backgroundColor: colors.bgCard,
+      borderRadius: radius.card,
       borderWidth: 1,
       borderColor: colors.ring,
-      borderRadius: radius.card,
-      padding: 12,
+      overflow: "hidden",
     },
     pressed: {
-      opacity: 0.8,
+      opacity: 0.7,
     },
     thumb: {
-      borderRadius: radius.card,
+      aspectRatio: 1,
       overflow: "hidden",
-      marginRight: 12,
     },
-    info: {
-      flex: 1,
-    },
-    storyRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 6,
-    },
-    storyTitle: {
-      fontFamily: fonts.card,
-      fontSize: 15,
-      lineHeight: 20,
-      color: colors.cream,
-      flexShrink: 1,
-    },
-    earned: {
-      fontFamily: fonts.metaBold,
-      fontSize: 11,
-      color: colors.mutedDim,
-      marginTop: 5,
-    },
-    badgeDot: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
+    medalBadge: {
+      position: "absolute",
+      top: 8,
+      right: 8,
+      width: 28,
+      height: 28,
+      borderRadius: 14,
       backgroundColor: colors.gold,
       alignItems: "center",
       justifyContent: "center",
-      marginLeft: 8,
+    },
+    info: {
+      paddingHorizontal: 12,
+      paddingTop: 10,
+      paddingBottom: 12,
+    },
+    saint: {
+      fontFamily: fonts.card,
+      fontSize: 18,
+      lineHeight: 21,
+      color: colors.cream,
+    },
+    gtitle: {
+      fontFamily: fonts.uiMedium,
+      fontSize: 11.5,
+      color: colors.muted,
+      marginTop: 3,
+    },
+    meta: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginTop: 9,
+    },
+    metaText: {
+      fontFamily: fonts.metaBold,
+      fontSize: 11,
+      color: colors.gold,
+      flexShrink: 1,
+      marginRight: 6,
     },
     empty: {
       flex: 1,
