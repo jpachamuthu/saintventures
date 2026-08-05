@@ -7,9 +7,10 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { ArrowUpDown, Clock, Heart, Search } from "lucide-react-native";
+import { ArrowUpDown, Clock, Heart, Search, X } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
+import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { theme } from "../theme";
 import { stories, type Story } from "../data/stories";
@@ -37,14 +38,19 @@ function Highlighted({ text, query, style }: { text: string; query: string; styl
 export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, onToggleFavourite }: LibraryScreenProps) {
   const [query, setQuery] = useState("");
   const [asc, setAsc] = useState(true);
+  const [onlyFavs, setOnlyFavs] = useState(false);
 
   const items = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = stories.slice().sort((a, b) =>
+    let list = stories.slice().sort((a, b) =>
       asc ? a.saint.localeCompare(b.saint) : b.saint.localeCompare(a.saint)
     );
-    return q ? list.filter((s) => s.saint.toLowerCase().includes(q)) : list;
-  }, [query, asc]);
+    if (onlyFavs) list = list.filter((s) => favouriteIds.includes(s.id));
+    if (q) list = list.filter((s) => s.saint.toLowerCase().includes(q));
+    return list;
+  }, [query, asc, onlyFavs, favouriteIds]);
+
+  const clearSearch = () => setQuery("");
 
   return (
     <SafeAreaView style={styles.root}>
@@ -63,11 +69,16 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
             style={styles.searchInput}
           />
           {query.length > 0 && (
-            <Pressable onPress={() => setQuery("")} hitSlop={8}>
-              <Text style={styles.clearBtn}>✕</Text>
+            <Pressable onPress={clearSearch} hitSlop={8}>
+              <X size={15} color={theme.colors.mutedDim} />
             </Pressable>
           )}
         </View>
+        {query.length > 0 && (
+          <Pressable onPress={clearSearch} hitSlop={8}>
+            <Text style={styles.cancelText}>Cancel</Text>
+          </Pressable>
+        )}
       </View>
 
       <View style={styles.sortRow}>
@@ -75,10 +86,32 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
           <Text style={styles.countNum}>{items.length}</Text>
           {query ? " of 6 stories" : " stories"}
         </Text>
-        <Pressable onPress={() => setAsc(!asc)} style={styles.sortBtn}>
-          <ArrowUpDown size={13} color={theme.colors.gold} strokeWidth={2.4} />
-          <Text style={styles.sortLabel}>{asc ? "Name A–Z" : "Name Z–A"}</Text>
-        </Pressable>
+        <View style={styles.sortGroup}>
+          <Pressable
+            onPress={() => setOnlyFavs(!onlyFavs)}
+            accessibilityRole="button"
+            accessibilityLabel={onlyFavs ? "Show all stories" : "Show only favourites"}
+            style={({ pressed }) => [
+              styles.sortBtn,
+              pressed && styles.pressed,
+              onlyFavs && styles.favChipActive,
+            ]}
+          >
+            <Heart
+              size={13}
+              color={onlyFavs ? theme.colors.onGold : theme.colors.gold}
+              fill={onlyFavs ? theme.colors.onGold : "transparent"}
+            />
+            <Text style={[styles.sortLabel, onlyFavs && { color: theme.colors.onGold }]}>Favs</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setAsc(!asc)}
+            style={({ pressed }) => [styles.sortBtn, pressed && styles.pressed]}
+          >
+            <ArrowUpDown size={13} color={theme.colors.gold} strokeWidth={2.4} />
+            <Text style={styles.sortLabel}>{asc ? "A–Z" : "Z–A"}</Text>
+          </Pressable>
+        </View>
       </View>
 
       {items.length === 0 ? (
@@ -90,23 +123,19 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
       ) : (
         <ScrollView contentContainerStyle={styles.grid} showsVerticalScrollIndicator={false}>
           {items.map((s) => (
-            <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.card}>
+            <Pressable
+              key={s.id}
+              onPress={() => onOpenStory(s)}
+              style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+            >
               <View style={styles.thumb}>
                 <SaintIllustration palette={s.palette} art={s.art} height={150} />
-                <Pressable
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    onToggleFavourite(s.id);
-                  }}
-                  hitSlop={8}
+                <AnimatedHeartButton
+                  active={favouriteIds.includes(s.id)}
+                  onPress={() => onToggleFavourite(s.id)}
+                  size={15}
                   style={styles.heartBtn}
-                >
-                  <Heart
-                    size={15}
-                    color={favouriteIds.includes(s.id) ? theme.colors.gold : theme.colors.cream}
-                    fill={favouriteIds.includes(s.id) ? theme.colors.gold : "transparent"}
-                  />
-                </Pressable>
+                />
               </View>
               <View style={styles.info}>
                 <Highlighted style={styles.saint} text={s.saint} query={query.trim()} />
@@ -185,6 +214,23 @@ const styles = StyleSheet.create({
   clearBtn: {
     fontSize: 13,
     color: theme.colors.mutedDim,
+  },
+  cancelText: {
+    fontFamily: theme.fonts.uiBold,
+    fontSize: 13,
+    color: theme.colors.gold,
+  },
+  sortGroup: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  favChipActive: {
+    backgroundColor: theme.colors.gold,
+    borderColor: theme.colors.gold,
+  },
+  pressed: {
+    opacity: 0.7,
   },
   sortRow: {
     flexDirection: "row",

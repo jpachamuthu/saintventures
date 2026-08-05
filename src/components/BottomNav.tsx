@@ -36,6 +36,9 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
             <Pressable
               key={item.id}
               onPress={() => onTab(item.id)}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isActive }}
+              accessibilityLabel={item.label}
               style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
             >
               <View style={[styles.iconWrap, isActive && styles.iconWrapActive]}>

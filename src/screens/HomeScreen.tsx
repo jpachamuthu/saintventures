@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -6,9 +6,11 @@ import {
   Text,
   View,
 } from "react-native";
-import { Bell, Menu, Play, Heart, Clock, UserPlus } from "lucide-react-native";
+import { Bell, Menu, Play, Clock, UserPlus } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
+import AnimatedHeartButton from "../components/AnimatedHeartButton";
+import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { theme } from "../theme";
 import { featuredStory, stories, type Story } from "../data/stories";
@@ -26,6 +28,34 @@ export default function HomeScreen({
 }) {
   const more = stories.slice(1);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
+  const [removed, setRemoved] = useState<Story | null>(null);
+  const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleToggle = (s: Story) => {
+    const wasFav = favouriteIds.includes(s.id);
+    onToggleFavourite(s.id);
+    if (undoRef.current) {
+      clearTimeout(undoRef.current);
+      undoRef.current = null;
+    }
+    if (wasFav) {
+      setRemoved(s);
+      undoRef.current = setTimeout(() => setRemoved(null), 4000);
+    } else {
+      setRemoved(null);
+    }
+  };
+
+  const undoRemoval = () => {
+    if (removed) {
+      onToggleFavourite(removed.id);
+      setRemoved(null);
+      if (undoRef.current) {
+        clearTimeout(undoRef.current);
+        undoRef.current = null;
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={styles.root}>
@@ -58,6 +88,12 @@ export default function HomeScreen({
               </Pressable>
             </View>
           </SaintIllustration>
+          <AnimatedHeartButton
+            active={favouriteIds.includes(featuredStory.id)}
+            onPress={() => handleToggle(featuredStory)}
+            size={18}
+            style={styles.featuredHeart}
+          />
         </View>
 
         <View style={styles.favouritesSection}>
@@ -67,64 +103,68 @@ export default function HomeScreen({
               <Text style={styles.favCount}>{favourites.length} 💛</Text>
             )}
           </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.favRail}
-          >
-            {favourites.map((s) => (
-              <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.favCard}>
-                <View style={styles.favThumb}>
-                  <SaintIllustration palette={s.palette} art={s.art} height={150} />
+          {favourites.length === 0 ? (
+            <View style={styles.favEmpty}>
+              <Text style={styles.favEmptyText}>Tap the heart on a story to save it here</Text>
+            </View>
+          ) : (
+            <FadeInView>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.favRail}
+              >
+                {favourites.map((s) => (
                   <Pressable
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      onToggleFavourite(s.id);
-                    }}
-                    hitSlop={8}
-                    style={styles.heartBtn}
+                    key={s.id}
+                    onPress={() => onOpenStory(s)}
+                    style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
                   >
-                    <Heart size={13} color={theme.colors.gold} fill={theme.colors.gold} />
+                    <View style={styles.favThumb}>
+                      <SaintIllustration palette={s.palette} art={s.art} height={150} />
+                      <AnimatedHeartButton
+                        active
+                        onPress={() => handleToggle(s)}
+                        size={13}
+                        style={[styles.heartBtn, { width: 28, height: 28, borderRadius: 14 }]}
+                      />
+                    </View>
+                    <View style={styles.favInfo}>
+                      <Text style={styles.favSaint}>{s.saint}</Text>
+                      <View style={styles.favMeta}>
+                        <View style={styles.ageBadge}>
+                          <Text style={styles.ageText}>{s.age}</Text>
+                        </View>
+                        <View style={styles.metaItem}>
+                          <Clock size={11} color={theme.colors.mutedDim} />
+                          <Text style={styles.metaText}>{s.minutes} min</Text>
+                        </View>
+                      </View>
+                    </View>
                   </Pressable>
-                </View>
-                <View style={styles.favInfo}>
-                  <Text style={styles.favSaint}>{s.saint}</Text>
-                  <View style={styles.favMeta}>
-                    <View style={styles.ageBadge}>
-                      <Text style={styles.ageText}>{s.age}</Text>
-                    </View>
-                    <View style={styles.metaItem}>
-                      <Clock size={11} color={theme.colors.mutedDim} />
-                      <Text style={styles.metaText}>{s.minutes} min</Text>
-                    </View>
-                  </View>
-                </View>
-              </Pressable>
-            ))}
-          </ScrollView>
+                ))}
+              </ScrollView>
+            </FadeInView>
+          )}
         </View>
 
         {favourites.length > 0 && <View style={styles.blank} />}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>More saint stories</Text>
           {more.map((s) => (
-            <Pressable key={s.id} onPress={() => onOpenStory(s)} style={styles.readCard}>
+            <Pressable
+              key={s.id}
+              onPress={() => onOpenStory(s)}
+              style={({ pressed }) => [styles.readCard, pressed && styles.pressed]}
+            >
               <View style={styles.readThumb}>
                 <SaintIllustration palette={s.palette} art={s.art} height={88} />
-                <Pressable
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    onToggleFavourite(s.id);
-                  }}
-                  hitSlop={8}
+                <AnimatedHeartButton
+                  active={favouriteIds.includes(s.id)}
+                  onPress={() => handleToggle(s)}
+                  size={13}
                   style={styles.heartBtn}
-                >
-                  <Heart
-                    size={13}
-                    color={favouriteIds.includes(s.id) ? theme.colors.gold : theme.colors.cream}
-                    fill={favouriteIds.includes(s.id) ? theme.colors.gold : "transparent"}
-                  />
-                </Pressable>
+                />
               </View>
               <View style={styles.readInfo}>
                 <Text style={styles.readTitle}>{s.title}</Text>
@@ -143,6 +183,15 @@ export default function HomeScreen({
           ))}
         </View>
       </ScrollView>
+
+      {removed && (
+        <View style={styles.toast}>
+          <Text style={styles.toastText}>Removed from favourites</Text>
+          <Pressable onPress={undoRemoval} hitSlop={8}>
+            <Text style={styles.toastUndo}>Undo</Text>
+          </Pressable>
+        </View>
+      )}
 
       <BottomNav active="home" onTab={onFooterTab} />
     </SafeAreaView>
@@ -204,6 +253,47 @@ const styles = StyleSheet.create({
   },
   featuredWrap: {
     paddingHorizontal: 18,
+  },
+  featuredHeart: {
+    top: 14,
+    right: 32,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "rgba(20,13,9,0.62)",
+  },
+  pressed: {
+    opacity: 0.75,
+  },
+  toast: {
+    position: "absolute",
+    left: 18,
+    right: 18,
+    bottom: 96,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: theme.colors.bgCardAlt,
+    borderWidth: 1,
+    borderColor: theme.colors.ring,
+    borderRadius: theme.radius.card,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
+    shadowColor: "#000",
+    shadowOpacity: 0.4,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+  },
+  toastText: {
+    fontFamily: theme.fonts.ui,
+    fontSize: 13,
+    color: theme.colors.cream,
+  },
+  toastUndo: {
+    fontFamily: theme.fonts.uiBold,
+    fontSize: 13,
+    color: theme.colors.gold,
   },
   featuredOverlay: {
     flex: 1,
@@ -377,6 +467,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     marginTop: 7,
+  },
+  favEmpty: {
+    marginHorizontal: 18,
+    paddingVertical: 22,
+    alignItems: "center",
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: theme.colors.ring,
+    borderRadius: theme.radius.card,
+  },
+  favEmptyText: {
+    fontFamily: theme.fonts.ui,
+    fontSize: 13,
+    color: theme.colors.mutedDim,
   },
   blank: {
     height: 6,
