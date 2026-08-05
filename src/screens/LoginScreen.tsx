@@ -4,19 +4,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import LogoMark from "../components/Logo";
 import GoogleButton from "../components/GoogleButton";
-import { theme } from "../theme";
+import { useTheme } from "../components/ThemeContext";
+import { fonts, type ThemeColors } from "../theme";
 
 type LoginScreenProps = {
   onLogin: () => void;
 };
 
 export default function LoginScreen({ onLogin }: LoginScreenProps) {
+  const { colors, isDark } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <LinearGradient
-      colors={["#2A1B11", theme.colors.bg, "#160D08"]}
+      colors={[colors.bgCardAlt, colors.bg, colors.bgCard]}
       style={styles.root}
     >
-      <StatusBar style="light" />
+      <StatusBar style={isDark ? "light" : "dark"} />
 
       <View style={styles.top}>
         <LogoMark size={92} />
@@ -51,68 +55,70 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  top: {
-    paddingTop: 92,
-    alignItems: "center",
-  },
-  body: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 30,
-    marginTop: -40,
-  },
-  heading: {
-    fontFamily: theme.fonts.displayBold,
-    fontSize: 32,
-    color: theme.colors.cream,
-    textAlign: "center",
-  },
-  subheading: {
-    fontFamily: theme.fonts.ui,
-    fontSize: 15,
-    lineHeight: 22,
-    color: theme.colors.muted,
-    textAlign: "center",
-    marginTop: 12,
-    marginHorizontal: 8,
-  },
-  dividerWrap: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginVertical: 28,
-  },
-  divider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: theme.colors.ring,
-  },
-  dividerText: {
-    fontFamily: theme.fonts.uiBold,
-    fontSize: 12,
-    letterSpacing: 1.2,
-    color: theme.colors.mutedDim,
-    textTransform: "uppercase",
-  },
-  footnote: {
-    fontFamily: theme.fonts.ui,
-    fontSize: 12.5,
-    lineHeight: 19,
-    color: theme.colors.mutedDim,
-    textAlign: "center",
-    marginTop: 22,
-  },
-  bottom: {
-    paddingBottom: 36,
-    alignItems: "center",
-  },
-  fineprint: {
-    fontFamily: theme.fonts.uiMedium,
-    fontSize: 12,
-    color: theme.colors.mutedDim,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    root: {
+      flex: 1,
+    },
+    top: {
+      paddingTop: 92,
+      alignItems: "center",
+    },
+    body: {
+      flex: 1,
+      justifyContent: "center",
+      paddingHorizontal: 30,
+      marginTop: -40,
+    },
+    heading: {
+      fontFamily: fonts.displayBold,
+      fontSize: 32,
+      color: colors.cream,
+      textAlign: "center",
+    },
+    subheading: {
+      fontFamily: fonts.ui,
+      fontSize: 15,
+      lineHeight: 22,
+      color: colors.muted,
+      textAlign: "center",
+      marginTop: 12,
+      marginHorizontal: 8,
+    },
+    dividerWrap: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+      marginVertical: 28,
+    },
+    divider: {
+      flex: 1,
+      height: 1,
+      backgroundColor: colors.ring,
+    },
+    dividerText: {
+      fontFamily: fonts.uiBold,
+      fontSize: 12,
+      letterSpacing: 1.2,
+      color: colors.mutedDim,
+      textTransform: "uppercase",
+    },
+    footnote: {
+      fontFamily: fonts.ui,
+      fontSize: 12.5,
+      lineHeight: 19,
+      color: colors.mutedDim,
+      textAlign: "center",
+      marginTop: 22,
+    },
+    bottom: {
+      paddingBottom: 36,
+      alignItems: "center",
+    },
+    fineprint: {
+      fontFamily: fonts.uiMedium,
+      fontSize: 12,
+      color: colors.mutedDim,
+    },
+  });
+}

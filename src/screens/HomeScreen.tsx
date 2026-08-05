@@ -12,7 +12,8 @@ import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
-import { theme } from "../theme";
+import { useTheme } from "../components/ThemeContext";
+import { fonts, radius, type ThemeColors } from "../theme";
 import { featuredStory, stories, type Story } from "../data/stories";
 
 export default function HomeScreen({
@@ -26,6 +27,8 @@ export default function HomeScreen({
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const more = stories.slice(1);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
   const [removed, setRemoved] = useState<Story | null>(null);
@@ -62,16 +65,16 @@ export default function HomeScreen({
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.topBar}>
           <View style={styles.pill}>
-            <UserPlus size={15} color={theme.colors.gold} />
+            <UserPlus size={15} color={colors.gold} />
             <Text style={styles.pillText}>Add your child</Text>
           </View>
           <View style={styles.icons}>
             <View style={styles.iconBtn}>
-              <Bell size={16} color={theme.colors.cream} />
+              <Bell size={16} color={colors.cream} />
               <View style={styles.notifDot} />
             </View>
             <View style={styles.iconBtn}>
-              <Menu size={16} color={theme.colors.cream} />
+              <Menu size={16} color={colors.cream} />
             </View>
           </View>
         </View>
@@ -83,7 +86,7 @@ export default function HomeScreen({
               <Text style={styles.featuredTitle}>{featuredStory.title}</Text>
               <Text style={styles.featuredBlurb}>{featuredStory.blurb}</Text>
               <Pressable onPress={() => onOpenStory(featuredStory)} style={styles.readBtn}>
-                <Play size={15} color={theme.colors.onGold} fill={theme.colors.onGold} />
+                <Play size={15} color={colors.onGold} fill={colors.onGold} />
                 <Text style={styles.readBtnText}>Read</Text>
               </Pressable>
             </View>
@@ -136,7 +139,7 @@ export default function HomeScreen({
                           <Text style={styles.ageText}>{s.age}</Text>
                         </View>
                         <View style={styles.metaItem}>
-                          <Clock size={11} color={theme.colors.mutedDim} />
+                          <Clock size={11} color={colors.mutedDim} />
                           <Text style={styles.metaText}>{s.minutes} min</Text>
                         </View>
                       </View>
@@ -174,7 +177,7 @@ export default function HomeScreen({
                     <Text style={styles.ageText}>{s.age}</Text>
                   </View>
                   <View style={styles.metaItem}>
-                    <Clock size={12} color={theme.colors.mutedDim} />
+                    <Clock size={12} color={colors.mutedDim} />
                     <Text style={styles.metaText}>{s.minutes} min</Text>
                   </View>
                 </View>
@@ -198,10 +201,11 @@ export default function HomeScreen({
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: theme.colors.bg,
+    backgroundColor: colors.bg,
   },
   scroll: {
     paddingBottom: 130,
@@ -218,17 +222,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.pill,
+    borderColor: colors.ring,
+    borderRadius: radius.pill,
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
   pillText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 14,
-    color: theme.colors.gold,
+    color: colors.gold,
   },
   icons: {
     flexDirection: "row",
@@ -238,7 +242,7 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 19,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -249,7 +253,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: theme.colors.gold,
+    backgroundColor: colors.gold,
   },
   featuredWrap: {
     paddingHorizontal: 18,
@@ -273,10 +277,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: theme.colors.bgCardAlt,
+    backgroundColor: colors.bgCardAlt,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.card,
+    borderColor: colors.ring,
+    borderRadius: radius.card,
     paddingHorizontal: 16,
     paddingVertical: 13,
     shadowColor: "#000",
@@ -286,14 +290,14 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   toastText: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 13,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   toastUndo: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 13,
-    color: theme.colors.gold,
+    color: colors.gold,
   },
   featuredOverlay: {
     flex: 1,
@@ -302,24 +306,24 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(20,13,9,0.35)",
   },
   eyebrow: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
     letterSpacing: 0.8,
-    color: theme.colors.gold,
+    color: colors.gold,
     textTransform: "uppercase",
     marginBottom: 6,
   },
   featuredTitle: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 34,
     lineHeight: 38,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   featuredBlurb: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 13,
     lineHeight: 19,
-    color: theme.colors.muted,
+    color: colors.muted,
     marginTop: 8,
   },
   readBtn: {
@@ -328,16 +332,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8,
     alignSelf: "flex-start",
-    backgroundColor: theme.colors.gold,
-    borderRadius: theme.radius.pill,
+    backgroundColor: colors.gold,
+    borderRadius: radius.pill,
     paddingVertical: 13,
     paddingHorizontal: 34,
     marginTop: 16,
   },
   readBtnText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 15,
-    color: theme.colors.onGold,
+    color: colors.onGold,
   },
   section: {
     paddingHorizontal: 18,
@@ -345,18 +349,18 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   sectionTitle: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 22,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   readCard: {
     flexDirection: "row",
     gap: 14,
-    backgroundColor: theme.colors.bgCard,
-    borderRadius: theme.radius.card,
+    backgroundColor: colors.bgCard,
+    borderRadius: radius.card,
     padding: 12,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
+    borderColor: colors.ring,
   },
   readThumb: {
     width: 88,
@@ -380,15 +384,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   readTitle: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 18,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   readBlurb: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 12,
     lineHeight: 16,
-    color: theme.colors.muted,
+    color: colors.muted,
     marginTop: 4,
   },
   readMeta: {
@@ -401,12 +405,12 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: theme.colors.marianBlue,
+    backgroundColor: colors.marianBlue,
     alignItems: "center",
     justifyContent: "center",
   },
   ageText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
     color: "#FFFFFF",
   },
@@ -416,9 +420,9 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   metaText: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 12,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   favouritesSection: {
     marginTop: 26,
@@ -431,9 +435,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   favCount: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
-    color: theme.colors.gold,
+    color: colors.gold,
   },
   favRail: {
     paddingHorizontal: 18,
@@ -441,10 +445,10 @@ const styles = StyleSheet.create({
   },
   favCard: {
     width: 148,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
+    borderColor: colors.ring,
     overflow: "hidden",
   },
   favThumb: {
@@ -457,10 +461,10 @@ const styles = StyleSheet.create({
     paddingBottom: 11,
   },
   favSaint: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 15,
     lineHeight: 19,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   favMeta: {
     flexDirection: "row",
@@ -474,15 +478,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.card,
+    borderColor: colors.ring,
+    borderRadius: radius.card,
   },
   favEmptyText: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 13,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   blank: {
     height: 6,
   },
 });
+}

@@ -19,14 +19,16 @@ import LoginScreen from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LibraryScreen from "./src/screens/LibraryScreen";
 import StoryScreen from "./src/screens/StoryScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
+import { ThemeProvider } from "./src/components/ThemeContext";
 import type { TabId } from "./src/components/BottomNav";
 import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "login" | "home" | "story" | "library";
+type Screen = "splash" | "login" | "home" | "story" | "library" | "settings";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
@@ -64,33 +66,37 @@ export default function App() {
   const handleFooterTab = (tab: TabId) => {
     if (tab === "home") setScreen("home");
     else if (tab === "library") setScreen("library");
+    else if (tab === "settings") setScreen("settings");
   };
 
   return (
     <SafeAreaProvider>
-      <View style={styles.root} onLayout={onLayoutRootView}>
-        {screen === "splash" && <SplashView onDone={() => setScreen("login")} />}
-        {screen === "login" && <LoginScreen onLogin={() => setScreen("home")} />}
-        {screen === "home" && (
-          <HomeScreen
-            onOpenStory={(s) => openStory(s, "home")}
-            onFooterTab={handleFooterTab}
-            favouriteIds={favourites}
-            onToggleFavourite={toggleFavourite}
-          />
-        )}
-        {screen === "library" && (
-          <LibraryScreen
-            onOpenStory={(s) => openStory(s, "library")}
-            onFooterTab={handleFooterTab}
-            favouriteIds={favourites}
-            onToggleFavourite={toggleFavourite}
-          />
-        )}
-        {screen === "story" && (
-          <StoryScreen story={story} onBack={() => setScreen(storyOrigin)} />
-        )}
-      </View>
+      <ThemeProvider>
+        <View style={styles.root} onLayout={onLayoutRootView}>
+          {screen === "splash" && <SplashView onDone={() => setScreen("login")} />}
+          {screen === "login" && <LoginScreen onLogin={() => setScreen("home")} />}
+          {screen === "home" && (
+            <HomeScreen
+              onOpenStory={(s) => openStory(s, "home")}
+              onFooterTab={handleFooterTab}
+              favouriteIds={favourites}
+              onToggleFavourite={toggleFavourite}
+            />
+          )}
+          {screen === "library" && (
+            <LibraryScreen
+              onOpenStory={(s) => openStory(s, "library")}
+              onFooterTab={handleFooterTab}
+              favouriteIds={favourites}
+              onToggleFavourite={toggleFavourite}
+            />
+          )}
+          {screen === "settings" && <SettingsScreen onFooterTab={handleFooterTab} />}
+          {screen === "story" && (
+            <StoryScreen story={story} onBack={() => setScreen(storyOrigin)} />
+          )}
+        </View>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }

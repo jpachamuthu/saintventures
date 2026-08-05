@@ -4,7 +4,8 @@ import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings } from "lucide-
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
-import { theme } from "../theme";
+import { useTheme } from "../components/ThemeContext";
+import { fonts, radius, type ThemeColors } from "../theme";
 import type { Story } from "../data/stories";
 
 type StoryScreenProps = {
@@ -64,6 +65,8 @@ function scoreVoice(v: { name: string; language: string; localService?: boolean 
 }
 
 export default function StoryScreen({ story, onBack }: StoryScreenProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [page, setPage] = useState(0);
   const [reading, setReading] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -245,11 +248,11 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
         <Pressable onPress={onBack} style={styles.headerBtn} hitSlop={8}>
-          <ChevronDown size={18} color={theme.colors.cream} />
+          <ChevronDown size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
         <Pressable style={styles.headerBtn} hitSlop={8}>
-          <Settings size={17} color={theme.colors.cream} />
+          <Settings size={17} color={colors.cream} />
         </Pressable>
       </View>
 
@@ -298,31 +301,32 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
           style={{ opacity: page === 0 && !reading ? 0.35 : 1 }}
           hitSlop={8}
         >
-          <RotateCcw size={22} color={theme.colors.cream} />
+          <RotateCcw size={22} color={colors.cream} />
         </Pressable>
         <Pressable style={styles.playBtn} onPress={reading ? togglePause : startReading} hitSlop={8}>
           {reading ? (
             paused ? (
-              <Play size={26} color={theme.colors.onGold} fill={theme.colors.onGold} style={{ marginLeft: 3 }} />
+              <Play size={26} color={colors.onGold} fill={colors.onGold} style={{ marginLeft: 3 }} />
             ) : (
-              <Pause size={26} color={theme.colors.onGold} fill={theme.colors.onGold} />
+              <Pause size={26} color={colors.onGold} fill={colors.onGold} />
             )
           ) : (
-            <Play size={26} color={theme.colors.onGold} fill={theme.colors.onGold} style={{ marginLeft: 3 }} />
+            <Play size={26} color={colors.onGold} fill={colors.onGold} style={{ marginLeft: 3 }} />
           )}
         </Pressable>
         <Pressable onPress={goNext} hitSlop={8}>
-          <RotateCw size={22} color={theme.colors.cream} />
+          <RotateCw size={22} color={colors.cream} />
         </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: theme.colors.bg,
+    backgroundColor: colors.bg,
   },
   header: {
     flexDirection: "row",
@@ -335,14 +339,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     alignItems: "center",
     justifyContent: "center",
   },
   headerTitle: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 18,
-    color: theme.colors.cream,
+    color: colors.cream,
     flexShrink: 1,
     textAlign: "center",
   },
@@ -361,20 +365,20 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   pageLabel: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
     letterSpacing: 1,
-    color: theme.colors.gold,
+    color: colors.gold,
     textTransform: "uppercase",
   },
   listeningPill: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.pill,
+    borderColor: colors.ring,
+    borderRadius: radius.pill,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
@@ -382,37 +386,37 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
     borderRadius: 4,
-    backgroundColor: theme.colors.gold,
+    backgroundColor: colors.gold,
   },
   listeningDotPaused: {
-    backgroundColor: theme.colors.mutedDim,
+    backgroundColor: colors.mutedDim,
   },
   listeningText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 10,
     letterSpacing: 0.5,
-    color: theme.colors.cream,
+    color: colors.cream,
     textTransform: "uppercase",
   },
   pageText: {
-    fontFamily: theme.fonts.display,
+    fontFamily: fonts.display,
     fontSize: 22,
     lineHeight: 34,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   dropCap: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 40,
     lineHeight: 40,
-    color: theme.colors.gold,
+    color: colors.gold,
   },
   activeWord: {
-    color: theme.colors.goldBright,
+    color: colors.goldBright,
     backgroundColor: "rgba(212, 158, 66, 0.16)",
     borderRadius: 4,
   },
   activeWordPaused: {
-    color: theme.colors.gold,
+    color: colors.gold,
     backgroundColor: "rgba(212, 158, 66, 0.10)",
   },
   progressWrap: {
@@ -422,12 +426,12 @@ const styles = StyleSheet.create({
   track: {
     height: 3,
     borderRadius: 2,
-    backgroundColor: theme.colors.ring,
+    backgroundColor: colors.ring,
     overflow: "hidden",
   },
   fill: {
     height: 3,
-    backgroundColor: theme.colors.gold,
+    backgroundColor: colors.gold,
   },
   progressMeta: {
     flexDirection: "row",
@@ -435,9 +439,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   progressText: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 12,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   controls: {
     flexDirection: "row",
@@ -450,8 +454,9 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: theme.colors.gold,
+    backgroundColor: colors.gold,
     alignItems: "center",
     justifyContent: "center",
   },
 });
+}

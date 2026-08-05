@@ -3,13 +3,15 @@ import { Animated, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import Logo from "../components/Logo";
-import { theme } from "../theme";
+import { useTheme } from "../components/ThemeContext";
+import type { ThemeColors } from "../theme";
 
 type SplashScreenProps = {
   onDone: () => void;
 };
 
 export default function SplashScreen({ onDone }: SplashScreenProps) {
+  const { colors, isDark } = useTheme();
   const fade = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.92)).current;
 
@@ -23,12 +25,14 @@ export default function SplashScreen({ onDone }: SplashScreenProps) {
     return () => clearTimeout(t);
   }, [fade, scale, onDone]);
 
+  const styles = createStyles(colors);
+
   return (
     <LinearGradient
-      colors={["#2A1B11", theme.colors.bg, "#160D08"]}
+      colors={[colors.bgCardAlt, colors.bg, colors.bgCard]}
       style={styles.root}
     >
-      <StatusBar style="light" />
+      <StatusBar style={isDark ? "light" : "dark"} />
       <Animated.View style={[styles.center, { opacity: fade, transform: [{ scale }] }]}>
         <Logo size={132} />
         <View style={styles.ornament}>
@@ -41,31 +45,33 @@ export default function SplashScreen({ onDone }: SplashScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  center: {
-    alignItems: "center",
-  },
-  ornament: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    marginTop: 26,
-  },
-  line: {
-    width: 46,
-    height: 1,
-    backgroundColor: theme.colors.gold,
-    opacity: 0.5,
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: theme.colors.gold,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    root: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    center: {
+      alignItems: "center",
+    },
+    ornament: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+      marginTop: 26,
+    },
+    line: {
+      width: 46,
+      height: 1,
+      backgroundColor: colors.gold,
+      opacity: 0.5,
+    },
+    dot: {
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      backgroundColor: colors.gold,
+    },
+  });
+}

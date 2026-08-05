@@ -2,7 +2,8 @@ import React from "react";
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { House, Library, Settings, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { theme } from "../theme";
+import { useTheme } from "./ThemeContext";
+import { fonts, type ThemeColors } from "../theme";
 
 export type TabId = "home" | "library" | "settings";
 
@@ -25,6 +26,8 @@ type BottomNavProps = {
 
 export default function BottomNav({ active, onTab }: BottomNavProps) {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
 
   return (
     <View style={[styles.wrap, { paddingBottom: Math.max(insets.bottom, 14) }]}>
@@ -45,7 +48,7 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
                 <Icon
                   size={22}
                   strokeWidth={isActive ? 2.4 : 2}
-                  color={isActive ? theme.colors.onGold : theme.colors.mutedDim}
+                  color={isActive ? colors.onGold : colors.mutedDim}
                 />
               </View>
               <Text style={[styles.label, isActive && styles.labelActive]}>{item.label}</Text>
@@ -57,52 +60,54 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    position: "absolute",
-    left: 12,
-    right: 12,
-    bottom: 0,
-  },
-  bar: {
-    flexDirection: "row",
-    backgroundColor: theme.colors.bgCard,
-    borderColor: theme.colors.ring,
-    borderWidth: 1,
-    borderRadius: 26,
-    paddingVertical: 8,
-    paddingHorizontal: 6,
-    shadowColor: "#000",
-    shadowOpacity: 0.45,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 10,
-  },
-  tab: {
-    flex: 1,
-    alignItems: "center",
-    gap: 3,
-    paddingVertical: 4,
-  },
-  pressed: {
-    opacity: 0.75,
-  },
-  iconWrap: {
-    width: 42,
-    height: 30,
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  iconWrapActive: {
-    backgroundColor: theme.colors.gold,
-  },
-  label: {
-    fontFamily: theme.fonts.uiBold,
-    fontSize: 10.5,
-    color: theme.colors.mutedDim,
-  },
-  labelActive: {
-    color: theme.colors.gold,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    wrap: {
+      position: "absolute",
+      left: 12,
+      right: 12,
+      bottom: 0,
+    },
+    bar: {
+      flexDirection: "row",
+      backgroundColor: colors.bgCard,
+      borderColor: colors.ring,
+      borderWidth: 1,
+      borderRadius: 26,
+      paddingVertical: 8,
+      paddingHorizontal: 6,
+      shadowColor: "#000",
+      shadowOpacity: 0.45,
+      shadowRadius: 18,
+      shadowOffset: { width: 0, height: 8 },
+      elevation: 10,
+    },
+    tab: {
+      flex: 1,
+      alignItems: "center",
+      gap: 3,
+      paddingVertical: 4,
+    },
+    pressed: {
+      opacity: 0.75,
+    },
+    iconWrap: {
+      width: 42,
+      height: 30,
+      borderRadius: 15,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    iconWrapActive: {
+      backgroundColor: colors.gold,
+    },
+    label: {
+      fontFamily: fonts.uiBold,
+      fontSize: 10.5,
+      color: colors.mutedDim,
+    },
+    labelActive: {
+      color: colors.gold,
+    },
+  });
+}

@@ -1,7 +1,8 @@
 import React from "react";
 import { Pressable, Text, ViewStyle, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { theme } from "../theme";
+import { fonts, type ThemeColors } from "../theme";
+import { useTheme } from "./ThemeContext";
 
 function GoogleG() {
   return (
@@ -32,6 +33,8 @@ type GoogleButtonProps = {
 };
 
 export default function GoogleButton({ onPress, style }: GoogleButtonProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   return (
     <Pressable
       onPress={onPress}
@@ -44,29 +47,31 @@ export default function GoogleButton({ onPress, style }: GoogleButtonProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 12,
-    backgroundColor: theme.colors.white,
-    height: 54,
-    borderRadius: theme.radius.pill,
-    paddingHorizontal: 24,
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 4,
-  },
-  pressed: {
-    opacity: 0.9,
-    transform: [{ scale: 0.985 }],
-  },
-  label: {
-    fontFamily: theme.fonts.uiBold,
-    fontSize: 16,
-    color: "#2C2C2C",
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    button: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 12,
+      backgroundColor: colors.white,
+      height: 54,
+      borderRadius: 999,
+      paddingHorizontal: 24,
+      shadowColor: "#000",
+      shadowOpacity: 0.25,
+      shadowRadius: 12,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 4,
+    },
+    pressed: {
+      opacity: 0.9,
+      transform: [{ scale: 0.985 }],
+    },
+    label: {
+      fontFamily: fonts.uiBold,
+      fontSize: 16,
+      color: "#2C2C2C",
+    },
+  });
+}

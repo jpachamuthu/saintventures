@@ -12,7 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import BottomNav, { type TabId } from "../components/BottomNav";
-import { theme } from "../theme";
+import { useTheme } from "../components/ThemeContext";
+import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
 
 type LibraryScreenProps = {
@@ -23,19 +24,22 @@ type LibraryScreenProps = {
 };
 
 function Highlighted({ text, query, style }: { text: string; query: string; style: any }) {
+  const { colors } = useTheme();
   if (!query) return <Text style={style}>{text}</Text>;
   const idx = text.toLowerCase().indexOf(query.toLowerCase());
   if (idx < 0) return <Text style={style}>{text}</Text>;
   return (
     <Text style={style}>
       {text.slice(0, idx)}
-      <Text style={{ color: theme.colors.goldBright }}>{text.slice(idx, idx + query.length)}</Text>
+      <Text style={{ color: colors.goldBright }}>{text.slice(idx, idx + query.length)}</Text>
       {text.slice(idx + query.length)}
     </Text>
   );
 }
 
 export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, onToggleFavourite }: LibraryScreenProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [query, setQuery] = useState("");
   const [asc, setAsc] = useState(true);
   const [onlyFavs, setOnlyFavs] = useState(false);
@@ -60,17 +64,17 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
           <Text style={styles.subtitle}>SAINT STORIES</Text>
         </View>
         <View style={styles.search}>
-          <Search size={15} color={theme.colors.mutedDim} />
+          <Search size={15} color={colors.mutedDim} />
           <TextInput
             value={query}
             onChangeText={setQuery}
             placeholder="Search saints…"
-            placeholderTextColor={theme.colors.mutedDim}
+            placeholderTextColor={colors.mutedDim}
             style={styles.searchInput}
           />
           {query.length > 0 && (
             <Pressable onPress={clearSearch} hitSlop={8}>
-              <X size={15} color={theme.colors.mutedDim} />
+              <X size={15} color={colors.mutedDim} />
             </Pressable>
           )}
         </View>
@@ -99,16 +103,16 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
           >
             <Heart
               size={13}
-              color={onlyFavs ? theme.colors.onGold : theme.colors.gold}
-              fill={onlyFavs ? theme.colors.onGold : "transparent"}
+              color={onlyFavs ? colors.onGold : colors.gold}
+              fill={onlyFavs ? colors.onGold : "transparent"}
             />
-            <Text style={[styles.sortLabel, onlyFavs && { color: theme.colors.onGold }]}>Favs</Text>
+            <Text style={[styles.sortLabel, onlyFavs && { color: colors.onGold }]}>Favs</Text>
           </Pressable>
           <Pressable
             onPress={() => setAsc(!asc)}
             style={({ pressed }) => [styles.sortBtn, pressed && styles.pressed]}
           >
-            <ArrowUpDown size={13} color={theme.colors.gold} strokeWidth={2.4} />
+            <ArrowUpDown size={13} color={colors.gold} strokeWidth={2.4} />
             <Text style={styles.sortLabel}>{asc ? "A–Z" : "Z–A"}</Text>
           </Pressable>
         </View>
@@ -147,7 +151,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
                     <Text style={styles.ageText}>{s.age}</Text>
                   </View>
                   <View style={styles.metaItem}>
-                    <Clock size={11} color={theme.colors.mutedDim} />
+                    <Clock size={11} color={colors.mutedDim} />
                     <Text style={styles.metaText}>{s.minutes} min</Text>
                   </View>
                 </View>
@@ -162,10 +166,11 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: theme.colors.bg,
+    backgroundColor: colors.bg,
     paddingBottom: 120,
   },
   header: {
@@ -180,16 +185,16 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   title: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 30,
     lineHeight: 32,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   subtitle: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
     letterSpacing: 1.5,
-    color: theme.colors.gold,
+    color: colors.gold,
     marginTop: 1,
   },
   search: {
@@ -197,28 +202,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.pill,
+    borderColor: colors.ring,
+    borderRadius: radius.pill,
     paddingHorizontal: 14,
     height: 42,
   },
   searchInput: {
     flex: 1,
-    fontFamily: theme.fonts.uiMedium,
+    fontFamily: fonts.uiMedium,
     fontSize: 13.5,
-    color: theme.colors.cream,
+    color: colors.cream,
     padding: 0,
   },
   clearBtn: {
     fontSize: 13,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   cancelText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 13,
-    color: theme.colors.gold,
+    color: colors.gold,
   },
   sortGroup: {
     flexDirection: "row",
@@ -226,8 +231,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   favChipActive: {
-    backgroundColor: theme.colors.gold,
-    borderColor: theme.colors.gold,
+    backgroundColor: colors.gold,
+    borderColor: colors.gold,
   },
   pressed: {
     opacity: 0.7,
@@ -241,29 +246,29 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   count: {
-    fontFamily: theme.fonts.uiMedium,
+    fontFamily: fonts.uiMedium,
     fontSize: 12.5,
-    color: theme.colors.muted,
+    color: colors.muted,
   },
   countNum: {
-    color: theme.colors.gold,
-    fontFamily: theme.fonts.uiBold,
+    color: colors.gold,
+    fontFamily: fonts.uiBold,
   },
   sortBtn: {
     flexDirection: "row",
     alignItems: "center",
     gap: 7,
-    backgroundColor: theme.colors.bgCard,
+    backgroundColor: colors.bgCard,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
-    borderRadius: theme.radius.pill,
+    borderColor: colors.ring,
+    borderRadius: radius.pill,
     paddingVertical: 8,
     paddingHorizontal: 14,
   },
   sortLabel: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 12,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   grid: {
     paddingHorizontal: 18,
@@ -275,10 +280,10 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "48%",
-    backgroundColor: theme.colors.bgCard,
-    borderRadius: theme.radius.card,
+    backgroundColor: colors.bgCard,
+    borderRadius: radius.card,
     borderWidth: 1,
-    borderColor: theme.colors.ring,
+    borderColor: colors.ring,
     overflow: "hidden",
   },
   thumb: {
@@ -302,15 +307,15 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   saint: {
-    fontFamily: theme.fonts.displayBold,
+    fontFamily: fonts.displayBold,
     fontSize: 18,
     lineHeight: 21,
-    color: theme.colors.cream,
+    color: colors.cream,
   },
   gtitle: {
-    fontFamily: theme.fonts.uiMedium,
+    fontFamily: fonts.uiMedium,
     fontSize: 11.5,
-    color: theme.colors.muted,
+    color: colors.muted,
     marginTop: 3,
   },
   meta: {
@@ -323,12 +328,12 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: theme.colors.marianBlue,
+    backgroundColor: colors.marianBlue,
     alignItems: "center",
     justifyContent: "center",
   },
   ageText: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 11,
     color: "#FFFFFF",
   },
@@ -338,9 +343,9 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   metaText: {
-    fontFamily: theme.fonts.uiMedium,
+    fontFamily: fonts.uiMedium,
     fontSize: 11,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   empty: {
     alignItems: "center",
@@ -349,18 +354,19 @@ const styles = StyleSheet.create({
   },
   emptyGlyph: {
     fontSize: 30,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
   },
   emptyTitle: {
-    fontFamily: theme.fonts.uiBold,
+    fontFamily: fonts.uiBold,
     fontSize: 14,
-    color: theme.colors.muted,
+    color: colors.muted,
     marginTop: 4,
   },
   emptyHint: {
-    fontFamily: theme.fonts.ui,
+    fontFamily: fonts.ui,
     fontSize: 12.5,
-    color: theme.colors.mutedDim,
+    color: colors.mutedDim,
     marginTop: 4,
   },
 });
+}

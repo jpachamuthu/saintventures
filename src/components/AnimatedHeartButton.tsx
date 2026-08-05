@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Pressable, StyleSheet } from "react-native";
 import { Heart } from "lucide-react-native";
-import { theme } from "../theme";
+import { useTheme } from "./ThemeContext";
 
 type AnimatedHeartButtonProps = {
   active: boolean;
@@ -19,6 +19,7 @@ export default function AnimatedHeartButton({
   size = 15,
   style,
 }: AnimatedHeartButtonProps) {
+  const { colors } = useTheme();
   const scale = useRef(new Animated.Value(active ? 1 : 0.85)).current;
   const prev = useRef(active);
 
@@ -52,8 +53,8 @@ export default function AnimatedHeartButton({
       <Animated.View style={{ transform: [{ scale }] }}>
         <Heart
           size={size}
-          color={active ? theme.colors.gold : theme.colors.cream}
-          fill={active ? theme.colors.gold : "transparent"}
+          color={active ? colors.gold : colors.cream}
+          fill={active ? colors.gold : "transparent"}
         />
       </Animated.View>
     </Pressable>
