@@ -3,16 +3,15 @@ import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import {
-  Quicksand_500Medium,
-  Quicksand_600SemiBold,
-  Quicksand_700Bold,
-} from "@expo-google-fonts/quicksand";
+  Fredoka_600SemiBold,
+  Fredoka_700Bold,
+} from "@expo-google-fonts/fredoka";
+import { Baloo2_600SemiBold } from "@expo-google-fonts/baloo-2";
 import {
-  CormorantGaramond_500Medium,
-  CormorantGaramond_500Medium_Italic,
-  CormorantGaramond_600SemiBold,
-  CormorantGaramond_700Bold,
-} from "@expo-google-fonts/cormorant-garamond";
+  Nunito_400Regular,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+} from "@expo-google-fonts/nunito";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SplashView from "./src/screens/SplashScreen";
 import LoginScreen from "./src/screens/LoginScreen";
@@ -36,13 +35,12 @@ export default function App() {
   const [storyOrigin, setStoryOrigin] = useState<"home" | "library">("home");
 
   const [fontsLoaded] = useFonts({
-    Quicksand_500Medium,
-    Quicksand_600SemiBold,
-    Quicksand_700Bold,
-    CormorantGaramond_500Medium,
-    CormorantGaramond_500Medium_Italic,
-    CormorantGaramond_600SemiBold,
-    CormorantGaramond_700Bold,
+    Fredoka_600SemiBold,
+    Fredoka_700Bold,
+    Baloo2_600SemiBold,
+    Nunito_400Regular,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
   });
 
   const { favourites, isFavourite, toggleFavourite } = useFavourites();

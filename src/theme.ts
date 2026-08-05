@@ -40,12 +40,14 @@ export const palettes = {
 export type ThemeColors = (typeof palettes)[ThemeMode];
 
 export const fonts = {
-  display: "CormorantGaramond_600SemiBold",
-  displayBold: "CormorantGaramond_700Bold",
-  displayItalic: "CormorantGaramond_500Medium_Italic",
-  ui: "Quicksand_500Medium",
-  uiMedium: "Quicksand_600SemiBold",
-  uiBold: "Quicksand_700Bold",
+  display: "Baloo2_600SemiBold",
+  displayBold: "Fredoka_700Bold",
+  displayItalic: "Baloo2_600SemiBold",
+  card: "Baloo2_600SemiBold",
+  ui: "Nunito_400Regular",
+  uiMedium: "Nunito_600SemiBold",
+  uiBold: "Fredoka_600SemiBold",
+  metaBold: "Nunito_700Bold",
 };
 
 export const radius = {

@@ -257,7 +257,7 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
       </View>
 
       <View style={styles.artWrap}>
-        <SaintIllustration palette={story.palette} art={story.art} height={180} />
+        <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={180} />
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
@@ -399,7 +399,7 @@ function createStyles(colors: ThemeColors) {
     textTransform: "uppercase",
   },
   pageText: {
-    fontFamily: fonts.display,
+    fontFamily: fonts.ui,
     fontSize: 22,
     lineHeight: 34,
     color: colors.cream,

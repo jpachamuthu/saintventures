@@ -80,7 +80,7 @@ export default function HomeScreen({
         </View>
 
         <View style={styles.featuredWrap}>
-          <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} height={330}>
+          <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} image={featuredStory.hero} height={330}>
             <View style={styles.featuredOverlay}>
               <Text style={styles.eyebrow}>Tonight's Saint</Text>
               <Text style={styles.featuredTitle}>{featuredStory.title}</Text>
@@ -124,7 +124,7 @@ export default function HomeScreen({
                     style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
                   >
                     <View style={styles.favThumb}>
-                      <SaintIllustration palette={s.palette} art={s.art} height={150} />
+                      <SaintIllustration palette={s.palette} art={s.art} image={s.hero} height={150} />
                       <AnimatedHeartButton
                         active
                         onPress={() => handleToggle(s)}
@@ -161,7 +161,7 @@ export default function HomeScreen({
               style={({ pressed }) => [styles.readCard, pressed && styles.pressed]}
             >
               <View style={styles.readThumb}>
-                <SaintIllustration palette={s.palette} art={s.art} height={88} />
+                <SaintIllustration palette={s.palette} art={s.art} image={s.hero} height={88} />
                 <AnimatedHeartButton
                   active={favouriteIds.includes(s.id)}
                   onPress={() => handleToggle(s)}
@@ -384,7 +384,7 @@ function createStyles(colors: ThemeColors) {
     justifyContent: "center",
   },
   readTitle: {
-    fontFamily: fonts.displayBold,
+    fontFamily: fonts.card,
     fontSize: 18,
     color: colors.cream,
   },
@@ -410,7 +410,7 @@ function createStyles(colors: ThemeColors) {
     justifyContent: "center",
   },
   ageText: {
-    fontFamily: fonts.uiBold,
+    fontFamily: fonts.metaBold,
     fontSize: 11,
     color: "#FFFFFF",
   },
@@ -420,7 +420,7 @@ function createStyles(colors: ThemeColors) {
     gap: 4,
   },
   metaText: {
-    fontFamily: fonts.ui,
+    fontFamily: fonts.metaBold,
     fontSize: 12,
     color: colors.mutedDim,
   },
@@ -461,7 +461,7 @@ function createStyles(colors: ThemeColors) {
     paddingBottom: 11,
   },
   favSaint: {
-    fontFamily: fonts.displayBold,
+    fontFamily: fonts.card,
     fontSize: 15,
     lineHeight: 19,
     color: colors.cream,

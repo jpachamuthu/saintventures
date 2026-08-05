@@ -133,7 +133,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
               style={({ pressed }) => [styles.card, pressed && styles.pressed]}
             >
               <View style={styles.thumb}>
-                <SaintIllustration palette={s.palette} art={s.art} height={150} />
+                <SaintIllustration palette={s.palette} art={s.art} image={s.hero} height={150} />
                 <AnimatedHeartButton
                   active={favouriteIds.includes(s.id)}
                   onPress={() => onToggleFavourite(s.id)}
@@ -307,7 +307,7 @@ function createStyles(colors: ThemeColors) {
     paddingBottom: 12,
   },
   saint: {
-    fontFamily: fonts.displayBold,
+    fontFamily: fonts.card,
     fontSize: 18,
     lineHeight: 21,
     color: colors.cream,
@@ -333,7 +333,7 @@ function createStyles(colors: ThemeColors) {
     justifyContent: "center",
   },
   ageText: {
-    fontFamily: fonts.uiBold,
+    fontFamily: fonts.metaBold,
     fontSize: 11,
     color: "#FFFFFF",
   },
@@ -343,7 +343,7 @@ function createStyles(colors: ThemeColors) {
     gap: 3,
   },
   metaText: {
-    fontFamily: fonts.uiMedium,
+    fontFamily: fonts.metaBold,
     fontSize: 11,
     color: colors.mutedDim,
   },

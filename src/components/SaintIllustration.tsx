@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import Svg, { Circle, Ellipse, Path, Rect } from "react-native-svg";
 import type { ArtVariant, StoryPalette } from "../data/stories";
 
@@ -19,6 +19,7 @@ type SaintIllustrationProps = {
   palette?: StoryPalette;
   art?: ArtVariant;
   height?: number;
+  image?: number;
   children?: React.ReactNode;
 };
 
@@ -113,29 +114,33 @@ function SaintArt({ variant, c3 }: { variant: ArtVariant; c3: string }) {
   }
 }
 
-export default function SaintIllustration({ palette = "gold", art = "saint", height = 180, children }: SaintIllustrationProps) {
+export default function SaintIllustration({ palette = "gold", art = "saint", height = 180, image, children }: SaintIllustrationProps) {
   const [c1, c2, c3] = PALETTES[palette];
 
   return (
     <View style={[styles.root, { height, backgroundColor: "transparent" }]}>
-      <View style={[styles.gradient, { backgroundColor: c1 }]}>
-        <View style={[styles.aurora, { backgroundColor: c2, opacity: 0.5 }]} />
-        <Svg width="100%" height="100%" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
-          {Array.from({ length: 18 }).map((_, i) => (
-            <Circle
-              key={i}
-              cx={(i * 53) % 400}
-              cy={(i * 97) % 180}
-              r={i % 4 === 0 ? 1.6 : 0.8}
-              fill={WHITE}
-              opacity={0.35}
-            />
-          ))}
-          <Circle cx="200" cy="120" r="68" stroke={c3} strokeWidth="3" fill="none" opacity={0.55} />
-          <Circle cx="200" cy="120" r="68" stroke={c3} strokeWidth="10" fill="none" opacity={0.12} />
-          <SaintArt variant={art} c3={c3} />
-        </Svg>
-      </View>
+      {image ? (
+        <Image source={image} style={StyleSheet.absoluteFill} resizeMode="cover" />
+      ) : (
+        <View style={[styles.gradient, { backgroundColor: c1 }]}>
+          <View style={[styles.aurora, { backgroundColor: c2, opacity: 0.5 }]} />
+          <Svg width="100%" height="100%" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <Circle
+                key={i}
+                cx={(i * 53) % 400}
+                cy={(i * 97) % 180}
+                r={i % 4 === 0 ? 1.6 : 0.8}
+                fill={WHITE}
+                opacity={0.35}
+              />
+            ))}
+            <Circle cx="200" cy="120" r="68" stroke={c3} strokeWidth="3" fill="none" opacity={0.55} />
+            <Circle cx="200" cy="120" r="68" stroke={c3} strokeWidth="10" fill="none" opacity={0.12} />
+            <SaintArt variant={art} c3={c3} />
+          </Svg>
+        </View>
+      )}
       {children ? <View style={StyleSheet.absoluteFill}>{children}</View> : null}
     </View>
   );
