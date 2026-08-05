@@ -109,4 +109,55 @@ export const quizzes: Record<string, Quiz> = {
       correct: 1,
     },
   ],
+  "st-jude": [
+    {
+      question: "Who was Jude a cousin of?",
+      choices: ["The governor", "A fisherman", "Jesus"],
+      correct: 2,
+    },
+    {
+      question: "What were people always mixing Jude up with?",
+      choices: ["Another apostle also named Judas", "A shepherd boy", "A great king"],
+      correct: 0,
+    },
+    {
+      question: "What is St Jude the patron saint of?",
+      choices: ["Hopeless causes", "Safe travels", "Good weather"],
+      correct: 0,
+    },
+  ],
+  "st-john-baptist": [
+    {
+      question: "What did John wear while he lived in the wilderness?",
+      choices: ["Clothes made of camel hair", "A golden crown", "A royal robe"],
+      correct: 0,
+    },
+    {
+      question: "Where did John baptize people?",
+      choices: ["The ocean", "The River Jordan", "A garden pond"],
+      correct: 1,
+    },
+    {
+      question: "What came down from the sky when Jesus was baptized?",
+      choices: ["A dove", "A rainbow", "A small boat"],
+      correct: 0,
+    },
+  ],
+  "st-mary-magdalene": [
+    {
+      question: "What happened to the big stone at Jesus' tomb?",
+      choices: ["It was rolled away", "It grew bigger", "It turned to gold"],
+      correct: 0,
+    },
+    {
+      question: "Who was the very first person to see Jesus alive?",
+      choices: ["Peter", "John", "Mary Magdalene"],
+      correct: 2,
+    },
+    {
+      question: "What is Mary Magdalene called?",
+      choices: ["Queen of the hills", "Apostle to the apostles", "Keeper of the keys"],
+      correct: 1,
+    },
+  ],
 };

@@ -33,6 +33,7 @@ export default function HomeScreen({
   const styles = createStyles(colors);
   const more = stories.slice(1);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
+  const topStories = [...stories].sort((a, b) => avgRating(b.id) - avgRating(a.id)).slice(0, 10);
   const [removed, setRemoved] = useState<Story | null>(null);
   const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -99,6 +100,45 @@ export default function HomeScreen({
             size={18}
             style={styles.featuredHeart}
           />
+        </View>
+
+        <View style={styles.favouritesSection}>
+          <View style={styles.sectionHead}>
+            <Text style={styles.sectionTitle}>Top stories</Text>
+            <Text style={styles.favCount}>Top 10 ⭐</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.favRail}
+          >
+            {topStories.map((s) => (
+              <Pressable
+                key={s.id}
+                onPress={() => onOpenStory(s)}
+                style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
+              >
+                <View style={styles.favThumb}>
+                  <SaintIllustration palette={s.palette} art={s.art} image={s.hero} height={150} />
+                </View>
+                <View style={styles.favInfo}>
+                  <Text style={styles.favSaint} numberOfLines={1}>
+                    {s.saint}
+                  </Text>
+                  <View style={styles.favMeta}>
+                    <View style={styles.metaItem}>
+                      <Clock size={11} color={colors.mutedDim} />
+                      <Text style={styles.metaText}>{s.minutes} min</Text>
+                    </View>
+                    <View style={styles.starGroup}>
+                      <Star size={12} color={colors.gold} fill={colors.gold} />
+                      <Text style={styles.starValue}>{formatRating(avgRating(s.id))}</Text>
+                    </View>
+                  </View>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
         </View>
 
         <View style={styles.favouritesSection}>
