@@ -19,6 +19,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import LibraryScreen from "./src/screens/LibraryScreen";
 import StoryScreen from "./src/screens/StoryScreen";
 import QuizScreen from "./src/screens/QuizScreen";
+import BadgesScreen from "./src/screens/BadgesScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
@@ -28,12 +29,12 @@ import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "login" | "home" | "story" | "library" | "settings" | "quiz";
+type Screen = "splash" | "login" | "home" | "story" | "library" | "badges" | "settings" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
   const [story, setStory] = useState<Story>(featuredStory);
-  const [storyOrigin, setStoryOrigin] = useState<"home" | "library">("home");
+  const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges">("home");
 
   const [fontsLoaded] = useFonts({
     Fredoka_600SemiBold,
@@ -56,7 +57,7 @@ export default function App() {
     return null;
   }
 
-  const openStory = (s: Story, origin: "home" | "library") => {
+  const openStory = (s: Story, origin: "home" | "library" | "badges") => {
     setStory(s);
     setStoryOrigin(origin);
     setScreen("story");
@@ -65,6 +66,7 @@ export default function App() {
   const handleFooterTab = (tab: TabId) => {
     if (tab === "home") setScreen("home");
     else if (tab === "library") setScreen("library");
+    else if (tab === "badges") setScreen("badges");
     else if (tab === "settings") setScreen("settings");
   };
 
@@ -91,6 +93,12 @@ export default function App() {
             />
           )}
           {screen === "settings" && <SettingsScreen onFooterTab={handleFooterTab} />}
+          {screen === "badges" && (
+            <BadgesScreen
+              onOpenStory={(s) => openStory(s, "badges")}
+              onFooterTab={handleFooterTab}
+            />
+          )}
           {screen === "story" && (
             <StoryScreen
               story={story}

@@ -1,11 +1,11 @@
 import React from "react";
 import { Pressable, Text, View, StyleSheet } from "react-native";
-import { House, Library, Settings, type LucideIcon } from "lucide-react-native";
+import { House, Library, Medal, Settings, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
 import { fonts, type ThemeColors } from "../theme";
 
-export type TabId = "home" | "library" | "settings";
+export type TabId = "home" | "library" | "badges" | "settings";
 
 type TabItem = {
   id: TabId;
@@ -16,6 +16,7 @@ type TabItem = {
 const TABS: TabItem[] = [
   { id: "home", label: "Home", icon: House },
   { id: "library", label: "Library", icon: Library },
+  { id: "badges", label: "Badges", icon: Medal },
   { id: "settings", label: "Settings", icon: Settings },
 ];
 

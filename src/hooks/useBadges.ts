@@ -22,6 +22,14 @@ export function useBadges() {
 
   const count = useCallback((): number => Object.keys(badges).length, [badges]);
 
+  const list = useCallback(
+    (): Array<{ id: string; earnedAt: number }> =>
+      Object.entries(badges)
+        .map(([id, earnedAt]) => ({ id, earnedAt }))
+        .sort((a, b) => b.earnedAt - a.earnedAt),
+    [badges]
+  );
+
   const earn = useCallback((id: string) => {
     setBadges((prev) => {
       if (prev[id]) return prev;
@@ -37,5 +45,5 @@ export function useBadges() {
     });
   }, []);
 
-  return { has, count, earn };
+  return { has, count, list, earn };
 }
