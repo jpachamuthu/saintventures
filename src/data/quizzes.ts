@@ -250,4 +250,85 @@ export const quizzes: Record<string, Quiz> = {
       correct: 1,
     },
   ],
+  "st-fulgentius": [
+    {
+      question: "What does the name Fulgentius mean?",
+      choices: ["Brave and strong", "Bright and radiant", "Tall and fast"],
+      correct: 1,
+    },
+    {
+      question: "Who taught young Fulgentius to speak Greek?",
+      choices: ["His father", "His mother", "His king"],
+      correct: 1,
+    },
+    {
+      question: "What did Fulgentius give up to follow God?",
+      choices: ["His rich, easy life", "His friends' games", "His pet donkey"],
+      correct: 0,
+    },
+    {
+      question: "What did Fulgentius do when the faraway king sent him to an island?",
+      choices: ["He grumbled all day", "He kept praying and writing kind letters", "He ran away into the sea"],
+      correct: 1,
+    },
+    {
+      question: "What did the people hold over Fulgentius' head when he came home?",
+      choices: ["A big umbrella", "Their cloaks", "A golden roof"],
+      correct: 1,
+    },
+  ],
+  "st-macarius": [
+    {
+      question: "What did Macarius sell at his stall in Alexandria?",
+      choices: ["Fish", "Fruit", "Blankets"],
+      correct: 1,
+    },
+    {
+      question: "What was the desert place called where Macarius lived?",
+      choices: ["The Cells", "The City", "The Vineyard"],
+      correct: 0,
+    },
+    {
+      question: "What happened to the bunch of grapes Macarius gave away?",
+      choices: ["It was eaten in one bite", "It came back to him at the end", "It fell into the sand"],
+      correct: 1,
+    },
+    {
+      question: "What did Macarius do when a proud thought told him to show off?",
+      choices: ["He carried a heavy basket of sand to stay humble", "He went to Rome to be admired", "He stopped praying"],
+      correct: 0,
+    },
+    {
+      question: "What did Macarius do for the blind little hyena cub?",
+      choices: ["He chased it away", "He prayed and touched its eyes so it could see", "He fed it grapes"],
+      correct: 1,
+    },
+  ],
+  "st-genevieve": [
+    {
+      question: "Where was Genevieve born?",
+      choices: ["Nanterre", "Rome", "Lisbon"],
+      correct: 0,
+    },
+    {
+      question: "What did Bishop Germanus give Genevieve?",
+      choices: ["A small bronze cross", "A golden crown", "A baby sheep"],
+      correct: 0,
+    },
+    {
+      question: "When Attila's army was coming, what did Genevieve tell the people to do?",
+      choices: ["Run away quickly", "Stay and pray", "Hide in the hills"],
+      correct: 1,
+    },
+    {
+      question: "What happened to Genevieve's candle in the storm?",
+      choices: ["It went out forever", "It lit by itself and kept burning", "It turned into a star"],
+      correct: 1,
+    },
+    {
+      question: "When famine came, how did Genevieve help feed Paris?",
+      choices: ["She sailed to bring grain and made bread", "She moved everyone to another city", "She asked for one big feast"],
+      correct: 0,
+    },
+  ],
 };

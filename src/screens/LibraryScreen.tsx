@@ -90,7 +90,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
       <View style={styles.sortRow}>
         <Text style={styles.count}>
           <Text style={styles.countNum}>{items.length}</Text>
-          {query ? " of 6 stories" : " stories"}
+          {query ? ` of ${stories.length} stories` : " stories"}
         </Text>
         <View style={styles.sortGroup}>
           <Pressable
