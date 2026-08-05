@@ -6,13 +6,14 @@ import {
   Text,
   View,
 } from "react-native";
-import { Bell, Menu, Play, Clock, UserPlus } from "lucide-react-native";
+import { Bell, Menu, Play, Clock, Star, UserPlus } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { useTheme } from "../components/ThemeContext";
+import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { featuredStory, stories, type Story } from "../data/stories";
 
@@ -28,6 +29,7 @@ export default function HomeScreen({
   onToggleFavourite: (id: string) => void;
 }) {
   const { colors } = useTheme();
+  const { average: avgRating } = useRatings();
   const styles = createStyles(colors);
   const more = stories.slice(1);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
@@ -135,12 +137,13 @@ export default function HomeScreen({
                     <View style={styles.favInfo}>
                       <Text style={styles.favSaint}>{s.saint}</Text>
                       <View style={styles.favMeta}>
-                        <View style={styles.ageBadge}>
-                          <Text style={styles.ageText}>{s.age}</Text>
-                        </View>
                         <View style={styles.metaItem}>
                           <Clock size={11} color={colors.mutedDim} />
                           <Text style={styles.metaText}>{s.minutes} min</Text>
+                        </View>
+                        <View style={styles.starGroup}>
+                          <Star size={12} color={colors.gold} fill={colors.gold} />
+                          <Text style={styles.starValue}>{formatRating(avgRating(s.id))}</Text>
                         </View>
                       </View>
                     </View>
@@ -173,12 +176,13 @@ export default function HomeScreen({
                 <Text style={styles.readTitle}>{s.title}</Text>
                 <Text style={styles.readBlurb}>{s.blurb}</Text>
                 <View style={styles.readMeta}>
-                  <View style={styles.ageBadge}>
-                    <Text style={styles.ageText}>{s.age}</Text>
-                  </View>
                   <View style={styles.metaItem}>
                     <Clock size={12} color={colors.mutedDim} />
                     <Text style={styles.metaText}>{s.minutes} min</Text>
+                  </View>
+                  <View style={styles.starGroup}>
+                    <Star size={12} color={colors.gold} fill={colors.gold} />
+                    <Text style={styles.starValue}>{formatRating(avgRating(s.id))}</Text>
                   </View>
                 </View>
               </View>
@@ -398,21 +402,19 @@ function createStyles(colors: ThemeColors) {
   readMeta: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     gap: 10,
     marginTop: 8,
   },
-  ageBadge: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: colors.marianBlue,
+  starGroup: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    gap: 3,
   },
-  ageText: {
+  starValue: {
     fontFamily: fonts.metaBold,
     fontSize: 11,
-    color: "#FFFFFF",
+    color: colors.gold,
   },
   metaItem: {
     flexDirection: "row",
@@ -469,6 +471,7 @@ function createStyles(colors: ThemeColors) {
   favMeta: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     gap: 8,
     marginTop: 7,
   },

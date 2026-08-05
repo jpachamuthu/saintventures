@@ -1,37 +1,48 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings } from "lucide-react-native";
+import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
 import { useTheme } from "../components/ThemeContext";
+import { useRatings } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
 import type { Story } from "../data/stories";
 
 type StoryScreenProps = {
   story: Story;
   onBack: () => void;
+  onStartQuiz: () => void;
 };
 
-const WPM = 175;
 const RATE = 0.98;
 const PITCH = 1.0;
 const PAGE_END_PAD_MS = 900;
 const BOUNDARY_GRACE_MS = 800;
+const BASE_WORD_MS = 120;
+const CHAR_MS = 55;
+const WORD_GAP_MS = 70;
+const SENTENCE_END_MS = 360;
+const PHRASE_PAUSE_MS = 200;
+const CALIB_SMOOTH = 0.5;
 
 function splitWords(text: string): string[] {
   return text.trim().split(/\s+/);
 }
 
 function wordDurationMs(word: string): number {
-  return ((word.length + 1) / WPM) * 60000 * (1 / RATE);
+  const letters = word.replace(/[^A-Za-z0-9'-]/g, "");
+  let ms = BASE_WORD_MS + Math.max(0, letters.length - 1) * CHAR_MS;
+  if (/[.!?]/.test(word)) ms += SENTENCE_END_MS;
+  else if (/[,;:]/.test(word)) ms += PHRASE_PAUSE_MS;
+  return ms;
 }
 
-function buildDurations(words: string[]): number[] {
+function buildDurations(words: string[], calib = 1): number[] {
   const out: number[] = [];
   let acc = 0;
   for (const w of words) {
-    acc += wordDurationMs(w);
+    acc += (wordDurationMs(w) + WORD_GAP_MS) * calib;
     out.push(acc);
   }
   return out;
@@ -61,10 +72,14 @@ function scoreVoice(v: { name: string; language: string; localService?: boolean 
   if (/male|david|mark|guy|george|daniel|ryan|james|alex|christopher|eric|thomas|fred|liam|matthew/i.test(n)) s -= 4;
   if (/en[-_ ]?(US|USA)/i.test(v.language)) s += 2;
   else if (/^en/i.test(v.language)) s += 1;
+  if (Platform.OS === "android") {
+    if (/en[-_ ]?(US|USA)/i.test(v.language)) s += 2;
+    if (/google/i.test(n)) s += 1;
+  }
   return s;
 }
 
-export default function StoryScreen({ story, onBack }: StoryScreenProps) {
+export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const [page, setPage] = useState(0);
@@ -72,11 +87,14 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   const [paused, setPaused] = useState(false);
   const [activeWord, setActiveWord] = useState<number | null>(null);
   const [voice, setVoice] = useState<string | undefined>(undefined);
+  const [showEnd, setShowEnd] = useState(false);
+  const [myRating, setMyRating] = useState(0);
 
   const pageRef = useRef(0);
   const readingRef = useRef(false);
   const durationsRef = useRef<number[]>([]);
   const offsetsRef = useRef<number[]>([]);
+  const calibRef = useRef(1);
   const speechStartRef = useRef(0);
   const consumedRef = useRef(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -84,6 +102,11 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   const cancelledRef = useRef(false);
   const advancedRef = useRef(false);
   const boundaryModeRef = useRef(false);
+  const sessionRef = useRef(0);
+  const endTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const endOpacity = useRef(new Animated.Value(0)).current;
+
+  const { rate } = useRatings();
 
   const total = story.pages.length;
   const pct = Math.round(((page + 1) / total) * 100);
@@ -113,6 +136,10 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
     return () => {
       mounted = false;
       Speech.stop();
+      if (endTimerRef.current) {
+        clearTimeout(endTimerRef.current);
+        endTimerRef.current = null;
+      }
     };
   }, []);
 
@@ -128,6 +155,7 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   }
 
   function stopReading() {
+    sessionRef.current += 1;
     cancelledRef.current = true;
     readingRef.current = false;
     clearTimers();
@@ -157,11 +185,23 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
     }, 80);
   }
 
+  function calibrateFromActual() {
+    const dur = durationsRef.current;
+    if (!dur.length) return;
+    const estMs = dur[dur.length - 1];
+    const actualMs = Date.now() - speechStartRef.current;
+    if (estMs > 200 && actualMs > 400) {
+      const ratio = actualMs / estMs;
+      calibRef.current = calibRef.current * (1 - CALIB_SMOOTH) + ratio * CALIB_SMOOTH;
+    }
+  }
+
   function startPage(p: number) {
+    const session = ++sessionRef.current;
     pageRef.current = p;
     boundaryModeRef.current = false;
     offsetsRef.current = buildWordOffsets(story.pages[p]);
-    durationsRef.current = buildDurations(splitWords(story.pages[p]));
+    durationsRef.current = buildDurations(splitWords(story.pages[p]), calibRef.current);
     advancedRef.current = false;
     cancelledRef.current = false;
     speechStartRef.current = Date.now();
@@ -173,24 +213,32 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
       rate: RATE,
       pitch: PITCH,
       onBoundary: (ev: any) => {
+        if (session !== sessionRef.current) return;
         if (ev && typeof ev.charIndex === "number" && (ev.name === undefined || ev.name === "word")) {
           boundaryModeRef.current = true;
           setActiveWord(wordIndexFromChar(ev.charIndex, offsetsRef.current));
         }
       },
       onDone: () => {
-        if (!cancelledRef.current) advancePage();
+        if (session !== sessionRef.current) return;
+        if (!cancelledRef.current) {
+          calibrateFromActual();
+          advancePage();
+        }
       },
       onStopped: () => {
+        if (session !== sessionRef.current) return;
         if (cancelledRef.current) return;
       },
       onError: () => {
+        if (session !== sessionRef.current) return;
         if (cancelledRef.current) return;
         advancePage();
       },
     });
 
     fallbackTimerRef.current = setTimeout(() => {
+      if (session !== sessionRef.current) return;
       if (!boundaryModeRef.current && readingRef.current) startEstimateInterval();
     }, BOUNDARY_GRACE_MS);
   }
@@ -208,6 +256,12 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
       setActiveWord(null);
       setReading(false);
       setPaused(false);
+      endTimerRef.current = setTimeout(() => {
+        endTimerRef.current = null;
+        setShowEnd(true);
+        endOpacity.setValue(0);
+        Animated.timing(endOpacity, { toValue: 1, duration: 350, useNativeDriver: true }).start();
+      }, 1000);
     }
   }
 
@@ -234,20 +288,67 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
   }
 
   function goNext() {
+    if (page + 1 >= total) {
+      if (reading) stopReading();
+      onBack();
+      return;
+    }
+    const wasReading = reading;
     if (reading) stopReading();
-    if (page + 1 < total) setPage(page + 1);
-    else onBack();
+    const next = page + 1;
+    setPage(next);
+    pageRef.current = next;
+    if (wasReading) {
+      setReading(true);
+      setPaused(false);
+      startPage(next);
+    }
   }
 
   function goPrev() {
+    if (page === 0) {
+      if (reading) stopReading();
+      return;
+    }
+    const wasReading = reading;
     if (reading) stopReading();
-    if (page > 0) setPage(page - 1);
+    const prev = page - 1;
+    setPage(prev);
+    pageRef.current = prev;
+    if (wasReading) {
+      setReading(true);
+      setPaused(false);
+      startPage(prev);
+    }
+  }
+
+  function handleBack() {
+    if (endTimerRef.current) {
+      clearTimeout(endTimerRef.current);
+      endTimerRef.current = null;
+    }
+    stopReading();
+    onBack();
+  }
+
+  function replay() {
+    if (endTimerRef.current) {
+      clearTimeout(endTimerRef.current);
+      endTimerRef.current = null;
+    }
+    setShowEnd(false);
+    setMyRating(0);
+    setPage(0);
+    pageRef.current = 0;
+    setReading(true);
+    setPaused(false);
+    startPage(0);
   }
 
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
-        <Pressable onPress={onBack} style={styles.headerBtn} hitSlop={8}>
+        <Pressable onPress={handleBack} style={styles.headerBtn} hitSlop={8}>
           <ChevronDown size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
@@ -318,6 +419,52 @@ export default function StoryScreen({ story, onBack }: StoryScreenProps) {
           <RotateCw size={22} color={colors.cream} />
         </Pressable>
       </View>
+
+      {showEnd && (
+        <Animated.View style={[styles.endOverlay, { opacity: endOpacity }]}>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => setShowEnd(false)}
+            accessibilityRole="button"
+            accessibilityLabel="Close rating panel"
+          />
+          <View style={styles.endPanel}>
+            <Text style={styles.endTitle}>The end</Text>
+            <Text style={styles.endSub}>{story.title}</Text>
+            <View style={styles.endStars}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <Pressable
+                  key={n}
+                  hitSlop={6}
+                  onPress={() => {
+                    if (myRating === 0) {
+                      setMyRating(n);
+                      rate(story.id, n);
+                    }
+                  }}
+                >
+                  <Star
+                    size={30}
+                    color={n <= myRating ? colors.gold : colors.ring}
+                    fill={n <= myRating ? colors.gold : "transparent"}
+                  />
+                </Pressable>
+              ))}
+            </View>
+            <Text style={styles.endHint}>
+              {myRating === 0 ? "Rate this story" : `You rated it ${myRating} stars`}
+            </Text>
+            <Pressable style={styles.replayBtn} onPress={replay}>
+              <RotateCcw size={18} color={colors.onGold} />
+              <Text style={styles.replayLabel}>Replay</Text>
+            </Pressable>
+            <Pressable style={styles.quizBtn} onPress={onStartQuiz}>
+              <Play size={16} color={colors.onGold} fill={colors.onGold} />
+              <Text style={styles.quizLabel}>Start quiz</Text>
+            </Pressable>
+          </View>
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 }
@@ -457,6 +604,79 @@ function createStyles(colors: ThemeColors) {
     backgroundColor: colors.gold,
     alignItems: "center",
     justifyContent: "center",
+  },
+  endOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(10, 8, 18, 0.55)",
+    justifyContent: "flex-end",
+  },
+  endPanel: {
+    backgroundColor: colors.bgCard,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 32,
+    alignItems: "center",
+  },
+  endTitle: {
+    fontFamily: fonts.displayBold,
+    fontSize: 26,
+    color: colors.cream,
+  },
+  endSub: {
+    fontFamily: fonts.ui,
+    fontSize: 13,
+    color: colors.mutedDim,
+    marginTop: 2,
+    marginBottom: 16,
+  },
+  endStars: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  endHint: {
+    fontFamily: fonts.ui,
+    fontSize: 11,
+    color: colors.mutedDim,
+    marginTop: 8,
+  },
+  replayBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: colors.gold,
+    borderRadius: radius.pill,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
+    marginTop: 20,
+  },
+  replayLabel: {
+    fontFamily: fonts.displayBold,
+    fontSize: 17,
+    color: colors.onGold,
+  },
+  quizBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: colors.bgCardAlt,
+    borderWidth: 2,
+    borderColor: colors.gold,
+    borderRadius: radius.pill,
+    paddingHorizontal: 30,
+    paddingVertical: 12,
+    marginTop: 14,
+  },
+  quizLabel: {
+    fontFamily: fonts.displayBold,
+    fontSize: 16,
+    color: colors.gold,
   },
 });
 }

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1A38"/>
+      <stop offset="1" stop-color="#0E0E26"/>
+    </linearGradient>
+    <clipPath id="sunclip">
+      <circle cx="100" cy="100" r="92"/>
+    </clipPath>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="url(#logoGrad)" stroke="#EF9E56" stroke-width="3"/>
+  <g clip-path="url(#sunclip)" stroke="#EF9E56" stroke-width="5" stroke-linecap="round" opacity="0.45">
+    <line x1="162" y1="100" x2="200" y2="100"/>
+    <line x1="153.7" y1="131" x2="186.6" y2="150"/>
+    <line x1="131" y1="153.7" x2="150" y2="186.6"/>
+    <line x1="100" y1="162" x2="100" y2="200"/>
+    <line x1="69" y1="153.7" x2="50" y2="186.6"/>
+    <line x1="46.3" y1="131" x2="13.4" y2="150"/>
+    <line x1="38" y1="100" x2="0" y2="100"/>
+    <line x1="46.3" y1="69" x2="13.4" y2="50"/>
+    <line x1="69" y1="46.3" x2="50" y2="13.4"/>
+    <line x1="100" y1="38" x2="100" y2="0"/>
+    <line x1="131" y1="46.3" x2="150" y2="13.4"/>
+    <line x1="153.7" y1="69" x2="186.6" y2="50"/>
+  </g>
+  <circle cx="100" cy="84" r="21" fill="none" stroke="#EF9E56" stroke-width="3.5"/>
+  <circle cx="100" cy="84" r="21" fill="none" stroke="#EF9E56" stroke-width="9" opacity="0.18"/>
+  <circle cx="100" cy="84" r="15" fill="#3A2A22"/>
+  <path d="M100 96 C84 102 76 122 76 158 L124 158 C124 122 116 102 100 96 Z" fill="#3A2A22"/>
+  <path d="M98 128 L102 128 L102 138 L112 138 L112 142 L102 142 L102 152 L98 152 L98 142 L88 142 L88 138 L98 138 Z" fill="#EF9E56"/>
+  <path d="M160 34 L161.6 44.4 L172 46 L161.6 47.6 L160 58 L158.4 47.6 L148 46 L158.4 44.4 Z" fill="#F0AB6A"/>
+</svg>

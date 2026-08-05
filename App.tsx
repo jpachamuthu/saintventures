@@ -18,6 +18,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LibraryScreen from "./src/screens/LibraryScreen";
 import StoryScreen from "./src/screens/StoryScreen";
+import QuizScreen from "./src/screens/QuizScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
@@ -27,7 +28,7 @@ import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "login" | "home" | "story" | "library" | "settings";
+type Screen = "splash" | "login" | "home" | "story" | "library" | "settings" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
@@ -91,8 +92,13 @@ export default function App() {
           )}
           {screen === "settings" && <SettingsScreen onFooterTab={handleFooterTab} />}
           {screen === "story" && (
-            <StoryScreen story={story} onBack={() => setScreen(storyOrigin)} />
+            <StoryScreen
+              story={story}
+              onBack={() => setScreen(storyOrigin)}
+              onStartQuiz={() => setScreen("quiz")}
+            />
           )}
+          {screen === "quiz" && <QuizScreen story={story} onExit={() => setScreen("story")} />}
         </View>
       </ThemeProvider>
     </SafeAreaProvider>

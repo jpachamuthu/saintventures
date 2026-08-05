@@ -22,7 +22,7 @@ export const stories: Story[] = [
     saint: "St Anthony of Padua",
     blurb:
       "A quiet, bookish friar is too afraid to speak in front of people — until his shaky knees carry him toward the biggest miracle of his life.",
-    minutes: 6,
+    minutes: 3.5,
     age: 3,
     palette: "ember",
     art: "saint",
@@ -47,7 +47,7 @@ export const stories: Story[] = [
     saint: "St Joan of Arc",
     blurb:
       "A village girl who could not read or write hears a voice and rides off to save a whole country — with nothing but a white banner and a very brave heart.",
-    minutes: 8,
+    minutes: 2.7,
     age: 4,
     palette: "azure",
     art: "sword",
@@ -71,7 +71,7 @@ export const stories: Story[] = [
     saint: "St Clare of Assisi",
     blurb:
       "A rich girl slips out of her big house one night to follow God — and her little lamp of faith outshines even an army of soldiers.",
-    minutes: 6,
+    minutes: 2.7,
     age: 3,
     palette: "gold",
     art: "lamp",
@@ -95,7 +95,7 @@ export const stories: Story[] = [
     saint: "St Pio of Pietrelcina",
     blurb:
       "A cheerful farm boy becomes a humble friar who carries Jesus' marks — and tells everyone he meets to pray, hope, and not worry.",
-    minutes: 7,
+    minutes: 2.6,
     age: 4,
     palette: "ember",
     art: "rosary",
@@ -119,7 +119,7 @@ export const stories: Story[] = [
     saint: "St Francis of Assisi",
     blurb:
       "A rich party boy gives everything away to live like a bird in the hills — and becomes a friend to every creature under the sun.",
-    minutes: 7,
+    minutes: 2.5,
     age: 3,
     palette: "forest",
     art: "birds",
@@ -143,7 +143,7 @@ export const stories: Story[] = [
     saint: "St Therese of Lisieux",
     blurb:
       "The littlest girl in a big family discovers that doing small things with great love can make a whole lifetime of big miracles.",
-    minutes: 6,
+    minutes: 2.4,
     age: 3,
     palette: "rose",
     art: "rose",

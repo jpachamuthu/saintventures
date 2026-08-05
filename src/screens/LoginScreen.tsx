@@ -29,7 +29,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
       <View style={styles.body}>
         <Text style={styles.heading}>Welcome to the family</Text>
         <Text style={styles.subheading}>
-          Bedtime stories of the saints, made gentle and exciting for little hearts.
+          Stories of the saints, made gentle and exciting for little hearts.
         </Text>
 
         <View style={styles.dividerWrap}>
