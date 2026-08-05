@@ -23,6 +23,16 @@ export const quizzes: Record<string, Quiz> = {
       choices: ["A king on a horse", "A fish wearing a crown", "A little child glowing with light"],
       correct: 2,
     },
+    {
+      question: "Why did Anthony's stomach flip when he was asked to preach?",
+      choices: ["He had missed breakfast", "He was afraid to speak in front of people", "He heard a loud noise"],
+      correct: 1,
+    },
+    {
+      question: "When people lose something, they often say a prayer to…",
+      choices: ["Ask St Anthony to help find it", "Ride off on a horse", "Wait until spring"],
+      correct: 0,
+    },
   ],
   "st-joan": [
     {
@@ -38,6 +48,16 @@ export const quizzes: Record<string, Quiz> = {
     {
       question: "Where was the prince crowned king?",
       choices: ["The cathedral at Reims", "The top of a tall tower", "A small garden"],
+      correct: 0,
+    },
+    {
+      question: "What great city was surrounded by enemies?",
+      choices: ["Reims", "Orleans", "Domremy"],
+      correct: 1,
+    },
+    {
+      question: "What did Joan say about hurting anyone?",
+      choices: ["I will never hurt anyone", "I will fight with a sword", "I will hide from the soldiers"],
       correct: 0,
     },
   ],
@@ -57,6 +77,16 @@ export const quizzes: Record<string, Quiz> = {
       choices: ["They turned and ran away", "They asked for bread", "They broke the door down"],
       correct: 0,
     },
+    {
+      question: "What were Clare's sisters called?",
+      choices: ["The Poor Ladies", "The Bright Stars", "The Royal Singers"],
+      correct: 0,
+    },
+    {
+      question: "St Clare is the patron saint of…",
+      choices: ["Television", "Sailing", "Baking bread"],
+      correct: 0,
+    },
   ],
   "st-pio": [
     {
@@ -74,6 +104,16 @@ export const quizzes: Record<string, Quiz> = {
       choices: ["Always be first", "Pray, hope, and don't worry", "Work hard every day"],
       correct: 1,
     },
+    {
+      question: "What did Padre Pio's mother say about him when he was born?",
+      choices: ["He was born crying", "He was born smiling", "He was born sleeping"],
+      correct: 1,
+    },
+    {
+      question: "What did Padre Pio build for the sick people?",
+      choices: ["A big hospital", "A tower of bells", "A garden of roses"],
+      correct: 0,
+    },
   ],
   "st-francis": [
     {
@@ -89,6 +129,16 @@ export const quizzes: Record<string, Quiz> = {
     {
       question: "What did Francis call the sun?",
       choices: ["Cousin", "Brother", "Friend"],
+      correct: 1,
+    },
+    {
+      question: "What did Francis call the moon?",
+      choices: ["Auntie", "Sister", "Grandma"],
+      correct: 1,
+    },
+    {
+      question: "What happened to the hungry wolf when Francis spoke to it gently?",
+      choices: ["It ran away forever", "It became gentle like a puppy", "It grew huge and scary"],
       correct: 1,
     },
   ],
@@ -108,6 +158,16 @@ export const quizzes: Record<string, Quiz> = {
       choices: ["A happy song", "A shower of roses", "A cup of tea"],
       correct: 1,
     },
+    {
+      question: "Who did Therese travel all the way to Rome to ask?",
+      choices: ["The king", "The Pope", "Her grandmother"],
+      correct: 1,
+    },
+    {
+      question: "What did Therese say when she was too ill to leave her bed?",
+      choices: ["I am entering into life", "I am going to sleep", "I am flying to the moon"],
+      correct: 0,
+    },
   ],
   "st-jude": [
     {
@@ -124,6 +184,16 @@ export const quizzes: Record<string, Quiz> = {
       question: "What is St Jude the patron saint of?",
       choices: ["Hopeless causes", "Safe travels", "Good weather"],
       correct: 0,
+    },
+    {
+      question: "What did Jude write that is still in the Bible today?",
+      choices: ["A short letter", "A long poem", "A recipe for bread"],
+      correct: 0,
+    },
+    {
+      question: "What brave question did Jude ask Jesus at the last supper?",
+      choices: ["Why are we eating fish?", "Lord, why do you show yourself to us?", "When will we get new sandals?"],
+      correct: 1,
     },
   ],
   "st-john-baptist": [
@@ -142,6 +212,16 @@ export const quizzes: Record<string, Quiz> = {
       choices: ["A dove", "A rainbow", "A small boat"],
       correct: 0,
     },
+    {
+      question: "What happened to Zechariah when he could not believe the angel?",
+      choices: ["He could not speak", "He lost his hat", "He fell fast asleep"],
+      correct: 0,
+    },
+    {
+      question: "What did John say about the one coming after him?",
+      choices: ["I am the greatest", "Someone much greater is coming after me", "Nobody else is coming"],
+      correct: 1,
+    },
   ],
   "st-mary-magdalene": [
     {
@@ -157,6 +237,16 @@ export const quizzes: Record<string, Quiz> = {
     {
       question: "What is Mary Magdalene called?",
       choices: ["Queen of the hills", "Apostle to the apostles", "Keeper of the keys"],
+      correct: 1,
+    },
+    {
+      question: "What did Mary carry to the tomb to care for Jesus' body?",
+      choices: ["Spices", "Flowers", "A lantern"],
+      correct: 0,
+    },
+    {
+      question: "What special job did Jesus give Mary after she saw him alive?",
+      choices: ["To guard the empty tomb", "To go and tell the good news", "To bake the bread"],
       correct: 1,
     },
   ],
