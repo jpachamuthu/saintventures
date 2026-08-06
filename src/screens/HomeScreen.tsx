@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native";
 import { Bell, Menu, Play, Clock, Star, UserPlus } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
@@ -120,11 +121,13 @@ export default function HomeScreen({
               >
                 <View style={styles.favThumb}>
                   <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} cropBottom={s.imageSmall != null} />
+                  <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.nameScrim}>
+                    <Text style={styles.nameOverlay} numberOfLines={2}>
+                      {s.saint}
+                    </Text>
+                  </LinearGradient>
                 </View>
                 <View style={styles.favInfo}>
-                  <Text style={styles.favSaint} numberOfLines={1}>
-                    {s.saint}
-                  </Text>
                   <View style={styles.favMeta}>
                     <View style={styles.metaItem}>
                       <Clock size={11} color={colors.mutedDim} />
@@ -173,9 +176,13 @@ export default function HomeScreen({
                         size={13}
                         style={[styles.heartBtn, { width: 28, height: 28, borderRadius: 14 }]}
                       />
+                      <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.nameScrim}>
+                        <Text style={styles.nameOverlay} numberOfLines={2}>
+                          {s.saint}
+                        </Text>
+                      </LinearGradient>
                     </View>
                     <View style={styles.favInfo}>
-                      <Text style={styles.favSaint}>{s.saint}</Text>
                       <View style={styles.favMeta}>
                         <View style={styles.metaItem}>
                           <Clock size={11} color={colors.mutedDim} />
@@ -502,11 +509,23 @@ function createStyles(colors: ThemeColors) {
     paddingTop: 9,
     paddingBottom: 11,
   },
-  favSaint: {
+  nameScrim: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingTop: 18,
+    paddingHorizontal: 10,
+    paddingBottom: 9,
+  },
+  nameOverlay: {
     fontFamily: fonts.card,
-    fontSize: 15,
-    lineHeight: 19,
-    color: colors.cream,
+    fontSize: 14,
+    lineHeight: 17,
+    color: colors.white,
+    textShadowColor: "rgba(0,0,0,0.8)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
   favMeta: {
     flexDirection: "row",
