@@ -108,6 +108,8 @@ export const stories: Story[] = [
     publishedAt: "2026-06-06",
     palette: "ember",
     art: "rosary",
+    hero: require("../../assets/St_Pio_Hero.png"),
+    imageSmall: require("../../assets/St_Pio_Tile.png"),
     source: "Church biography (public facts); Butler's Lives of the Saints (public domain)",
     pages: [
       "In a tiny village in Italy called Pietrelcina, a boy named Francesco was born into a poor farming family. His mother always said he was born smiling — and she was right. He loved to laugh, and he loved to pray.",
@@ -183,6 +185,8 @@ export const stories: Story[] = [
     publishedAt: "2026-06-27",
     palette: "sea",
     art: "saint",
+    hero: require("../../assets/St_Jude_Hero.png"),
+    imageSmall: require("../../assets/St_Jude_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, by the sparkling Sea of Galilee, a boy named Jude grew up in a happy family. He was a cousin of Jesus, and even as a child he loved listening to quiet, kind stories about God. But like everyone, he sometimes felt small and worried.",
