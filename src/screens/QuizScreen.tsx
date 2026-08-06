@@ -13,9 +13,10 @@ import { useBadges } from "../hooks/useBadges";
 type QuizScreenProps = {
   story: Story;
   onExit: () => void;
+  onDone: () => void;
 };
 
-export default function QuizScreen({ story, onExit }: QuizScreenProps) {
+export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const questions = useMemo(() => quizzes[story.id] ?? [], [story.id]);
@@ -105,9 +106,17 @@ export default function QuizScreen({ story, onExit }: QuizScreenProps) {
               {count()} badge{count() === 1 ? "" : "s"} earned
             </Text>
           </View>
-          <Pressable style={styles.replayBtn} onPress={onExit}>
+          <Pressable style={styles.replayBtn} onPress={onDone}>
             <Text style={styles.replayBtnLabel}>Done</Text>
           </Pressable>
+          <View style={styles.actionRow}>
+            <Pressable style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}>
+              <Text style={styles.actionBtnLabel}>Fun facts about the Saint</Text>
+            </Pressable>
+            <Pressable style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}>
+              <Text style={styles.actionBtnLabel}>Prayer</Text>
+            </Pressable>
+          </View>
         </View>
       ) : (
         <>
@@ -362,6 +371,30 @@ function createStyles(colors: ThemeColors) {
       fontFamily: fonts.displayBold,
       fontSize: 17,
       color: colors.onGold,
+    },
+    actionRow: {
+      flexDirection: "row",
+      gap: 12,
+      width: "100%",
+      marginTop: 14,
+    },
+    actionBtn: {
+      flex: 1,
+      backgroundColor: colors.bgCard,
+      borderWidth: 1,
+      borderColor: colors.ring,
+      borderRadius: radius.card,
+      paddingVertical: 14,
+      paddingHorizontal: 10,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    actionBtnLabel: {
+      fontFamily: fonts.uiBold,
+      fontSize: 12.5,
+      lineHeight: 16,
+      color: colors.cream,
+      textAlign: "center",
     },
   });
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import React, { useRef } from "react";
+import { Animated, Pressable, Text, View, StyleSheet } from "react-native";
 import { House, Library, Medal, Settings, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
@@ -25,6 +25,53 @@ type BottomNavProps = {
   onTab: (tab: TabId) => void;
 };
 
+function TabButton({
+  item,
+  isActive,
+  styles,
+  colors,
+  onTab,
+}: {
+  item: TabItem;
+  isActive: boolean;
+  styles: ReturnType<typeof createStyles>;
+  colors: ThemeColors;
+  onTab: (tab: TabId) => void;
+}) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const Icon = item.icon;
+
+  const handlePress = () => {
+    scale.setValue(0.82);
+    Animated.sequence([
+      Animated.spring(scale, { toValue: 1.12, friction: 3, tension: 220, useNativeDriver: true }),
+      Animated.spring(scale, { toValue: 1, friction: 4, tension: 180, useNativeDriver: true }),
+    ]).start();
+    onTab(item.id);
+  };
+
+  return (
+    <Pressable
+      onPress={handlePress}
+      accessibilityRole="tab"
+      accessibilityState={{ selected: isActive }}
+      accessibilityLabel={item.label}
+      style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
+    >
+      <Animated.View
+        style={[styles.iconWrap, isActive && styles.iconWrapActive, { transform: [{ scale }] }]}
+      >
+        <Icon
+          size={22}
+          strokeWidth={isActive ? 2.4 : 2}
+          color={isActive ? colors.onGold : colors.mutedDim}
+        />
+      </Animated.View>
+      <Text style={[styles.label, isActive && styles.labelActive]}>{item.label}</Text>
+    </Pressable>
+  );
+}
+
 export default function BottomNav({ active, onTab }: BottomNavProps) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
@@ -33,29 +80,16 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
   return (
     <View style={[styles.wrap, { paddingBottom: Math.max(insets.bottom, 14) }]}>
       <View style={styles.bar}>
-        {TABS.map((item) => {
-          const Icon = item.icon;
-          const isActive = active === item.id;
-          return (
-            <Pressable
-              key={item.id}
-              onPress={() => onTab(item.id)}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: isActive }}
-              accessibilityLabel={item.label}
-              style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
-            >
-              <View style={[styles.iconWrap, isActive && styles.iconWrapActive]}>
-                <Icon
-                  size={22}
-                  strokeWidth={isActive ? 2.4 : 2}
-                  color={isActive ? colors.onGold : colors.mutedDim}
-                />
-              </View>
-              <Text style={[styles.label, isActive && styles.labelActive]}>{item.label}</Text>
-            </Pressable>
-          );
-        })}
+        {TABS.map((item) => (
+          <TabButton
+            key={item.id}
+            item={item}
+            isActive={active === item.id}
+            styles={styles}
+            colors={colors}
+            onTab={onTab}
+          />
+        ))}
       </View>
     </View>
   );
@@ -78,10 +112,10 @@ function createStyles(colors: ThemeColors) {
       paddingVertical: 8,
       paddingHorizontal: 6,
       shadowColor: "#000",
-      shadowOpacity: 0.45,
-      shadowRadius: 18,
-      shadowOffset: { width: 0, height: 8 },
-      elevation: 10,
+      shadowOpacity: 0.55,
+      shadowRadius: 22,
+      shadowOffset: { width: 0, height: 12 },
+      elevation: 14,
     },
     tab: {
       flex: 1,

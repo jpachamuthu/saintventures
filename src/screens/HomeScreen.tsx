@@ -218,6 +218,11 @@ export default function HomeScreen({
                   size={13}
                   style={styles.heartBtn}
                 />
+                <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.thumbScrim}>
+                  <Text style={styles.thumbName} numberOfLines={2}>
+                    {s.saint}
+                  </Text>
+                </LinearGradient>
               </View>
               <View style={styles.readInfo}>
                 <Text style={styles.readTitle}>{s.title}</Text>
@@ -541,6 +546,24 @@ function createStyles(colors: ThemeColors) {
     textShadowColor: "rgba(0,0,0,0.8)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 3,
+  },
+  thumbScrim: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingTop: 10,
+    paddingHorizontal: 6,
+    paddingBottom: 5,
+  },
+  thumbName: {
+    fontFamily: fonts.card,
+    fontSize: 10.5,
+    lineHeight: 13,
+    color: colors.white,
+    textShadowColor: "rgba(0,0,0,0.8)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   favMeta: {
     flexDirection: "row",

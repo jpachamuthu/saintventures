@@ -106,7 +106,9 @@ export default function App() {
               onStartQuiz={() => setScreen("quiz")}
             />
           )}
-          {screen === "quiz" && <QuizScreen story={story} onExit={() => setScreen("story")} />}
+          {screen === "quiz" && (
+            <QuizScreen story={story} onExit={() => setScreen("story")} onDone={() => setScreen("home")} />
+          )}
         </View>
       </ThemeProvider>
     </SafeAreaProvider>
