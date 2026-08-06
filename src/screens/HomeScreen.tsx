@@ -119,7 +119,7 @@ export default function HomeScreen({
                 style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
               >
                 <View style={styles.favThumb}>
-                  <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} />
+                  <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} cropBottom={s.imageSmall != null} />
                 </View>
                 <View style={styles.favInfo}>
                   <Text style={styles.favSaint} numberOfLines={1}>
@@ -166,7 +166,7 @@ export default function HomeScreen({
                     style={({ pressed }) => [styles.favCard, pressed && styles.pressed]}
                   >
                     <View style={styles.favThumb}>
-                      <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} />
+                      <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} cropBottom={s.imageSmall != null} />
                       <AnimatedHeartButton
                         active
                         onPress={() => handleToggle(s)}
@@ -204,7 +204,7 @@ export default function HomeScreen({
               style={({ pressed }) => [styles.readCard, pressed && styles.pressed]}
             >
               <View style={styles.readThumb}>
-                <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={88} />
+                <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={88} cropBottom={s.imageSmall != null} />
                 <AnimatedHeartButton
                   active={favouriteIds.includes(s.id)}
                   onPress={() => handleToggle(s)}

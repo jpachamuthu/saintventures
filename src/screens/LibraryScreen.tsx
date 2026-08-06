@@ -135,7 +135,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
               style={({ pressed }) => [styles.card, pressed && styles.pressed]}
             >
               <View style={styles.thumb}>
-                <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} />
+                <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} cropBottom={s.imageSmall != null} />
                 <AnimatedHeartButton
                   active={favouriteIds.includes(s.id)}
                   onPress={() => onToggleFavourite(s.id)}

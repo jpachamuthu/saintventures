@@ -20,6 +20,7 @@ type SaintIllustrationProps = {
   art?: ArtVariant;
   height?: number;
   image?: number;
+  cropBottom?: boolean;
   children?: React.ReactNode;
 };
 
@@ -114,7 +115,7 @@ function SaintArt({ variant, c3 }: { variant: ArtVariant; c3: string }) {
   }
 }
 
-export default function SaintIllustration({ palette = "gold", art = "saint", height = 180, image, children }: SaintIllustrationProps) {
+export default function SaintIllustration({ palette = "gold", art = "saint", height = 180, image, cropBottom = false, children }: SaintIllustrationProps) {
   const [c1, c2, c3] = PALETTES[palette];
 
   return (
@@ -122,7 +123,11 @@ export default function SaintIllustration({ palette = "gold", art = "saint", hei
       {image ? (
         <View style={[styles.gradient, { backgroundColor: c1 }]}>
           <View style={[styles.aurora, { backgroundColor: c2, opacity: 0.5 }]} />
-          <Image source={image} style={StyleSheet.absoluteFill} resizeMode="contain" />
+          <Image
+            source={image}
+            resizeMode="cover"
+            style={cropBottom ? styles.imageCropped : [StyleSheet.absoluteFill, { width: "100%", height: "100%" }]}
+          />
         </View>
       ) : (
         <View style={[styles.gradient, { backgroundColor: c1 }]}>
@@ -164,5 +169,12 @@ const styles = StyleSheet.create({
     width: 260,
     height: 260,
     borderRadius: 130,
+  },
+  imageCropped: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "115%",
   },
 });
