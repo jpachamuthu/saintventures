@@ -331,4 +331,58 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
   ],
+  "st-mariam": [
+    {
+      question: "What does the name Mariam mean?",
+      choices: ["Mary", "Rose", "Star"],
+      correct: 0,
+    },
+    {
+      question: "Who took Mariam in when her parents died?",
+      choices: ["The king", "A big sister", "A kind uncle"],
+      correct: 2,
+    },
+    {
+      question: "Who did Mariam believe the gentle lady in blue was?",
+      choices: ["A fairy princess", "Mary, the mother of Jesus", "Her own aunt"],
+      correct: 1,
+    },
+    {
+      question: "What new name did Mariam take when she became a nun?",
+      choices: ["Mary of the Hills", "Mary of Jesus Crucified", "Mary of the Lamp"],
+      correct: 1,
+    },
+    {
+      question: "In which town did Mariam help start a new monastery?",
+      choices: ["Rome", "London", "Bethlehem"],
+      correct: 2,
+    },
+  ],
+  "st-christina": [
+    {
+      question: "What did Christina do to help her family after her parents died?",
+      choices: ["She looked after the sheep", "She opened a shop", "She joined the army"],
+      correct: 0,
+    },
+    {
+      question: "What happened in the middle of Christina's funeral?",
+      choices: ["The sky turned green", "She sat up and floated to the rafters", "The church filled with doves"],
+      correct: 1,
+    },
+    {
+      question: "Which sad place did God show Christina?",
+      choices: ["The bottom of the sea", "A dark cave", "Purgatory"],
+      correct: 2,
+    },
+    {
+      question: "Why did Christina wear rags and live with no home?",
+      choices: ["Because she lost everything", "To help souls and turn hearts back to God", "Because she loved adventures"],
+      correct: 1,
+    },
+    {
+      question: "What did Christina do every day for the souls and for sinners?",
+      choices: ["She prayed for them", "She collected coins", "She hid in the hills"],
+      correct: 0,
+    },
+  ],
 };

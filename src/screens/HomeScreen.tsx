@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Bell, Menu, Play, Clock, Star, UserPlus } from "lucide-react-native";
+import { Bell, Library, Menu, Play, Clock, Star, UserPlus } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
@@ -241,7 +241,8 @@ export default function HomeScreen({
               </Pressable>
             ))}
           <Pressable onPress={() => onFooterTab("library")} hitSlop={8} style={({ pressed }) => [styles.goLibrary, pressed && styles.pressed]}>
-            <Text style={styles.goLibraryText}>Go to Library for more stories →</Text>
+            <Library size={18} color={colors.onGold} />
+            <Text style={styles.goLibraryText}>Go to Library for more stories</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -413,16 +414,21 @@ function createStyles(colors: ThemeColors) {
     color: colors.cream,
   },
   goLibrary: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
     alignSelf: "center",
-    marginTop: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    backgroundColor: colors.gold,
+    borderRadius: radius.pill,
+    paddingVertical: 13,
+    paddingHorizontal: 30,
+    marginTop: 8,
   },
   goLibraryText: {
     fontFamily: fonts.uiBold,
-    fontSize: 13.5,
-    color: colors.gold,
-    textDecorationLine: "underline",
+    fontSize: 15,
+    color: colors.onGold,
   },
   readCard: {
     flexDirection: "row",
