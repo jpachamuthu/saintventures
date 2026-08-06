@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, type DimensionValue } from "react-native";
 import Svg, { Circle, Ellipse, Path, Rect } from "react-native-svg";
 import type { ArtVariant, StoryPalette } from "../data/stories";
 
@@ -18,7 +18,7 @@ const WHITE = "#FFFFFF";
 type SaintIllustrationProps = {
   palette?: StoryPalette;
   art?: ArtVariant;
-  height?: number;
+  height?: DimensionValue;
   image?: number;
   cropBottom?: boolean;
   children?: React.ReactNode;
