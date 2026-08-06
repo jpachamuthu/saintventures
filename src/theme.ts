@@ -2,10 +2,10 @@ export type ThemeMode = "dark" | "light";
 
 export const palettes = {
   dark: {
-    bg: "#0B0B1E",
+    bg: "#1A1633",
     bgCard: "#121226",
     bgCardAlt: "#171732",
-    gold: "#EF9E56",
+    gold: "#F5C451",
     goldBright: "#F0AB6A",
     cream: "#FFFFFF",
     muted: "#B9AFC9",

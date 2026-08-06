@@ -160,6 +160,8 @@ export const stories: Story[] = [
     publishedAt: "2026-06-20",
     palette: "rose",
     art: "rose",
+    hero: require("../../assets/St_Therese_of_Lisieux_Hero.jpg"),
+    imageSmall: require("../../assets/St_Therese_of_Lisieux_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "A long time ago, in a town in France called Lisieux, the littlest girl in a big, happy family was named Therese. Everyone called her “the little one” — and she grew up watching her big sisters love God with all their hearts.",
@@ -186,7 +188,7 @@ export const stories: Story[] = [
     palette: "sea",
     art: "saint",
     hero: require("../../assets/St_Jude_Hero.png"),
-    imageSmall: require("../../assets/St_Jude_Tile.png"),
+    imageSmall: require("../../assets/St_Jude_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, by the sparkling Sea of Galilee, a boy named Jude grew up in a happy family. He was a cousin of Jesus, and even as a child he loved listening to quiet, kind stories about God. But like everyone, he sometimes felt small and worried.",
