@@ -32,7 +32,7 @@ export default function HomeScreen({
   const { colors } = useTheme();
   const { average: avgRating } = useRatings();
   const styles = createStyles(colors);
-  const more = stories.slice(1);
+  const latest = [...stories].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, 10);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
   const topStories = [...stories].sort((a, b) => avgRating(b.id) - avgRating(a.id)).slice(0, 10);
   const [removed, setRemoved] = useState<Story | null>(null);
@@ -203,8 +203,8 @@ export default function HomeScreen({
 
         {favourites.length > 0 && <View style={styles.blank} />}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>More saint stories</Text>
-          {more.map((s) => (
+          <Text style={styles.sectionTitle}>Latest saint stories</Text>
+          {latest.map((s) => (
             <Pressable
               key={s.id}
               onPress={() => onOpenStory(s)}
@@ -232,9 +232,12 @@ export default function HomeScreen({
                     <Text style={styles.starValue}>{formatRating(avgRating(s.id))}</Text>
                   </View>
                 </View>
-              </View>
-            </Pressable>
-          ))}
+                </View>
+              </Pressable>
+            ))}
+          <Pressable onPress={() => onFooterTab("library")} hitSlop={8} style={({ pressed }) => [styles.goLibrary, pressed && styles.pressed]}>
+            <Text style={styles.goLibraryText}>Go to Library for more stories →</Text>
+          </Pressable>
         </View>
       </ScrollView>
 
@@ -403,6 +406,18 @@ function createStyles(colors: ThemeColors) {
     fontFamily: fonts.displayBold,
     fontSize: 22,
     color: colors.cream,
+  },
+  goLibrary: {
+    alignSelf: "center",
+    marginTop: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  goLibraryText: {
+    fontFamily: fonts.uiBold,
+    fontSize: 13.5,
+    color: colors.gold,
+    textDecorationLine: "underline",
   },
   readCard: {
     flexDirection: "row",

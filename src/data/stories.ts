@@ -8,6 +8,7 @@ export type Story = {
   blurb: string;
   minutes: number;
   age: number;
+  publishedAt: string;
   palette: StoryPalette;
   art: ArtVariant;
   hero?: number;
@@ -25,6 +26,7 @@ export const stories: Story[] = [
       "A quiet, bookish friar is too afraid to speak in front of people — until his shaky knees carry him toward the biggest miracle of his life.",
     minutes: 3.5,
     age: 3,
+    publishedAt: "2026-05-16",
     palette: "ember",
     art: "saint",
     hero: require("../../assets/St_Anthony_Hero.png"),
@@ -51,6 +53,7 @@ export const stories: Story[] = [
       "A village girl who could not read or write hears a voice and rides off to save a whole country — with nothing but a white banner and a very brave heart.",
     minutes: 2.7,
     age: 4,
+    publishedAt: "2026-05-23",
     palette: "azure",
     art: "sword",
     source: "Butler's Lives of the Saints (public domain)",
@@ -75,6 +78,7 @@ export const stories: Story[] = [
       "A rich girl slips out of her big house one night to follow God — and her little lamp of faith outshines even an army of soldiers.",
     minutes: 2.7,
     age: 3,
+    publishedAt: "2026-05-30",
     palette: "gold",
     art: "lamp",
     source: "Butler's Lives of the Saints (public domain)",
@@ -99,6 +103,7 @@ export const stories: Story[] = [
       "A cheerful farm boy becomes a humble friar who carries Jesus' marks — and tells everyone he meets to pray, hope, and not worry.",
     minutes: 2.6,
     age: 4,
+    publishedAt: "2026-06-06",
     palette: "ember",
     art: "rosary",
     source: "Church biography (public facts); Butler's Lives of the Saints (public domain)",
@@ -123,6 +128,7 @@ export const stories: Story[] = [
       "A rich party boy gives everything away to live like a bird in the hills — and becomes a friend to every creature under the sun.",
     minutes: 2.5,
     age: 3,
+    publishedAt: "2026-06-13",
     palette: "forest",
     art: "birds",
     source: "Butler's Lives of the Saints (public domain)",
@@ -147,6 +153,7 @@ export const stories: Story[] = [
       "The littlest girl in a big family discovers that doing small things with great love can make a whole lifetime of big miracles.",
     minutes: 2.4,
     age: 3,
+    publishedAt: "2026-06-20",
     palette: "rose",
     art: "rose",
     source: "Butler's Lives of the Saints (public domain)",
@@ -171,6 +178,7 @@ export const stories: Story[] = [
       "A quiet, faithful friend of Jesus becomes the saint people turn to when everything seems impossible — and shows that hope is never lost.",
     minutes: 3.0,
     age: 3,
+    publishedAt: "2026-06-27",
     palette: "sea",
     art: "saint",
     source: "Butler's Lives of the Saints (public domain)",
@@ -195,6 +203,7 @@ export const stories: Story[] = [
       "A wild, joyful prophet who lived in the desert and washed people in the river — the one who pointed to Jesus and said, 'Look, there he is!'",
     minutes: 3.2,
     age: 4,
+    publishedAt: "2026-07-04",
     palette: "azure",
     art: "saint",
     source: "Butler's Lives of the Saints (public domain)",
@@ -219,6 +228,7 @@ export const stories: Story[] = [
       "A woman whose past was whispered about becomes the very first person to see the risen Jesus — and the first to share the joyful news.",
     minutes: 2.9,
     age: 4,
+    publishedAt: "2026-07-11",
     palette: "rose",
     art: "rose",
     source: "Butler's Lives of the Saints (public domain)",
@@ -243,6 +253,7 @@ export const stories: Story[] = [
       "A brilliant boy whose name means 'radiant' gives up his rich life to follow God — and his quiet kindness shines brighter than gold through exile and homecoming.",
     minutes: 3.1,
     age: 4,
+    publishedAt: "2026-07-18",
     palette: "ember",
     art: "saint",
     source: "Butler's Lives of the Saints (public domain)",
@@ -267,6 +278,7 @@ export const stories: Story[] = [
       "A fruit-seller with a proud thought in his heart learns the biggest secret in the desert: the greatest people are the most humble ones.",
     minutes: 3.0,
     age: 4,
+    publishedAt: "2026-07-25",
     palette: "dawn",
     art: "saint",
     source: "Butler's Lives of the Saints (public domain)",
@@ -291,6 +303,7 @@ export const stories: Story[] = [
       "A little shepherdess who was laughed at keeps her lamp burning — and her prayers save a whole city from a terrible army.",
     minutes: 3.2,
     age: 4,
+    publishedAt: "2026-08-01",
     palette: "forest",
     art: "saint",
     source: "Butler's Lives of the Saints (public domain)",

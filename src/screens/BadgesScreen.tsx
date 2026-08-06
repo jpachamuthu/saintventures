@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Medal } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import BottomNav, { type TabId } from "../components/BottomNav";
@@ -75,11 +76,13 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
                 <View style={styles.medalBadge}>
                   <Medal size={15} color={colors.onGold} fill={colors.onGold} />
                 </View>
+                <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.nameScrim}>
+                  <Text style={styles.nameOverlay} numberOfLines={2}>
+                    {story.saint}
+                  </Text>
+                </LinearGradient>
               </View>
               <View style={styles.info}>
-                <Text style={styles.saint} numberOfLines={1}>
-                  {story.saint}
-                </Text>
                 <Text style={styles.gtitle} numberOfLines={2}>
                   {story.title}
                 </Text>
@@ -185,13 +188,25 @@ function createStyles(colors: ThemeColors) {
       paddingTop: 10,
       paddingBottom: 12,
     },
-    saint: {
-      fontFamily: fonts.card,
-      fontSize: 18,
-      lineHeight: 21,
-      color: colors.cream,
-    },
-    gtitle: {
+  nameScrim: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingTop: 18,
+    paddingHorizontal: 10,
+    paddingBottom: 9,
+  },
+  nameOverlay: {
+    fontFamily: fonts.card,
+    fontSize: 14,
+    lineHeight: 17,
+    color: colors.white,
+    textShadowColor: "rgba(0,0,0,0.8)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+  },
+  gtitle: {
       fontFamily: fonts.uiMedium,
       fontSize: 11.5,
       color: colors.muted,

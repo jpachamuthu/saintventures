@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { ArrowUpDown, Clock, Heart, Search, Star, X } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
@@ -142,9 +143,11 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
                   size={15}
                   style={styles.heartBtn}
                 />
+                <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.nameScrim}>
+                  <Highlighted style={styles.nameOverlay} text={s.saint} query={query.trim()} />
+                </LinearGradient>
               </View>
               <View style={styles.info}>
-                <Highlighted style={styles.saint} text={s.saint} query={query.trim()} />
                 <Text style={styles.gtitle} numberOfLines={1}>
                   {s.title}
                 </Text>
@@ -309,11 +312,23 @@ function createStyles(colors: ThemeColors) {
     paddingTop: 10,
     paddingBottom: 12,
   },
-  saint: {
+  nameScrim: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingTop: 18,
+    paddingHorizontal: 10,
+    paddingBottom: 9,
+  },
+  nameOverlay: {
     fontFamily: fonts.card,
-    fontSize: 18,
-    lineHeight: 21,
-    color: colors.cream,
+    fontSize: 14,
+    lineHeight: 17,
+    color: colors.white,
+    textShadowColor: "rgba(0,0,0,0.8)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
   gtitle: {
     fontFamily: fonts.uiMedium,
