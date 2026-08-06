@@ -16,7 +16,7 @@ import BottomNav, { type TabId } from "../components/BottomNav";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
-import { featuredStory, stories, type Story } from "../data/stories";
+import { stories, type Story } from "../data/stories";
 
 export default function HomeScreen({
   onOpenStory,
@@ -35,6 +35,9 @@ export default function HomeScreen({
   const latest = [...stories].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, 10);
   const favourites = stories.filter((s) => favouriteIds.includes(s.id));
   const topStories = [...stories].sort((a, b) => avgRating(b.id) - avgRating(a.id)).slice(0, 10);
+  const [featuredStory] = useState<Story>(
+    () => stories[Math.floor(Math.random() * stories.length)]
+  );
   const [removed, setRemoved] = useState<Story | null>(null);
   const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -86,7 +89,7 @@ export default function HomeScreen({
         <View style={styles.featuredWrap}>
           <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} image={featuredStory.hero} height={330}>
             <View style={styles.featuredOverlay}>
-              <Text style={styles.eyebrow}>Tonight's Saint</Text>
+              <Text style={styles.eyebrow}>Featured Saint</Text>
               <Text style={styles.featuredTitle}>{featuredStory.title}</Text>
               <Text style={styles.featuredBlurb}>{featuredStory.blurb}</Text>
               <Pressable onPress={() => onOpenStory(featuredStory)} style={styles.readBtn}>
