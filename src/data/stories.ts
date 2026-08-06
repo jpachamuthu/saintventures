@@ -212,6 +212,8 @@ export const stories: Story[] = [
     publishedAt: "2026-07-04",
     palette: "azure",
     art: "saint",
+    hero: require("../../assets/St_John_the_Baptist_Hero.png"),
+    imageSmall: require("../../assets/St_John_the_Baptist_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in the quiet hill country, an old man named Zechariah and his wife Elizabeth had no children. They prayed and waited for many years. One day, an angel appeared and said, “God has heard your prayers. You will have a son, and his name will be John.”",
