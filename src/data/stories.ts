@@ -239,6 +239,8 @@ export const stories: Story[] = [
     publishedAt: "2026-07-11",
     palette: "rose",
     art: "rose",
+    hero: require("../../assets/St_Mary_Magdalene_Hero.jpg"),
+    imageSmall: require("../../assets/St_Mary_Magdalene_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in a town by the Sea of Galilee, there lived a woman named Mary. People whispered about her and said unkind things. She had made many mistakes, and she carried a heavy, heavy sadness in her heart like a stone.",
