@@ -56,6 +56,8 @@ export const stories: Story[] = [
     publishedAt: "2026-05-23",
     palette: "azure",
     art: "sword",
+    hero: require("../../assets/St_Joan_of_Arc_Hero.png"),
+    imageSmall: require("../../assets/St_Joan_of_Arc_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "In a little French village called Domrémy, a long time ago, there lived a girl named Jehanne — which means Joan. She helped her mother with the sheep and her father in the fields. But in her heart, she was always listening for something more.",
