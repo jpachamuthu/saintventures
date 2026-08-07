@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "lucide-react-native";
+import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
@@ -8,6 +8,7 @@ import GoldGradient from "../components/GoldGradient";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
+import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 import type { Story } from "../data/stories";
 
@@ -111,6 +112,8 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     return () => {
       mounted = false;
       Speech.stop();
+      stopStoryMusic();
+      releaseStoryMusic();
       if (endTimerRef.current) {
         clearTimeout(endTimerRef.current);
         endTimerRef.current = null;
@@ -135,6 +138,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     readingRef.current = false;
     clearTimers();
     Speech.stop();
+    stopStoryMusic();
     setReading(false);
     setPaused(false);
     setActiveWord(null);
@@ -231,6 +235,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       setActiveWord(null);
       setReading(false);
       setPaused(false);
+      stopStoryMusic();
       endTimerRef.current = setTimeout(() => {
         endTimerRef.current = null;
         setShowEnd(true);
@@ -244,6 +249,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     readingRef.current = true;
     setReading(true);
     setPaused(false);
+    startStoryMusic();
     startPage(pageRef.current);
   }
 
@@ -253,11 +259,13 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       speechStartRef.current = Date.now();
       Speech.resume();
       if (!boundaryModeRef.current) startEstimateInterval();
+      resumeStoryMusic();
       setPaused(false);
     } else {
       consumedRef.current += Date.now() - speechStartRef.current;
       clearTimers();
       Speech.pause();
+      pauseStoryMusic();
       setPaused(true);
     }
   }
@@ -276,6 +284,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     if (wasReading) {
       setReading(true);
       setPaused(false);
+      startStoryMusic();
       startPage(next);
     }
   }
@@ -293,6 +302,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     if (wasReading) {
       setReading(true);
       setPaused(false);
+      startStoryMusic();
       startPage(prev);
     }
   }
@@ -317,6 +327,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     pageRef.current = 0;
     setReading(true);
     setPaused(false);
+    startStoryMusic();
     startPage(0);
   }
 
@@ -324,7 +335,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
         <Pressable onPress={handleBack} style={styles.headerBtn} hitSlop={8}>
-          <ChevronDown size={18} color={colors.cream} />
+          <ArrowLeft size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
         <Pressable style={styles.headerBtn} hitSlop={8}>
@@ -436,7 +447,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
               <Text style={styles.replayLabel}>Replay</Text>
             </Pressable>
             <Pressable style={styles.quizBtn} onPress={onStartQuiz}>
-              <Play size={16} color={colors.onGold} fill={colors.onGold} />
+              <Play size={16} color={colors.gold} fill={colors.gold} />
               <Text style={styles.quizLabel}>Start quiz</Text>
             </Pressable>
           </View>

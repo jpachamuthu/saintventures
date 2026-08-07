@@ -130,6 +130,12 @@ export default function HomeScreen({
               >
                 <View style={styles.favThumb}>
                   <SaintIllustration palette={s.palette} art={s.art} image={s.imageSmall ?? s.hero} height={150} cropBottom={s.imageSmall != null} />
+                  <AnimatedHeartButton
+                    active={favouriteIds.includes(s.id)}
+                    onPress={() => handleToggle(s)}
+                    size={13}
+                    style={[styles.heartBtn, { width: 28, height: 28, borderRadius: 14 }]}
+                  />
                   <LinearGradient colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)", "rgba(0,0,0,0.78)"]} style={styles.nameScrim}>
                     <Text style={styles.nameOverlay} numberOfLines={2}>
                       {s.saint}
