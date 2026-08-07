@@ -10,6 +10,7 @@ import { Bell, Library, Menu, Play, Clock, Star, UserPlus } from "lucide-react-n
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
+import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
@@ -29,7 +30,7 @@ export default function HomeScreen({
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const { average: avgRating } = useRatings();
   const styles = createStyles(colors);
   const latest = [...stories].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, 10);
@@ -89,11 +90,16 @@ export default function HomeScreen({
         <View style={styles.featuredWrap}>
           <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} image={featuredStory.hero} height={330}>
             <View style={styles.featuredOverlay}>
-              <Text style={styles.eyebrow}>Featured Saint</Text>
-              <Text style={styles.featuredTitle}>{featuredStory.title}</Text>
-              <Text style={styles.featuredBlurb}>{featuredStory.blurb}</Text>
+              <Text style={[styles.eyebrow, !isDark && styles.eyebrowLight]}>Featured Saint</Text>
+              <Text style={[styles.featuredTitle, !isDark && styles.featuredTitleLight]}>
+                {featuredStory.title}
+              </Text>
+              <Text style={[styles.featuredBlurb, !isDark && styles.featuredBlurbLight]}>
+                {featuredStory.blurb}
+              </Text>
               <Pressable onPress={() => onOpenStory(featuredStory)} style={styles.readBtn}>
-                <Play size={15} color={colors.onGold} fill={colors.onGold} />
+                <GoldGradient style={StyleSheet.absoluteFill} />
+                <Play size={15} color="#000000" fill="#000000" />
                 <Text style={styles.readBtnText}>Read</Text>
               </Pressable>
             </View>
@@ -244,6 +250,7 @@ export default function HomeScreen({
               </Pressable>
             ))}
           <Pressable onPress={() => onFooterTab("library")} hitSlop={8} style={({ pressed }) => [styles.goLibrary, pressed && styles.pressed]}>
+            <GoldGradient style={StyleSheet.absoluteFill} />
             <Library size={18} color={colors.onGold} />
             <Text style={styles.goLibraryText}>Go to Library for more stories</Text>
           </Pressable>
@@ -376,11 +383,17 @@ function createStyles(colors: ThemeColors) {
     textTransform: "uppercase",
     marginBottom: 6,
   },
+  eyebrowLight: {
+    color: "#FFB347",
+  },
   featuredTitle: {
     fontFamily: fonts.displayBold,
     fontSize: 34,
     lineHeight: 38,
     color: colors.cream,
+  },
+  featuredTitleLight: {
+    color: colors.gold,
   },
   featuredBlurb: {
     fontFamily: fonts.ui,
@@ -389,17 +402,20 @@ function createStyles(colors: ThemeColors) {
     color: colors.muted,
     marginTop: 8,
   },
+  featuredBlurbLight: {
+    color: colors.gold,
+  },
   readBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
     alignSelf: "flex-start",
-    backgroundColor: colors.gold,
     borderRadius: radius.pill,
     paddingVertical: 13,
     paddingHorizontal: 34,
     marginTop: 16,
+    overflow: "hidden",
   },
   readBtnText: {
     fontFamily: fonts.uiBold,
@@ -422,11 +438,11 @@ function createStyles(colors: ThemeColors) {
     justifyContent: "center",
     gap: 8,
     alignSelf: "center",
-    backgroundColor: colors.gold,
     borderRadius: radius.pill,
     paddingVertical: 13,
     paddingHorizontal: 30,
     marginTop: 8,
+    overflow: "hidden",
   },
   goLibraryText: {
     fontFamily: fonts.uiBold,

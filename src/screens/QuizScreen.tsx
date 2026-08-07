@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Medal, X } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
+import GoldGradient from "../components/GoldGradient";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
@@ -69,6 +70,7 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
         <View style={styles.badgeWrap}>
           <Text style={styles.badgeTitle}>No quiz for this story yet.</Text>
           <Pressable style={styles.replayBtn} onPress={onExit}>
+            <GoldGradient style={StyleSheet.absoluteFill} />
             <Text style={styles.replayBtnLabel}>Back</Text>
           </Pressable>
         </View>
@@ -107,6 +109,7 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
             </Text>
           </View>
           <Pressable style={styles.replayBtn} onPress={onDone}>
+            <GoldGradient style={StyleSheet.absoluteFill} />
             <Text style={styles.replayBtnLabel}>Done</Text>
           </Pressable>
           <View style={styles.actionRow}>
@@ -361,11 +364,13 @@ function createStyles(colors: ThemeColors) {
       color: colors.cream,
     },
     replayBtn: {
-      backgroundColor: colors.gold,
+      alignItems: "center",
+      justifyContent: "center",
       borderRadius: radius.pill,
       paddingHorizontal: 34,
       paddingVertical: 14,
       marginTop: 26,
+      overflow: "hidden",
     },
     replayBtnLabel: {
       fontFamily: fonts.displayBold,

@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
+import GoldGradient from "../components/GoldGradient";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
@@ -94,23 +95,24 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
           {query ? ` of ${stories.length} stories` : " stories"}
         </Text>
         <View style={styles.sortGroup}>
-          <Pressable
-            onPress={() => setOnlyFavs(!onlyFavs)}
-            accessibilityRole="button"
-            accessibilityLabel={onlyFavs ? "Show all stories" : "Show only favourites"}
-            style={({ pressed }) => [
-              styles.sortBtn,
-              pressed && styles.pressed,
-              onlyFavs && styles.favChipActive,
-            ]}
-          >
-            <Heart
-              size={13}
-              color={onlyFavs ? colors.onGold : colors.gold}
-              fill={onlyFavs ? colors.onGold : "transparent"}
-            />
-            <Text style={[styles.sortLabel, onlyFavs && { color: colors.onGold }]}>Favs</Text>
-          </Pressable>
+            <Pressable
+              onPress={() => setOnlyFavs(!onlyFavs)}
+              accessibilityRole="button"
+              accessibilityLabel={onlyFavs ? "Show all stories" : "Show only favourites"}
+              style={({ pressed }) => [
+                styles.sortBtn,
+                pressed && styles.pressed,
+                onlyFavs && styles.favChipActive,
+              ]}
+            >
+              {onlyFavs && <GoldGradient style={StyleSheet.absoluteFill} />}
+              <Heart
+                size={13}
+                color={onlyFavs ? colors.onGold : colors.gold}
+                fill={onlyFavs ? colors.onGold : "transparent"}
+              />
+              <Text style={[styles.sortLabel, onlyFavs && { color: colors.onGold }]}>Favs</Text>
+            </Pressable>
           <Pressable
             onPress={() => setAsc(!asc)}
             style={({ pressed }) => [styles.sortBtn, pressed && styles.pressed]}
@@ -237,7 +239,6 @@ function createStyles(colors: ThemeColors) {
     gap: 8,
   },
   favChipActive: {
-    backgroundColor: colors.gold,
     borderColor: colors.gold,
   },
   pressed: {
@@ -270,6 +271,7 @@ function createStyles(colors: ThemeColors) {
     borderRadius: radius.pill,
     paddingVertical: 8,
     paddingHorizontal: 14,
+    overflow: "hidden",
   },
   sortLabel: {
     fontFamily: fonts.uiBold,

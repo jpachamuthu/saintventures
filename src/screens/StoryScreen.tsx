@@ -4,6 +4,7 @@ import { ChevronDown, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "l
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
+import GoldGradient from "../components/GoldGradient";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
@@ -379,14 +380,15 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
           <RotateCcw size={22} color={colors.cream} />
         </Pressable>
         <Pressable style={styles.playBtn} onPress={reading ? togglePause : startReading} hitSlop={8}>
+          <GoldGradient style={StyleSheet.absoluteFill} />
           {reading ? (
             paused ? (
-              <Play size={26} color={colors.onGold} fill={colors.onGold} style={{ marginLeft: 3 }} />
+              <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3 }} />
             ) : (
-              <Pause size={26} color={colors.onGold} fill={colors.onGold} />
+              <Pause size={26} color="#000000" fill="#000000" />
             )
           ) : (
-            <Play size={26} color={colors.onGold} fill={colors.onGold} style={{ marginLeft: 3 }} />
+            <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3 }} />
           )}
         </Pressable>
         <Pressable onPress={goNext} hitSlop={8}>
@@ -429,6 +431,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
               {myRating === 0 ? "Rate this story" : `You rated it ${myRating} stars`}
             </Text>
             <Pressable style={styles.replayBtn} onPress={replay}>
+              <GoldGradient style={StyleSheet.absoluteFill} />
               <RotateCcw size={18} color={colors.onGold} />
               <Text style={styles.replayLabel}>Replay</Text>
             </Pressable>
@@ -575,9 +578,9 @@ function createStyles(colors: ThemeColors) {
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: colors.gold,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   endOverlay: {
     position: "absolute",
@@ -623,11 +626,11 @@ function createStyles(colors: ThemeColors) {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colors.gold,
     borderRadius: radius.pill,
     paddingHorizontal: 28,
     paddingVertical: 14,
     marginTop: 20,
+    overflow: "hidden",
   },
   replayLabel: {
     fontFamily: fonts.displayBold,
