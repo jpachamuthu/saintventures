@@ -393,7 +393,7 @@ function createStyles(colors: ThemeColors) {
     color: colors.cream,
   },
   featuredTitleLight: {
-    color: colors.gold,
+    color: "#FFD27A",
   },
   featuredBlurb: {
     fontFamily: fonts.ui,
@@ -403,7 +403,7 @@ function createStyles(colors: ThemeColors) {
     marginTop: 8,
   },
   featuredBlurbLight: {
-    color: colors.gold,
+    color: "#FFD27A",
   },
   readBtn: {
     flexDirection: "row",
