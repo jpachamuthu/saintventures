@@ -110,6 +110,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
                 size={13}
                 color={onlyFavs ? colors.onGold : colors.gold}
                 fill={onlyFavs ? colors.onGold : "transparent"}
+                style={{ zIndex: 1 }}
               />
               <Text style={[styles.sortLabel, onlyFavs && { color: colors.onGold }]}>Favs</Text>
             </Pressable>

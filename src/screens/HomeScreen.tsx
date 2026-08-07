@@ -99,7 +99,7 @@ export default function HomeScreen({
               </Text>
               <Pressable onPress={() => onOpenStory(featuredStory)} style={styles.readBtn}>
                 <GoldGradient style={StyleSheet.absoluteFill} />
-                <Play size={15} color="#000000" fill="#000000" />
+                <Play size={15} color="#000000" fill="#000000" style={{ zIndex: 1 }} />
                 <Text style={styles.readBtnText}>Read</Text>
               </Pressable>
             </View>
@@ -251,7 +251,7 @@ export default function HomeScreen({
             ))}
           <Pressable onPress={() => onFooterTab("library")} hitSlop={8} style={({ pressed }) => [styles.goLibrary, pressed && styles.pressed]}>
             <GoldGradient style={StyleSheet.absoluteFill} />
-            <Library size={18} color={colors.onGold} />
+            <Library size={18} color={colors.onGold} style={{ zIndex: 1 }} />
             <Text style={styles.goLibraryText}>Go to Library for more stories</Text>
           </Pressable>
         </View>

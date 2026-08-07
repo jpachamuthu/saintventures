@@ -383,12 +383,12 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
           <GoldGradient style={StyleSheet.absoluteFill} />
           {reading ? (
             paused ? (
-              <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3 }} />
+              <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
             ) : (
-              <Pause size={26} color="#000000" fill="#000000" />
+              <Pause size={26} color="#000000" fill="#000000" style={{ zIndex: 1 }} />
             )
           ) : (
-            <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3 }} />
+            <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
           )}
         </Pressable>
         <Pressable onPress={goNext} hitSlop={8}>
@@ -432,7 +432,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
             </Text>
             <Pressable style={styles.replayBtn} onPress={replay}>
               <GoldGradient style={StyleSheet.absoluteFill} />
-              <RotateCcw size={18} color={colors.onGold} />
+              <RotateCcw size={18} color={colors.onGold} style={{ zIndex: 1 }} />
               <Text style={styles.replayLabel}>Replay</Text>
             </Pressable>
             <Pressable style={styles.quizBtn} onPress={onStartQuiz}>
