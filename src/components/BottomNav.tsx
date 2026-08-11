@@ -39,16 +39,41 @@ function TabButton({
   onTab: (tab: TabId) => void;
 }) {
   const scale = useRef(new Animated.Value(1)).current;
+  const lift = useRef(new Animated.Value(0)).current;
+  const wiggle = useRef(new Animated.Value(0)).current;
+  const glow = useRef(new Animated.Value(0)).current;
   const Icon = item.icon;
 
   const handlePress = () => {
-    scale.setValue(0.82);
-    Animated.sequence([
-      Animated.spring(scale, { toValue: 1.12, friction: 3, tension: 220, useNativeDriver: true }),
-      Animated.spring(scale, { toValue: 1, friction: 4, tension: 180, useNativeDriver: true }),
+    Animated.parallel([
+      // Big pop: squash, overshoot up, settle back
+      Animated.sequence([
+        Animated.timing(scale, { toValue: 0.85, duration: 60, useNativeDriver: true }),
+        Animated.spring(scale, { toValue: 1.32, friction: 3, tension: 320, useNativeDriver: true }),
+        Animated.spring(scale, { toValue: 1, friction: 5, tension: 260, useNativeDriver: true }),
+      ]),
+      // Lift the icon up like it jumps out of the bar
+      Animated.sequence([
+        Animated.spring(lift, { toValue: -13, friction: 3, tension: 280, useNativeDriver: true }),
+        Animated.spring(lift, { toValue: 0, friction: 5, tension: 220, useNativeDriver: true }),
+      ]),
+      // Side-to-side wiggle for extra energy
+      Animated.sequence([
+        Animated.timing(wiggle, { toValue: -0.24, duration: 80, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: 0.24, duration: 140, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: -0.16, duration: 120, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: 0, duration: 140, useNativeDriver: true }),
+      ]),
+      // Expanding glow ring that flashes and fades
+      Animated.sequence([
+        Animated.timing(glow, { toValue: 1, duration: 110, useNativeDriver: true }),
+        Animated.spring(glow, { toValue: 0, friction: 4, tension: 110, useNativeDriver: true }),
+      ]),
     ]).start();
     onTab(item.id);
   };
+
+  const glowColor = isActive ? colors.cream : colors.gold;
 
   return (
     <Pressable
@@ -58,14 +83,31 @@ function TabButton({
       accessibilityLabel={item.label}
       style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
     >
-      <Animated.View
-        style={[styles.iconWrap, isActive && styles.iconWrapActive, { transform: [{ scale }] }]}
-      >
-        <Icon
-          size={22}
-          strokeWidth={isActive ? 2.4 : 2}
-          color={isActive ? colors.onGold : colors.mutedDim}
+      <Animated.View style={[styles.iconWrap, isActive && styles.iconWrapActive]}>
+        <Animated.View
+          style={[
+            styles.glow,
+            { backgroundColor: glowColor, opacity: glow, transform: [{ scale: glow }] },
+          ]}
         />
+        <Animated.View
+          style={[
+            styles.iconCenter,
+            {
+              transform: [
+                { scale },
+                { translateY: lift },
+                { rotate: wiggle.interpolate({ inputRange: [-0.3, 0.3], outputRange: ["-14deg", "14deg"] }) },
+              ],
+            },
+          ]}
+        >
+          <Icon
+            size={22}
+            strokeWidth={isActive ? 2.4 : 2}
+            color={isActive ? colors.onGold : colors.mutedDim}
+          />
+        </Animated.View>
       </Animated.View>
       <Text style={[styles.label, isActive && styles.labelActive]}>{item.label}</Text>
     </Pressable>
@@ -132,9 +174,21 @@ function createStyles(colors: ThemeColors) {
       borderRadius: 15,
       alignItems: "center",
       justifyContent: "center",
+      overflow: "visible",
     },
     iconWrapActive: {
       backgroundColor: colors.gold,
+    },
+    glow: {
+      position: "absolute",
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      opacity: 0,
+    },
+    iconCenter: {
+      alignItems: "center",
+      justifyContent: "center",
     },
     label: {
       fontFamily: fonts.uiBold,

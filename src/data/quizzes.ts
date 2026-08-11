@@ -385,4 +385,85 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
   ],
+  "st-mary-mackillop": [
+    {
+      question: "Where was Mary MacKillop born?",
+      choices: ["Melbourne, Australia", "Rome, Italy", "Dublin, Ireland"],
+      correct: 0,
+    },
+    {
+      question: "What did Mary love doing for the children of the bush?",
+      choices: ["Teaching them to read and write", "Giving them gold coins", "Taking them on ships"],
+      correct: 0,
+    },
+    {
+      question: "Where did the very first St Joseph's school open?",
+      choices: ["In a golden church", "In a dusty old stable", "In a big castle"],
+      correct: 1,
+    },
+    {
+      question: "What did the Sisters of St Joseph promise to be?",
+      choices: ["Poor like Jesus", "Rich and famous", "Brave knights"],
+      correct: 0,
+    },
+    {
+      question: "Mary MacKillop became the first saint from which country?",
+      choices: ["Australia", "Ireland", "England"],
+      correct: 0,
+    },
+  ],
+  "st-carlo-acutis": [
+    {
+      question: "Which famous brother and sister did Carlo have?",
+      choices: ["He had no brothers or sisters", "Two older brothers", "A baby owl"],
+      correct: 0,
+    },
+    {
+      question: "Which of these did Carlo love?",
+      choices: ["Computers, football and his dog", "Collecting shiny coins", "Sleeping all day"],
+      correct: 0,
+    },
+    {
+      question: "What did Carlo write a famous website about?",
+      choices: ["Videos", "Miracles of the Eucharist", "Football matches"],
+      correct: 1,
+    },
+    {
+      question: "What did Carlo say about being on his phone?",
+      choices: ["Use it for nothing good", "Don't ever touch it", "Use it for something good"],
+      correct: 2,
+    },
+    {
+      question: "What happened in 2025?",
+      choices: ["Wake-up server", "The Pope made Carlo a saint", "Carlo started a band"],
+      correct: 1,
+    },
+  ],
+  "st-peter": [
+    {
+      question: "What was Peter's job before he followed Jesus?",
+      choices: ["He was a fisherman", "He was a baker", "He was a soldier"],
+      correct: 0,
+    },
+    {
+      question: "What did Jesus name Simon?",
+      choices: ["Peter, which means Rock", "David, which means Strong", "John, which means Kind"],
+      correct: 0,
+    },
+    {
+      question: "What did Peter say when he walked on the water?",
+      choices: ["'I am scared forever'", "'If it is really you, tell me to come to you'", "'Let me swim back'"],
+      correct: 1,
+    },
+    {
+      question: "What did Jesus tell Peter to do when he asked 'Do you love me?'",
+      choices: ["'Feed my sheep'", "'Sell my boat'", "'Build a big tower'"],
+      correct: 0,
+    },
+    {
+      question: "What happened when Peter was captured in Rome?",
+      choices: ["He escaped on a horse", "He asked to be crucified upside down", "He became the king"],
+      correct: 1,
+    },
+  ],
 };
