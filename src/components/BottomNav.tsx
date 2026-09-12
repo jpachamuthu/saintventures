@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Animated, Pressable, Text, View, StyleSheet } from "react-native";
+import { Animated, Easing, Pressable, Text, View, StyleSheet } from "react-native";
 import { House, Library, Medal, Settings, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
@@ -46,28 +46,33 @@ function TabButton({
 
   const handlePress = () => {
     Animated.parallel([
-      // Big pop: squash, overshoot up, settle back
+      // Squash down, then spring up big and settle with a bounce
       Animated.sequence([
-        Animated.timing(scale, { toValue: 0.85, duration: 60, useNativeDriver: true }),
-        Animated.spring(scale, { toValue: 1.32, friction: 3, tension: 320, useNativeDriver: true }),
-        Animated.spring(scale, { toValue: 1, friction: 5, tension: 260, useNativeDriver: true }),
+        Animated.timing(scale, { toValue: 0.78, duration: 70, useNativeDriver: true }),
+        Animated.spring(scale, { toValue: 1.28, friction: 3, tension: 300, useNativeDriver: true }),
+        Animated.spring(scale, { toValue: 1, friction: 5, tension: 240, useNativeDriver: true }),
       ]),
-      // Lift the icon up like it jumps out of the bar
+      // Jump high out of the bar, then fall back and land with a bounce
       Animated.sequence([
-        Animated.spring(lift, { toValue: -13, friction: 3, tension: 280, useNativeDriver: true }),
-        Animated.spring(lift, { toValue: 0, friction: 5, tension: 220, useNativeDriver: true }),
+        Animated.timing(lift, {
+          toValue: -36,
+          duration: 150,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.spring(lift, { toValue: 0, friction: 3, tension: 130, useNativeDriver: true }),
       ]),
       // Side-to-side wiggle for extra energy
       Animated.sequence([
-        Animated.timing(wiggle, { toValue: -0.24, duration: 80, useNativeDriver: true }),
-        Animated.timing(wiggle, { toValue: 0.24, duration: 140, useNativeDriver: true }),
-        Animated.timing(wiggle, { toValue: -0.16, duration: 120, useNativeDriver: true }),
-        Animated.timing(wiggle, { toValue: 0, duration: 140, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: -0.3, duration: 80, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: 0.3, duration: 120, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: -0.2, duration: 110, useNativeDriver: true }),
+        Animated.timing(wiggle, { toValue: 0, duration: 130, useNativeDriver: true }),
       ]),
-      // Expanding glow ring that flashes and fades
+      // Bright expanding glow ring that flashes and fades
       Animated.sequence([
-        Animated.timing(glow, { toValue: 1, duration: 110, useNativeDriver: true }),
-        Animated.spring(glow, { toValue: 0, friction: 4, tension: 110, useNativeDriver: true }),
+        Animated.timing(glow, { toValue: 1, duration: 90, useNativeDriver: true }),
+        Animated.spring(glow, { toValue: 0, friction: 4, tension: 90, useNativeDriver: true }),
       ]),
     ]).start();
     onTab(item.id);
@@ -175,15 +180,16 @@ function createStyles(colors: ThemeColors) {
       alignItems: "center",
       justifyContent: "center",
       overflow: "visible",
+      zIndex: 2,
     },
     iconWrapActive: {
       backgroundColor: colors.gold,
     },
     glow: {
       position: "absolute",
-      width: 56,
-      height: 56,
-      borderRadius: 28,
+      width: 64,
+      height: 64,
+      borderRadius: 32,
       opacity: 0,
     },
     iconCenter: {

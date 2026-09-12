@@ -466,4 +466,382 @@ export const quizzes: Record<string, Quiz> = {
       correct: 1,
     },
   ],
+  "st-andrew": [
+    {
+      question: "What was Andrew's job before he followed Jesus?",
+      choices: ["He was a fisherman", "He was a baker", "He was a soldier"],
+      correct: 0,
+    },
+    {
+      question: "Who was the very first person to follow Jesus?",
+      choices: ["Peter", "Andrew", "John"],
+      correct: 1,
+    },
+    {
+      question: "Who did Andrew run to fetch when he found Jesus?",
+      choices: ["His brother Simon", "His cousin James", "His uncle Thomas"],
+      correct: 0,
+    },
+    {
+      question: "What shape was the cross Andrew was tied to?",
+      choices: ["A letter X shape", "A round circle", "An upside-down letter V"],
+      correct: 0,
+    },
+    {
+      question: "What is Andrew honoured as the patron of?",
+      choices: ["Scotland, Greece and Russia", "Only one small town", "No one at all"],
+      correct: 0,
+    },
+  ],
+  "st-james-greater": [
+    {
+      question: "What did Jesus nickname James and his brother John?",
+      choices: ["The Sons of Thunder", "The Sons of the Sea", "The Sons of Music"],
+      correct: 0,
+    },
+    {
+      question: "What was James and John's father called?",
+      choices: ["Zebedee", "Zechariah", "Zacchaeus"],
+      correct: 0,
+    },
+    {
+      question: "Who was the first apostle to give his life for Jesus?",
+      choices: ["James the Greater", "Thomas", "Bartholomew"],
+      correct: 0,
+    },
+    {
+      question: "Where did people find James' tomb long ago?",
+      choices: ["A field in Spain where a star shone", "A cave under the sea", "A palace in Rome"],
+      correct: 0,
+    },
+    {
+      question: "What country is St James the patron of?",
+      choices: ["Spain", "China", "Egypt"],
+      correct: 0,
+    },
+  ],
+  "st-john": [
+    {
+      question: "What is John often called?",
+      choices: ["The disciple whom Jesus loved", "The loudest disciple", "The strongest disciple"],
+      correct: 0,
+    },
+    {
+      question: "Who did John look after when Jesus died on the cross?",
+      choices: ["Mary, the mother of Jesus", "His grandfather", "A poor farmer"],
+      correct: 0,
+    },
+    {
+      question: "What did John always say to people when he was old?",
+      choices: ["Love one another", "Work harder every day", "Tell me a joke"],
+      correct: 0,
+    },
+    {
+      question: "Which book about visions did John write while on Patmos?",
+      choices: ["Revelation", "The book of maps", "The book of songs"],
+      correct: 0,
+    },
+    {
+      question: "How did John die?",
+      choices: ["Peacefully as a very old man", "In a great battle", "On a long voyage"],
+      correct: 0,
+    },
+  ],
+  "st-philip": [
+    {
+      question: "What town was Philip from?",
+      choices: ["Bethsaida", "Nazareth", "Jericho"],
+      correct: 0,
+    },
+    {
+      question: "What did Jesus say to Philip?",
+      choices: ["Follow me", "Sell your boat", "Feed the birds"],
+      correct: 0,
+    },
+    {
+      question: "What did Philip say to his friend Nathanael?",
+      choices: ["Come and see", "Run away fast", "Stay at home"],
+      correct: 0,
+    },
+    {
+      question: "What did Philip ask Jesus at the last supper?",
+      choices: ["Show us the Father", "Give us more bread", "Take us back home"],
+      correct: 0,
+    },
+    {
+      question: "Who did Philip travel far away with?",
+      choices: ["Bartholomew", "Matthew", "Andrew"],
+      correct: 0,
+    },
+  ],
+  "st-bartholomew": [
+    {
+      question: "What other name does Bartholomew go by?",
+      choices: ["Nathanael", "Nathan", "Barnabas"],
+      correct: 0,
+    },
+    {
+      question: "Where was Bartholomew sitting when Jesus saw him?",
+      choices: ["Under a fig tree", "On a tall mountain", "By a fast river"],
+      correct: 0,
+    },
+    {
+      question: "What did Jesus say about Bartholomew?",
+      choices: ["A true Israelite with no deceit", "A loud and noisy man", "A sleepy fisherman"],
+      correct: 0,
+    },
+    {
+      question: "What did Bartholomew call Jesus when he believed?",
+      choices: ["Son of God, king of Israel", "A wise old teacher", "My best fishing partner"],
+      correct: 0,
+    },
+    {
+      question: "Which far land did Bartholomew preach in?",
+      choices: ["A kingdom in the East", "England", "Australia"],
+      correct: 0,
+    },
+  ],
+  "st-thomas": [
+    {
+      question: "What brave thing did Thomas once say to his friends?",
+      choices: ["Let us also go so we may die with him", "Let us wait until spring", "Let us go fishing instead"],
+      correct: 0,
+    },
+    {
+      question: "Why did Thomas first refuse to believe Jesus rose?",
+      choices: ["He had not seen the nail marks", "He was too sleepy", "He was angry at Peter"],
+      correct: 0,
+    },
+    {
+      question: "What did Thomas cry out when he saw Jesus?",
+      choices: ["My Lord and my God", "My boat and my net", "My family and my home"],
+      correct: 0,
+    },
+    {
+      question: "Where does tradition say Thomas took the good news?",
+      choices: ["India", "Spain", "Norway"],
+      correct: 0,
+    },
+    {
+      question: "What does St Thomas teach us to bring to Jesus?",
+      choices: ["Our honest doubts", "Our heavy bags", "Our biggest crowds"],
+      correct: 0,
+    },
+  ],
+  "st-matthew": [
+    {
+      question: "What was Matthew's job before he followed Jesus?",
+      choices: ["He collected taxes", "He baked bread", "He shepherded sheep"],
+      correct: 0,
+    },
+    {
+      question: "What did Matthew leave behind when Jesus called him?",
+      choices: ["His tax booth", "His family", "His fishing boat"],
+      correct: 0,
+    },
+    {
+      question: "What special book did Matthew write?",
+      choices: ["The Gospel of Matthew", "The book of numbers", "A story about pirates"],
+      correct: 0,
+    },
+    {
+      question: "Who did Matthew invite to his dinner party?",
+      choices: ["Many tax collectors", "Only the king's family", "Only his neighbours' children"],
+      correct: 0,
+    },
+    {
+      question: "What did Jesus say when people complained he ate with sinners?",
+      choices: ["I came to call sinners", "I made a mistake", "Please go away"],
+      correct: 0,
+    },
+  ],
+  "st-james-less": [
+    {
+      question: "What was James called because he was the younger James?",
+      choices: ["James the Less", "James the Great", "James the Old"],
+      correct: 0,
+    },
+    {
+      question: "Which city did James the Less lead the Church in?",
+      choices: ["Jerusalem", "Rome", "Babylon"],
+      correct: 0,
+    },
+    {
+      question: "What did James say faith without good works is like?",
+      choices: ["Something dead", "A bright star", "A deep ocean"],
+      correct: 0,
+    },
+    {
+      question: "What wise advice is in the letter of James?",
+      choices: ["Be quick to listen and slow to speak", "Always speak first", "Never listen to anyone"],
+      correct: 0,
+    },
+    {
+      question: "What quality did people admire in James the Less?",
+      choices: ["His humility and holiness", "His loud voice", "His big house"],
+      correct: 0,
+    },
+  ],
+  "st-simon-zealot": [
+    {
+      question: "What group was Simon said to belong to?",
+      choices: ["The Zealots", "The Shepherds", "The Sailors"],
+      correct: 0,
+    },
+    {
+      question: "What change did Jesus make in Simon?",
+      choices: ["From fighting to loving", "From love to anger", "From calm to noise"],
+      correct: 0,
+    },
+    {
+      question: "What did Simon learn about Jesus' kingdom?",
+      choices: ["It is won by love, not swords", "It needs many armies", "It comes from gold"],
+      correct: 0,
+    },
+    {
+      question: "Which apostle is tradition said Simon travelled with?",
+      choices: ["Jude Thaddeus", "Thomas", "Andrew"],
+      correct: 0,
+    },
+    {
+      question: "What does St Simon the Zealot show us about our passions?",
+      choices: ["God can turn them into holy love", "We should hide them", "They only cause trouble"],
+      correct: 0,
+    },
+  ],
+  "st-matthias": [
+    {
+      question: "Why was there an empty place among the twelve apostles?",
+      choices: ["Judas had betrayed Jesus", "Peter moved away", "John fell asleep"],
+      correct: 0,
+    },
+    {
+      question: "What did the apostles do before choosing the new apostle?",
+      choices: ["They prayed", "They sold their boats", "They left the city"],
+      correct: 0,
+    },
+    {
+      question: "How did they let God choose the new apostle?",
+      choices: ["By casting lots after praying", "By holding a race", "By asking the king"],
+      correct: 0,
+    },
+    {
+      question: "Who was chosen to take the empty place?",
+      choices: ["Matthias", "Barnabas", "Silas"],
+      correct: 0,
+    },
+    {
+      question: "What must the new apostle have done all along?",
+      choices: ["Followed Jesus from the beginning", "Collected taxes", "Climbed every mountain"],
+      correct: 0,
+    },
+  ],
+  "st-mark": [
+    {
+      question: "Who was Mark's great teacher?",
+      choices: ["Peter, the leader of the apostles", "A famous sea captain", "The village baker"],
+      correct: 0,
+    },
+    {
+      question: "What is the Gospel of Mark?",
+      choices: ["The shortest of the four Gospels", "The longest book ever written", "A book about farming"],
+      correct: 0,
+    },
+    {
+      question: "Where did Mark become the first bishop?",
+      choices: ["Alexandria", "Rome", "Bethlehem"],
+      correct: 0,
+    },
+    {
+      question: "What does the word Evangelist mean?",
+      choices: ["A bearer of good news", "A builder of boats", "A keeper of coins"],
+      correct: 0,
+    },
+    {
+      question: "Who is St Mark the patron of?",
+      choices: ["Writers", "Fishermen", "Bakers"],
+      correct: 0,
+    },
+  ],
+  "st-luke": [
+    {
+      question: "What was Luke's job before he followed Jesus?",
+      choices: ["He was a doctor", "He was a soldier", "He was a shepherd"],
+      correct: 0,
+    },
+    {
+      question: "Who was Luke's dear companion on his travels?",
+      choices: ["St Paul", "St Peter", "St John"],
+      correct: 0,
+    },
+    {
+      question: "Which beautiful story is only found in Luke's Gospel?",
+      choices: ["The Good Samaritan", "The Great Flood", "The Tower of Babel"],
+      correct: 0,
+    },
+    {
+      question: "Who did Luke is said to have painted pictures of?",
+      choices: ["Mary, the mother of Jesus", "Herod the king", "A village baker"],
+      correct: 0,
+    },
+    {
+      question: "What second book did Luke write?",
+      choices: ["The Acts of the Apostles", "A book of medicines", "A map of the world"],
+      correct: 0,
+    },
+  ],
+  "st-theresa-calcutta": [
+    {
+      question: "What was Mother Teresa called before?",
+      choices: ["Agnes", "Anna", "Alice"],
+      correct: 0,
+    },
+    {
+      question: "What is the family of sisters Mother Teresa started called?",
+      choices: ["Missionaries of Charity", "The Quiet Gardeners", "The Royal Helpers"],
+      correct: 0,
+    },
+    {
+      question: "What did she open a home for?",
+      choices: ["The sick and dying who had no one", "The king's horses", "People who fish"],
+      correct: 0,
+    },
+    {
+      question: "What was her famous secret of holy life?",
+      choices: ["Do small things with great love", "Do big things loudly", "Do nothing at all"],
+      correct: 0,
+    },
+    {
+      question: "In which year was she declared a saint?",
+      choices: ["2016", "2000", "1997"],
+      correct: 0,
+    },
+  ],
+  "st-maria-goretti": [
+    {
+      question: "How old was Maria Goretti when she died?",
+      choices: ["Eleven", "Twenty", "Fifty"],
+      correct: 0,
+    },
+    {
+      question: "What did Maria say even while she was hurt?",
+      choices: ["I forgive him and want him in heaven", "I will escape to Rome", "I am too scared to pray"],
+      correct: 0,
+    },
+    {
+      question: "What did Maria do every day?",
+      choices: ["Her chores and her prayers", "She hid in the attic", "She collected coins"],
+      correct: 0,
+    },
+    {
+      question: "Who is St Maria the patron saint of?",
+      choices: ["Young people", "Sea captains", "Astronomers"],
+      correct: 0,
+    },
+    {
+      question: "What is the message of Maria's story?",
+      choices: ["Love and forgiveness are stronger than hate", "Being rich is best", "Running away is wisest"],
+      correct: 0,
+    },
+  ],
 };

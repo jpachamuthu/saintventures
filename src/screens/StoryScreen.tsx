@@ -231,18 +231,39 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       setPage(next);
       startPage(next);
     } else {
-      readingRef.current = false;
-      setActiveWord(null);
-      setReading(false);
-      setPaused(false);
-      stopStoryMusic();
-      endTimerRef.current = setTimeout(() => {
-        endTimerRef.current = null;
-        setShowEnd(true);
-        endOpacity.setValue(0);
-        Animated.timing(endOpacity, { toValue: 1, duration: 350, useNativeDriver: true }).start();
-      }, 1000);
+      finishStory(1000);
     }
+  }
+
+  function showEndPanel() {
+    if (endTimerRef.current) {
+      clearTimeout(endTimerRef.current);
+      endTimerRef.current = null;
+    }
+    setMyRating(0);
+    setShowEnd(true);
+    endOpacity.setValue(0);
+    Animated.timing(endOpacity, { toValue: 1, duration: 350, useNativeDriver: true }).start();
+  }
+
+  function finishStory(delayMs = 1000) {
+    sessionRef.current += 1;
+    cancelledRef.current = true;
+    readingRef.current = false;
+    clearTimers();
+    Speech.stop();
+    setActiveWord(null);
+    setReading(false);
+    setPaused(false);
+    stopStoryMusic();
+    if (endTimerRef.current) {
+      clearTimeout(endTimerRef.current);
+      endTimerRef.current = null;
+    }
+    endTimerRef.current = setTimeout(() => {
+      endTimerRef.current = null;
+      showEndPanel();
+    }, delayMs);
   }
 
   function startReading() {
@@ -272,8 +293,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
 
   function goNext() {
     if (page + 1 >= total) {
-      if (reading) stopReading();
-      onBack();
+      finishStory(1000);
       return;
     }
     const wasReading = reading;
