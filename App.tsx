@@ -14,7 +14,7 @@ import {
 } from "@expo-google-fonts/nunito";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SplashView from "./src/screens/SplashScreen";
-import LoginScreen from "./src/screens/LoginScreen";
+import StartupScreen from "./src/screens/StartupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LibraryScreen from "./src/screens/LibraryScreen";
 import StoryScreen from "./src/screens/StoryScreen";
@@ -29,7 +29,7 @@ import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "login" | "home" | "story" | "library" | "badges" | "settings" | "quiz";
+type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "settings" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
@@ -74,8 +74,8 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider>
         <View style={styles.root} onLayout={onLayoutRootView}>
-          {screen === "splash" && <SplashView onDone={() => setScreen("login")} />}
-          {screen === "login" && <LoginScreen onLogin={() => setScreen("home")} />}
+          {screen === "splash" && <SplashView onDone={() => setScreen("startup")} />}
+          {screen === "startup" && <StartupScreen onStart={() => setScreen("home")} />}
           {screen === "home" && (
             <HomeScreen
               onOpenStory={(s) => openStory(s, "home")}
