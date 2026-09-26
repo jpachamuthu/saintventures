@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Animated, Easing, Pressable, Text, View, StyleSheet } from "react-native";
+import { Animated, Easing, Platform, Pressable, Text, View, StyleSheet, type ViewStyle } from "react-native";
 import { House, Library, Medal, Settings, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
@@ -126,7 +126,7 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
 
   return (
     <View style={[styles.wrap, { paddingBottom: Math.max(insets.bottom, 14) }]}>
-      <View style={styles.bar}>
+      <View style={[styles.bar, WEB_BLUR]}>
         {TABS.map((item) => (
           <TabButton
             key={item.id}
@@ -142,8 +142,11 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
   );
 }
 
-function createStyles(colors: ThemeColors) {
-  return StyleSheet.create({
+// Backdrop blur is web-only; native falls back to translucency.
+const WEB_BLUR: ViewStyle | null =
+  Platform.OS === "web" ? ({ backdropFilter: "blur(22px) saturate(1.5)" } as ViewStyle) : null;
+
+function createStyles(colors: ThemeColors) {  return StyleSheet.create({
     wrap: {
       position: "absolute",
       left: 12,
@@ -152,8 +155,8 @@ function createStyles(colors: ThemeColors) {
     },
     bar: {
       flexDirection: "row",
-      backgroundColor: colors.bgCard,
-      borderColor: colors.ring,
+      backgroundColor: colors.glassFillStrong,
+      borderColor: colors.glassBorder,
       borderWidth: 1,
       borderRadius: 26,
       paddingVertical: 8,

@@ -1,20 +1,40 @@
 import React, { useRef, useState } from "react";
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import Logo from "../components/Logo";
-import GoldGradient from "../components/GoldGradient";
+import { ArrowRight } from "lucide-react-native";
+import Svg, { Defs, LinearGradient, Rect, Stop } from "react-native-svg";
+import DawnSky from "../components/DawnSky";
 import LegalPage, { PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
-import { useTheme } from "../components/ThemeContext";
-import { fonts, type ThemeColors } from "../theme";
+import { fonts } from "../theme";
 
 type StartupScreenProps = {
   onStart: () => void;
 };
 
+const INK = "#2A1605";
+const PAPER = "#FFFFFF";
+const PAPER_SOFT = "rgba(255, 255, 255, 0.82)";
+const PAPER_FAINT = "rgba(255, 255, 255, 0.68)";
+
+function GoldCross({ size = 30 }: { size?: number }) {
+  const w = size;
+  const h = (size * 46) / 30;
+  return (
+    <Svg width={w} height={h} viewBox="0 0 30 46">
+      <Defs>
+        <LinearGradient id="crossGold" x1="0" y1="0" x2="1" y2="1">
+          <Stop offset="0" stopColor="#F9D06C" />
+          <Stop offset="1" stopColor="#E3A63C" />
+        </LinearGradient>
+      </Defs>
+      <Rect x="11.5" y="2" width="7" height="42" rx="3.5" fill="url(#crossGold)" />
+      <Rect x="3" y="12" width="24" height="7" rx="3.5" fill="url(#crossGold)" />
+    </Svg>
+  );
+}
+
 export default function StartupScreen({ onStart }: StartupScreenProps) {
-  const { colors, isDark } = useTheme();
-  const styles = createStyles(colors);
+  const styles = createStyles();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const exiting = useRef(false);
@@ -55,37 +75,37 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   };
 
   return (
-    <LinearGradient colors={[colors.bgCardAlt, colors.bg, colors.bgCard]} style={styles.root}>
-      <StatusBar style={isDark ? "light" : "dark"} />
+    <View style={styles.root}>
+      <StatusBar style="light" />
+      <DawnSky />
       <Animated.View style={[styles.screen, { opacity: exitOp, transform: [{ scale: exitSc }, { translateY: exitDy }] }]}>
         <Animated.View
           onLayout={onHeroLayout}
           style={[styles.heroWrap, { transform: [{ translateY: heroDy }, { scale: heroSc }] }]}
         >
-          <Logo size={88} />
+          <GoldCross size={30} />
+          <Text style={styles.title}>Saint{"\n"}Adventures</Text>
         </Animated.View>
 
         <View style={styles.body}>
           <Animated.View style={{ opacity: bodyOp }}>
-            <View style={styles.dividerWrap}>
-              <View style={styles.divider} />
-              <Text style={styles.dividerText}>Ready for an adventure?</Text>
-              <View style={styles.divider} />
-            </View>
+            <Text style={styles.eyebrow}>Real people. Extraordinary faith.</Text>
+            <Text style={styles.copy}>
+              Discover the inspiring stories of the saints and how they can guide your journey
+              today.
+            </Text>
 
             <Pressable
               onPress={handleStart}
               style={({ pressed }) => [styles.startBtn, pressed && styles.pressed]}
               accessibilityRole="button"
+              accessibilityLabel="Get Started"
             >
-              <GoldGradient style={StyleSheet.absoluteFill} />
               <Text style={styles.startBtnText}>Get Started</Text>
+              <ArrowRight size={19} color={INK} strokeWidth={2.4} />
             </Pressable>
 
-            <Text style={styles.footnote}>
-              No account needed.{"\n"}
-              Tap in and explore the saints.
-            </Text>
+            <Text style={styles.footnote}>No account needed.{"\n"}Tap in and explore the saints.</Text>
           </Animated.View>
         </View>
 
@@ -112,81 +132,102 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
         sections={TERMS_SECTIONS}
         onClose={() => setShowTerms(false)}
       />
-    </LinearGradient>
+    </View>
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles() {
   return StyleSheet.create({
     root: {
       flex: 1,
+      backgroundColor: "#0D1440",
     },
     screen: {
       flex: 1,
     },
     heroWrap: {
       position: "absolute",
-      top: 74,
+      top: 92,
       left: 0,
       right: 0,
       alignItems: "center",
     },
+    title: {
+      fontFamily: fonts.serif,
+      fontSize: 52,
+      lineHeight: 56,
+      letterSpacing: 0.5,
+      color: PAPER,
+      textAlign: "center",
+      marginTop: 14,
+      textShadowColor: "rgba(10, 10, 40, 0.45)",
+      textShadowOffset: { width: 0, height: 2 },
+      textShadowRadius: 10,
+    },
     body: {
       flex: 1,
-      justifyContent: "center",
-      paddingHorizontal: 30,
-      paddingTop: 190,
+      justifyContent: "flex-end",
+      paddingHorizontal: 34,
+      paddingBottom: 118,
     },
-    dividerWrap: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 12,
-      marginBottom: 24,
-    },
-    divider: {
-      flex: 1,
-      height: 1,
-      backgroundColor: colors.gold,
-      opacity: 0.35,
-    },
-    dividerText: {
-      fontFamily: fonts.uiBold,
-      fontSize: 13,
-      letterSpacing: 0.3,
-      color: colors.muted,
+    eyebrow: {
+      fontFamily: fonts.metaBold,
+      fontSize: 12.5,
+      letterSpacing: 3.2,
+      color: PAPER_SOFT,
       textAlign: "center",
+      textTransform: "uppercase",
+    },
+    copy: {
+      fontFamily: fonts.ui,
+      fontSize: 16,
+      lineHeight: 24,
+      color: PAPER_SOFT,
+      textAlign: "center",
+      marginTop: 12,
+      paddingHorizontal: 8,
+      textShadowColor: "rgba(10, 10, 40, 0.5)",
+      textShadowOffset: { width: 0, height: 1 },
+      textShadowRadius: 6,
     },
     startBtn: {
-      height: 58,
-      borderRadius: 999,
+      flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      overflow: "hidden",
+      gap: 8,
+      height: 60,
+      borderRadius: 999,
+      backgroundColor: "#F6DA96",
+      marginTop: 26,
       shadowColor: "#000",
       shadowOpacity: 0.35,
-      shadowRadius: 14,
-      shadowOffset: { width: 0, height: 5 },
-      elevation: 6,
+      shadowRadius: 16,
+      shadowOffset: { width: 0, height: 6 },
+      elevation: 8,
     },
     startBtnText: {
       fontFamily: fonts.uiBold,
       fontSize: 17,
-      color: colors.onGold,
-      zIndex: 1,
+      color: INK,
     },
     pressed: {
-      opacity: 0.9,
+      opacity: 0.88,
+      transform: [{ scale: 0.98 }],
     },
     footnote: {
       fontFamily: fonts.ui,
-      fontSize: 13,
-      lineHeight: 19,
-      color: colors.mutedDim,
+      fontSize: 12.5,
+      lineHeight: 18,
+      color: PAPER_FAINT,
       textAlign: "center",
-      marginTop: 18,
+      marginTop: 16,
     },
     bottom: {
-      paddingBottom: 36,
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      paddingBottom: 34,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
@@ -195,12 +236,12 @@ function createStyles(colors: ThemeColors) {
     separator: {
       fontFamily: fonts.ui,
       fontSize: 12,
-      color: colors.mutedDim,
+      color: PAPER_FAINT,
     },
     fineprint: {
       fontFamily: fonts.uiMedium,
       fontSize: 12,
-      color: colors.mutedDim,
+      color: PAPER_FAINT,
     },
   });
 }

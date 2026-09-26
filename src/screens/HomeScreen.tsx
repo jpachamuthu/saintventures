@@ -14,6 +14,7 @@ import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
+import GlassView from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
@@ -72,10 +73,10 @@ export default function HomeScreen({
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.topBar}>
-          <View style={styles.pill}>
+          <GlassView corner={999} style={styles.pill}>
             <UserPlus size={15} color={colors.gold} />
             <Text style={styles.pillText}>Add your child</Text>
-          </View>
+          </GlassView>
           <View style={styles.icons}>
             <View style={styles.iconBtn}>
               <Bell size={16} color={colors.cream} />
@@ -298,10 +299,6 @@ function createStyles(colors: ThemeColors) {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colors.bgCard,
-    borderWidth: 1,
-    borderColor: colors.ring,
-    borderRadius: radius.pill,
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
@@ -318,7 +315,9 @@ function createStyles(colors: ThemeColors) {
     width: 38,
     height: 38,
     borderRadius: 19,
-    backgroundColor: colors.bgCard,
+    backgroundColor: colors.glassFill,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -393,9 +392,9 @@ function createStyles(colors: ThemeColors) {
     color: "#FFB347",
   },
   featuredTitle: {
-    fontFamily: fonts.displayBold,
-    fontSize: 34,
-    lineHeight: 38,
+    fontFamily: fonts.serifBold,
+    fontSize: 36,
+    lineHeight: 40,
     color: colors.cream,
   },
   featuredTitleLight: {
@@ -434,8 +433,8 @@ function createStyles(colors: ThemeColors) {
     gap: 14,
   },
   sectionTitle: {
-    fontFamily: fonts.displayBold,
-    fontSize: 22,
+    fontFamily: fonts.serif,
+    fontSize: 24,
     color: colors.cream,
   },
   goLibrary: {
@@ -458,11 +457,11 @@ function createStyles(colors: ThemeColors) {
   readCard: {
     flexDirection: "row",
     gap: 14,
-    backgroundColor: colors.bgCard,
+    backgroundColor: colors.glassFill,
     borderRadius: radius.card,
     padding: 12,
     borderWidth: 1,
-    borderColor: colors.ring,
+    borderColor: colors.glassBorder,
   },
   readThumb: {
     width: 88,
@@ -545,10 +544,10 @@ function createStyles(colors: ThemeColors) {
   },
   favCard: {
     width: 148,
-    backgroundColor: colors.bgCard,
+    backgroundColor: colors.glassFill,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.ring,
+    borderColor: colors.glassBorder,
     overflow: "hidden",
   },
   favThumb: {
