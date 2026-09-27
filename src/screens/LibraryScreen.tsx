@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -82,11 +83,6 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
             </Pressable>
           )}
         </View>
-        {query.length > 0 && (
-          <Pressable onPress={clearSearch} hitSlop={8}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </Pressable>
-        )}
       </View>
 
       <View style={styles.sortRow}>
@@ -180,7 +176,6 @@ function createStyles(colors: ThemeColors) {
   root: {
     flex: 1,
     backgroundColor: colors.bg,
-    paddingBottom: 120,
   },
   header: {
     flexDirection: "row",
@@ -224,15 +219,14 @@ function createStyles(colors: ThemeColors) {
     fontSize: 13.5,
     color: colors.cream,
     padding: 0,
+    borderWidth: 0,
+    // Web browsers draw their own focus ring around the textbox — suppress it
+    // so only the pill itself is visible.
+    ...(Platform.OS === "web" ? ({ outlineStyle: "none" } as object) : null),
   },
   clearBtn: {
     fontSize: 13,
     color: colors.mutedDim,
-  },
-  cancelText: {
-    fontFamily: fonts.uiBold,
-    fontSize: 13,
-    color: colors.gold,
   },
   sortGroup: {
     flexDirection: "row",
@@ -281,7 +275,7 @@ function createStyles(colors: ThemeColors) {
   },
   grid: {
     paddingHorizontal: 18,
-    paddingBottom: 20,
+    paddingBottom: 130,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",

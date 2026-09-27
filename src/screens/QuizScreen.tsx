@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { Medal, X } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import GoldGradient from "../components/GoldGradient";
+import SaintIllustration from "../components/SaintIllustration";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
@@ -28,6 +29,7 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
   const [done, setDone] = useState(false);
   const advanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const throb = useRef(new Animated.Value(1)).current;
   const { has, count, earn } = useBadges();
 
   const q = questions[Math.min(qIndex, questions.length - 1)];
@@ -39,6 +41,18 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
     },
     []
   );
+
+  useEffect(() => {
+    if (!done) return;
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(throb, { toValue: 1.18, duration: 550, useNativeDriver: true }),
+        Animated.timing(throb, { toValue: 1, duration: 550, useNativeDriver: true }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [done, throb]);
 
   function handlePick(i: number) {
     if (done || result === "correct" || wrong.includes(i)) return;
@@ -97,8 +111,16 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
 
       {done ? (
         <View style={styles.badgeWrap}>
-          <View style={styles.badgeCircle}>
-            <Medal size={56} color={colors.gold} fill={colors.gold} />
+          <View style={styles.heroFrame}>
+            <SaintIllustration
+              palette={story.palette}
+              art={story.art}
+              image={story.imageSmall ?? story.hero}
+              height={160}
+            />
+            <Animated.View style={[styles.cornerBadge, { transform: [{ scale: throb }] }]}>
+              <Medal size={22} color={colors.onGold} fill={colors.onGold} />
+            </Animated.View>
           </View>
           <Text style={styles.badgeTitle}>Well done!</Text>
           <Text style={styles.badgeText}>You earned the {story.saint} badge</Text>
@@ -323,16 +345,28 @@ function createStyles(colors: ThemeColors) {
       justifyContent: "center",
       paddingHorizontal: 28,
     },
-    badgeCircle: {
-      width: 120,
-      height: 120,
-      borderRadius: 60,
-      backgroundColor: colors.bgCard,
+    heroFrame: {
+      width: 210,
+      alignSelf: "center",
+      marginBottom: 20,
+    },
+    cornerBadge: {
+      position: "absolute",
+      top: -13,
+      right: -13,
+      width: 46,
+      height: 46,
+      borderRadius: 23,
+      backgroundColor: colors.gold,
       borderWidth: 3,
-      borderColor: colors.gold,
+      borderColor: colors.bgCard,
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: 18,
+      shadowColor: "#000",
+      shadowOpacity: 0.4,
+      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 3 },
+      elevation: 6,
     },
     badgeTitle: {
       fontFamily: fonts.displayBold,

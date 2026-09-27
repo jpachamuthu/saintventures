@@ -844,4 +844,409 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
   ],
+  "st-augustine": [
+    {
+      question: "What did Augustine keep saying when told to do the right thing?",
+      choices: ["Later… just not yet", "Yes, right away", "Ask someone else"],
+      correct: 0,
+    },
+    {
+      question: "What did Monica do for seventeen years?",
+      choices: ["Sailed around the world", "Prayed and wept for her son", "Hid in a garden"],
+      correct: 1,
+    },
+    {
+      question: "What did the bishop tell Monica?",
+      choices: ["The child of so many tears will never perish", "Give up on your son", "Move to Rome at once"],
+      correct: 0,
+    },
+    {
+      question: "What voice did Augustine hear in the garden?",
+      choices: ["A roaring lion", "A child singing, take up and read", "Thunder in the clouds"],
+      correct: 1,
+    },
+    {
+      question: "What does Augustine's story teach us?",
+      choices: ["Cleverness is enough", "No one is ever too lost to be found", "Mothers should stop praying"],
+      correct: 1,
+    },
+  ],
+  "st-monica": [
+    {
+      question: "Who did Monica marry?",
+      choices: ["Patricius, who had a fiery temper", "A quiet fisherman", "The bishop of Milan"],
+      correct: 0,
+    },
+    {
+      question: "How did Monica answer her husband's anger?",
+      choices: ["She shouted even louder", "With quiet kindness", "She ran away from home"],
+      correct: 1,
+    },
+    {
+      question: "How long did Monica pray for Augustine?",
+      choices: ["One week", "Seventeen years", "A single night"],
+      correct: 1,
+    },
+    {
+      question: "What did Monica do when Augustine sailed to Italy?",
+      choices: ["She forgot about him", "She got on a ship and followed him", "She moved to Egypt"],
+      correct: 1,
+    },
+    {
+      question: "Who is St Monica the patron saint of?",
+      choices: ["Sailors", "Mothers", "Bakers"],
+      correct: 1,
+    },
+  ],
+  "st-josephine-bakhita": [
+    {
+      question: "What does the name Bakhita mean?",
+      choices: ["Fortunate", "Little fish", "Runaway"],
+      correct: 0,
+    },
+    {
+      question: "Where was Bakhita born?",
+      choices: ["In Italy", "In Sudan", "In France"],
+      correct: 1,
+    },
+    {
+      question: "Who treated Bakhita with gentleness?",
+      choices: ["Callisto Legnani", "The slave traders", "A circus lion"],
+      correct: 0,
+    },
+    {
+      question: "What name did she take when she was baptized?",
+      choices: ["Clare", "Josephine", "Agnes"],
+      correct: 1,
+    },
+    {
+      question: "What did Bakhita say about the men who stole her?",
+      choices: ["She would forgive them and kiss their hands", "She would never speak again", "She would sail away forever"],
+      correct: 0,
+    },
+  ],
+  "st-vincent-de-paul": [
+    {
+      question: "What job did young Vincent do as a boy?",
+      choices: ["He herded sheep", "He sailed ships", "He baked bread"],
+      correct: 0,
+    },
+    {
+      question: "What changed Vincent's life?",
+      choices: ["Winning a race", "A dying man's confession", "Finding a gold coin"],
+      correct: 1,
+    },
+    {
+      question: "Who helped Vincent start the Daughters of Charity?",
+      choices: ["Louise", "His sheepdog", "The king of France"],
+      correct: 0,
+    },
+    {
+      question: "What did Vincent call the poor?",
+      choices: ["A nuisance", "Our masters", "Strangers"],
+      correct: 1,
+    },
+    {
+      question: "Who is St Vincent the patron saint of?",
+      choices: ["Charities", "Astronauts", "Chefs"],
+      correct: 0,
+    },
+  ],
+  "st-augustine-zhao-rong": [
+    {
+      question: "What was Augustine's job before he converted?",
+      choices: ["A baker", "A soldier who guarded prisoners", "A fisherman"],
+      correct: 1,
+    },
+    {
+      question: "What convinced Augustine to become Christian?",
+      choices: ["The bravery of the Christian prisoners", "A bag of gold", "A thunderstorm"],
+      correct: 0,
+    },
+    {
+      question: "What did Augustine become?",
+      choices: ["A sailor", "A Catholic priest", "A palace guard"],
+      correct: 1,
+    },
+    {
+      question: "What happened when the soldiers caught Father Augustine?",
+      choices: ["He gave up his faith at once", "He was thrown in prison but refused to deny Christ", "He ran away to Rome"],
+      correct: 1,
+    },
+    {
+      question: "How many martyrs of China were declared saints with him?",
+      choices: ["Twelve", "One hundred and twenty", "One thousand"],
+      correct: 1,
+    },
+  ],
+  "st-lawrence-ruiz": [
+    {
+      question: "Where was Lawrence Ruiz born?",
+      choices: ["In Manila", "In Rome", "In Paris"],
+      correct: 0,
+    },
+    {
+      question: "What was Lawrence's church job as a boy?",
+      choices: ["Ringing the biggest bell", "Altar server", "Polishing the organ"],
+      correct: 1,
+    },
+    {
+      question: "Why did Lawrence have to flee?",
+      choices: ["He wanted an adventure", "He was falsely accused of a crime", "He missed his boat"],
+      correct: 1,
+    },
+    {
+      question: "What famous words did Lawrence say?",
+      choices: ["If I had a thousand lives, I would offer them all to God", "Take me back to Manila", "I give up"],
+      correct: 0,
+    },
+    {
+      question: "What makes Lawrence special in history?",
+      choices: ["He was the tallest saint", "He was the first Filipino saint", "He invented fireworks"],
+      correct: 1,
+    },
+  ],
+  "st-michael-archangel": [
+    {
+      question: "What does the name Michael mean?",
+      choices: ["Who is like God?", "Bringer of lunch", "Keeper of keys"],
+      correct: 0,
+    },
+    {
+      question: "Which angel rebelled against God?",
+      choices: ["Gabriel", "Lucifer", "Raphael"],
+      correct: 1,
+    },
+    {
+      question: "What happened in the war in heaven?",
+      choices: ["Michael won and the rebels were cast out", "Everyone took a nap", "The stars fell down"],
+      correct: 0,
+    },
+    {
+      question: "Who especially asks St Michael for protection?",
+      choices: ["Soldiers and police officers", "Bakers and chefs", "Fishermen only"],
+      correct: 0,
+    },
+    {
+      question: "What does St Michael's victory teach us?",
+      choices: ["Evil always wins", "God always wins", "Battles are fun"],
+      correct: 1,
+    },
+  ],
+  "st-gabriel-archangel": [
+    {
+      question: "What does the name Gabriel mean?",
+      choices: ["God is my strength", "Loud trumpet", "Fast runner"],
+      correct: 0,
+    },
+    {
+      question: "Who did Gabriel visit in the Temple?",
+      choices: ["Old priest Zechariah", "A Roman soldier", "A shepherd boy"],
+      correct: 0,
+    },
+    {
+      question: "How did Gabriel greet Mary?",
+      choices: ["Hail, full of grace!", "Good luck up there!", "Hide quickly!"],
+      correct: 0,
+    },
+    {
+      question: "What did Mary answer?",
+      choices: ["Let it be done to me", "Come back tomorrow", "Ask someone else"],
+      correct: 0,
+    },
+    {
+      question: "Where do we repeat Gabriel's words today?",
+      choices: ["In the Hail Mary prayer", "In a birthday song", "On a treasure map"],
+      correct: 0,
+    },
+  ],
+  "st-raphael-archangel": [
+    {
+      question: "What does the name Raphael mean?",
+      choices: ["God heals", "Big fish", "Long road"],
+      correct: 0,
+    },
+    {
+      question: "Who did Raphael guide on a journey?",
+      choices: ["Tobias", "A lost camel", "The king's army"],
+      correct: 0,
+    },
+    {
+      question: "What leaped out of the river at Tobias?",
+      choices: ["A giant fish", "A golden crown", "A singing frog"],
+      correct: 0,
+    },
+    {
+      question: "What happened when Tobias used the fish medicine?",
+      choices: ["Tobit's blindness was healed", "It started to rain", "Everyone fell asleep"],
+      correct: 0,
+    },
+    {
+      question: "Who is St Raphael the patron saint of?",
+      choices: ["Travellers", "Librarians", "Blacksmiths"],
+      correct: 0,
+    },
+  ],
+  "st-john-paul-ii": [
+    {
+      question: "What was John Paul II called as a boy, and where was he born?",
+      choices: ["Karol, in Poland", "Giovanni, in Rome", "Patrick, in Ireland"],
+      correct: 0,
+    },
+    {
+      question: "What did he say from the balcony when elected pope?",
+      choices: ["Be not afraid!", "Good night!", "Watch and learn!"],
+      correct: 0,
+    },
+    {
+      question: "What happened to the Pope in 1981?",
+      choices: ["He was shot, survived, and forgave the gunman", "He retired to a farm", "He learned to fly"],
+      correct: 0,
+    },
+    {
+      question: "What great gathering did he start?",
+      choices: ["World Youth Day", "A football league", "A cooking contest"],
+      correct: 0,
+    },
+    {
+      question: "What was special about his election as pope?",
+      choices: ["He was the first non-Italian pope in 455 years", "He was the youngest ever", "He was elected by children"],
+      correct: 0,
+    },
+  ],
+  "st-gregory-the-great": [
+    {
+      question: "What did Gregory give up to become a monk?",
+      choices: ["His riches and palace", "His pet goat", "His fishing boat"],
+      correct: 0,
+    },
+    {
+      question: "What humble title did Gregory take?",
+      choices: ["Servant of the servants of God", "King of Rome", "Lord of the palace"],
+      correct: 0,
+    },
+    {
+      question: "What church music is named after Gregory?",
+      choices: ["Gregorian chant", "Rock and roll", "Opera"],
+      correct: 0,
+    },
+    {
+      question: "Who did Gregory send to England?",
+      choices: ["A monk named Augustine with forty companions", "An army of knights", "A choir of canaries"],
+      correct: 0,
+    },
+    {
+      question: "What did Gregory say about the English slave boys?",
+      choices: ["Not Angles, but Angels!", "Send them home at once!", "Teach them to juggle!"],
+      correct: 0,
+    },
+  ],
+  "st-bernadette": [
+    {
+      question: "What was Bernadette doing when she saw the Lady?",
+      choices: ["Gathering firewood", "Swimming in the sea", "Climbing a mountain"],
+      correct: 0,
+    },
+    {
+      question: "What did the Lady wear?",
+      choices: ["A white dress with a blue sash", "A red cloak and boots", "A suit of armour"],
+      correct: 0,
+    },
+    {
+      question: "What happened when Bernadette scratched the dirt?",
+      choices: ["Muddy water bubbled up", "Gold coins popped out", "Nothing at all"],
+      correct: 0,
+    },
+    {
+      question: "What name did the Lady give?",
+      choices: ["The Queen of France", "The Immaculate Conception", "The River Fairy"],
+      correct: 1,
+    },
+    {
+      question: "What does Bernadette's story teach us?",
+      choices: ["God chooses the smallest and poorest for great things", "Only rich people see visions", "Never drink spring water"],
+      correct: 0,
+    },
+  ],
+  "st-faustina": [
+    {
+      question: "What was Faustina's birth name?",
+      choices: ["Helena Kowalska", "Maria Goretti", "Joan of Arc"],
+      correct: 0,
+    },
+    {
+      question: "What streamed from Jesus' Heart in the vision?",
+      choices: ["Two rays, one red and one pale", "A flock of doves", "A shower of stars"],
+      correct: 0,
+    },
+    {
+      question: "What words did Jesus ask to be written under the image?",
+      choices: ["Jesus, I trust in You", "Good luck to all", "See you soon"],
+      correct: 0,
+    },
+    {
+      question: "Who helped Faustina have the painting made?",
+      choices: ["Father Sopoćko", "The mayor", "A travelling artist"],
+      correct: 0,
+    },
+    {
+      question: "When is the Feast of Mercy that Jesus asked for?",
+      choices: ["The Sunday after Easter", "Christmas morning", "Every Friday night"],
+      correct: 0,
+    },
+  ],
+  "st-jerome": [
+    {
+      question: "What did young Jerome love more than being good?",
+      choices: ["His books", "His horse", "His stamp collection"],
+      correct: 0,
+    },
+    {
+      question: "Where did Jerome go to pray and learn?",
+      choices: ["The desert", "A circus", "A castle"],
+      correct: 0,
+    },
+    {
+      question: "What hard language did Jerome teach himself?",
+      choices: ["Hebrew", "Pirate talk", "Dolphin clicks"],
+      correct: 0,
+    },
+    {
+      question: "How did Jerome help the lion?",
+      choices: ["He pulled a thorn from its paw", "He gave it a haircut", "He taught it to read"],
+      correct: 0,
+    },
+    {
+      question: "What great work did Jerome finish in Bethlehem?",
+      choices: ["Translating the whole Bible into Latin", "Building a tower", "Painting the cave walls"],
+      correct: 0,
+    },
+  ],
+  "st-maximilian-kolbe": [
+    {
+      question: "What did Our Lady offer young Raymond?",
+      choices: ["Two crowns, white and red", "A bag of marbles", "A new puppy"],
+      correct: 0,
+    },
+    {
+      question: "How did Maximilian spread love of Mary?",
+      choices: ["With printing presses and magazines", "With skywriting", "With carrier pigeons"],
+      correct: 0,
+    },
+    {
+      question: "Where was Maximilian imprisoned?",
+      choices: ["Auschwitz", "A lighthouse", "A bakery"],
+      correct: 0,
+    },
+    {
+      question: "What did Maximilian say when Franciszek cried out?",
+      choices: ["Take me instead", "Run for your life", "Hide behind me"],
+      correct: 0,
+    },
+    {
+      question: "What does St Maximilian's story teach us?",
+      choices: ["Love lays down its life for a friend", "Prisons are fun", "Printing is boring"],
+      correct: 0,
+    },
+  ],
 };

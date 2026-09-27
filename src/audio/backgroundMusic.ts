@@ -6,6 +6,20 @@ const MUSIC_VOLUME = 0.25;
 
 let player: AudioPlayer | null = null;
 let modeApplied = false;
+let muted = false;
+
+export function setStoryMusicMuted(m: boolean) {
+  muted = m;
+  try {
+    if (player) player.volume = m ? 0 : MUSIC_VOLUME;
+  } catch {
+    // ignore
+  }
+}
+
+export function isStoryMusicMuted() {
+  return muted;
+}
 
 function ensureAudioMode() {
   if (modeApplied) return;
@@ -18,7 +32,7 @@ function getPlayer(): AudioPlayer | null {
     if (!player) {
       player = createAudioPlayer(STORY_MUSIC);
       player.loop = true;
-      player.volume = MUSIC_VOLUME;
+      player.volume = muted ? 0 : MUSIC_VOLUME;
     }
     return player;
   } catch {

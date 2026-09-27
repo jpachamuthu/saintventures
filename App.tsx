@@ -24,7 +24,8 @@ import LibraryScreen from "./src/screens/LibraryScreen";
 import StoryScreen from "./src/screens/StoryScreen";
 import QuizScreen from "./src/screens/QuizScreen";
 import BadgesScreen from "./src/screens/BadgesScreen";
-import SettingsScreen from "./src/screens/SettingsScreen";
+import FeastDaysScreen from "./src/screens/FeastDaysScreen";
+import MenuScreen from "./src/screens/MenuScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
 import { ThemeProvider } from "./src/components/ThemeContext";
@@ -33,12 +34,12 @@ import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "settings" | "quiz";
+type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "feasts" | "menu" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
   const [story, setStory] = useState<Story>(featuredStory);
-  const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges">("home");
+  const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges" | "feasts">("home");
 
   const [fontsLoaded] = useFonts({
     Fredoka_600SemiBold,
@@ -63,7 +64,7 @@ export default function App() {
     return null;
   }
 
-  const openStory = (s: Story, origin: "home" | "library" | "badges") => {
+  const openStory = (s: Story, origin: "home" | "library" | "badges" | "feasts") => {
     setStory(s);
     setStoryOrigin(origin);
     setScreen("story");
@@ -73,7 +74,7 @@ export default function App() {
     if (tab === "home") setScreen("home");
     else if (tab === "library") setScreen("library");
     else if (tab === "badges") setScreen("badges");
-    else if (tab === "settings") setScreen("settings");
+    else if (tab === "feasts") setScreen("feasts");
   };
 
   return (
@@ -86,6 +87,7 @@ export default function App() {
             <HomeScreen
               onOpenStory={(s) => openStory(s, "home")}
               onFooterTab={handleFooterTab}
+              onOpenMenu={() => setScreen("menu")}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
@@ -98,7 +100,15 @@ export default function App() {
               onToggleFavourite={toggleFavourite}
             />
           )}
-          {screen === "settings" && <SettingsScreen onFooterTab={handleFooterTab} />}
+          {screen === "feasts" && (
+            <FeastDaysScreen
+              onOpenStory={(s) => openStory(s, "feasts")}
+              onTab={handleFooterTab}
+              favouriteIds={favourites}
+              onToggleFavourite={toggleFavourite}
+            />
+          )}
+          {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} />}
           {screen === "badges" && (
             <BadgesScreen
               onOpenStory={(s) => openStory(s, "badges")}

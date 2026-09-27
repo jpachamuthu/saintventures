@@ -23,11 +23,13 @@ import { stories, type Story } from "../data/stories";
 export default function HomeScreen({
   onOpenStory,
   onFooterTab,
+  onOpenMenu,
   favouriteIds,
   onToggleFavourite,
 }: {
   onOpenStory: (story: Story) => void;
   onFooterTab: (tab: TabId) => void;
+  onOpenMenu: () => void;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
@@ -82,9 +84,15 @@ export default function HomeScreen({
               <Bell size={16} color={colors.cream} />
               <View style={styles.notifDot} />
             </View>
-            <View style={styles.iconBtn}>
+            <Pressable
+              onPress={onOpenMenu}
+              style={styles.iconBtn}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="Open menu"
+            >
               <Menu size={16} color={colors.cream} />
-            </View>
+            </Pressable>
           </View>
         </View>
 

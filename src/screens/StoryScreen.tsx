@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, Settings, Star } from "lucide-react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, Settings, Star, Volume2, VolumeX } from "lucide-react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
+import GlassView from "../components/GlassView";
 import GoldGradient from "../components/GoldGradient";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
-import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic } from "../audio/backgroundMusic";
+import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic, setStoryMusicMuted } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 import type { Story } from "../data/stories";
 
@@ -26,7 +27,8 @@ const BASE_WORD_MS = 120;
 const CHAR_MS = 55;
 const WORD_GAP_MS = 70;
 const SENTENCE_END_MS = 360;
-const PHRASE_PAUSE_MS = 200;
+// Flip to true to bring the mute button back to the story dock.
+const SHOW_MUTE_BUTTON = false;const PHRASE_PAUSE_MS = 200;
 const CALIB_SMOOTH = 0.5;
 
 function splitWords(text: string): string[] {
@@ -68,6 +70,7 @@ function wordIndexFromChar(charIndex: number, offsets: number[]): number {
 
 export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenProps) {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
   const [page, setPage] = useState(0);
   const [reading, setReading] = useState(false);
@@ -76,6 +79,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
   const [voice, setVoice] = useState<string | undefined>(undefined);
   const [showEnd, setShowEnd] = useState(false);
   const [myRating, setMyRating] = useState(0);
+  const [muted, setMuted] = useState(false);
 
   const pageRef = useRef(0);
   const readingRef = useRef(false);
@@ -92,6 +96,12 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
   const sessionRef = useRef(0);
   const endTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const endOpacity = useRef(new Animated.Value(0)).current;
+  const scrollRef = useRef<ScrollView>(null);
+  const wordYRef = useRef<number[]>([]);
+  const textYRef = useRef(0);
+  const scrollYRef = useRef(0);
+  const viewHRef = useRef(0);
+  const keepAliveRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const { rate } = useRatings();
 
@@ -102,6 +112,28 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
 
   const words = useMemo(() => splitWords(rest), [rest]);
 
+  // Reset word positions and jump back to the top whenever the page changes.
+  useEffect(() => {
+    wordYRef.current = [];
+    scrollYRef.current = 0;
+    scrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [page]);
+
+  // Follow the narrated word, but only step in when it is about to slide
+  // under the floating dock — one decisive glide per screenful, no jitter.
+  // DOCK_CLEAR must cover the dock height (~95) plus breathing room.
+  const DOCK_CLEAR = 120;
+  useEffect(() => {
+    if (!reading || activeWord == null) return;
+    const wy = wordYRef.current[activeWord];
+    if (wy == null) return;
+    const contentY = textYRef.current + wy;
+    const bottomEdge = scrollYRef.current + (viewHRef.current || 600);
+    if (contentY + 34 > bottomEdge - DOCK_CLEAR) {
+      scrollRef.current?.scrollTo({ y: Math.max(0, contentY - 140), animated: true });
+    }
+  }, [activeWord, reading]);
+
   useEffect(() => {
     let mounted = true;
     getBestVoice()
@@ -111,6 +143,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       .catch(() => {});
     return () => {
       mounted = false;
+      clearTimers();
       Speech.stop();
       stopStoryMusic();
       releaseStoryMusic();
@@ -129,6 +162,10 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     if (fallbackTimerRef.current) {
       clearTimeout(fallbackTimerRef.current);
       fallbackTimerRef.current = null;
+    }
+    if (keepAliveRef.current) {
+      clearInterval(keepAliveRef.current);
+      keepAliveRef.current = null;
     }
   }
 
@@ -220,6 +257,21 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       if (session !== sessionRef.current) return;
       if (!boundaryModeRef.current && readingRef.current) startEstimateInterval();
     }, BOUNDARY_GRACE_MS);
+
+    // Web-only TTS keepalive: Chromium can stall long utterances (~15s) without
+    // firing onDone; resume() is a no-op while speech is actively playing.
+    if (Platform.OS === "web") {
+      if (keepAliveRef.current) clearInterval(keepAliveRef.current);
+      keepAliveRef.current = setInterval(() => {
+        if (readingRef.current && session === sessionRef.current) {
+          try {
+            Speech.resume();
+          } catch {
+            // ignore
+          }
+        }
+      }, 10000);
+    }
   }
 
   function advancePage() {
@@ -267,6 +319,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
   }
 
   function startReading() {
+    clearMute();
     readingRef.current = true;
     setReading(true);
     setPaused(false);
@@ -288,6 +341,33 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       Speech.pause();
       pauseStoryMusic();
       setPaused(true);
+    }
+  }
+
+  // True when muting interrupted active narration, so unmuting can resume it.
+  const muteResumeRef = useRef(false);
+
+  // TTS has no volume knob, so muting the voiceover means halting speech.
+  // Music is silenced via player volume in the same gesture.
+  function clearMute() {
+    if (!muted) return;
+    setMuted(false);
+    setStoryMusicMuted(false);
+    muteResumeRef.current = false;
+  }
+
+  function toggleMute() {
+    const next = !muted;
+    setMuted(next);
+    setStoryMusicMuted(next);
+    if (next) {
+      // Mute: halt the voiceover (page position is kept) and silence music.
+      muteResumeRef.current = readingRef.current;
+      if (readingRef.current) stopReading();
+    } else if (muteResumeRef.current) {
+      // Unmute: resume narration from the top of the current page.
+      muteResumeRef.current = false;
+      startReading();
     }
   }
 
@@ -341,6 +421,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
       clearTimeout(endTimerRef.current);
       endTimerRef.current = null;
     }
+    clearMute();
     setShowEnd(false);
     setMyRating(0);
     setPage(0);
@@ -367,7 +448,18 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
         <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={240} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={styles.body}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={(e) => {
+          scrollYRef.current = e.nativeEvent.contentOffset.y;
+        }}
+        onLayout={(e) => {
+          viewHRef.current = e.nativeEvent.layout.height;
+        }}
+      >
         <View style={styles.pageLabelRow}>
           <Text style={styles.pageLabel}>
             Page {page + 1} of {total}
@@ -379,11 +471,19 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
             </View>
           )}
         </View>
-        <Text style={styles.pageText}>
+        <Text
+          style={styles.pageText}
+          onLayout={(e) => {
+            textYRef.current = e.nativeEvent.layout.y;
+          }}
+        >
           <Text style={styles.dropCap}>{firstChar}</Text>
           {words.map((w, i) => (
             <Text
               key={`${i}-${w}`}
+              onLayout={(e) => {
+                wordYRef.current[i] = e.nativeEvent.layout.y;
+              }}
               style={[i === activeWord && reading ? styles.activeWord : null, paused && i === activeWord && styles.activeWordPaused]}
             >
               {w}{" "}
@@ -392,39 +492,50 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
         </Text>
       </ScrollView>
 
-      <View style={styles.progressWrap}>
-        <View style={styles.track}>
-          <View style={[styles.fill, { width: `${pct}%` }]} />
-        </View>
-        <View style={styles.progressMeta}>
-          <Text style={styles.progressText}>Page {page + 1}</Text>
-          <Text style={styles.progressText}>{total - page - 1} to go</Text>
-        </View>
-      </View>
-
-      <View style={styles.controls}>
-        <Pressable
-          onPress={goPrev}
-          style={{ opacity: page === 0 && !reading ? 0.35 : 1 }}
-          hitSlop={8}
-        >
-          <RotateCcw size={22} color={colors.cream} />
-        </Pressable>
-        <Pressable style={styles.playBtn} onPress={reading ? togglePause : startReading} hitSlop={8}>
-          <GoldGradient style={StyleSheet.absoluteFill} />
-          {reading ? (
-            paused ? (
-              <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
-            ) : (
-              <Pause size={26} color="#000000" fill="#000000" style={{ zIndex: 1 }} />
-            )
-          ) : (
-            <Play size={26} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
-          )}
-        </Pressable>
-        <Pressable onPress={goNext} hitSlop={8}>
-          <RotateCw size={22} color={colors.cream} />
-        </Pressable>
+      <View style={[styles.dockWrap, { bottom: Math.max(insets.bottom, 4) }]}>
+        <GlassView strong deep corner={26} style={styles.dock}>
+          <View style={styles.track}>
+            <View style={[styles.fill, { width: `${pct}%` }]} />
+          </View>
+          <View style={styles.controls}>
+            <Pressable
+              onPress={goPrev}
+              style={{ opacity: page === 0 && !reading ? 0.35 : 1 }}
+              hitSlop={8}
+            >
+              <RotateCcw size={22} color={colors.cream} />
+            </Pressable>
+            <Pressable style={styles.playBtn} onPress={reading ? togglePause : startReading} hitSlop={8}>
+              <GoldGradient style={StyleSheet.absoluteFill} />
+              {reading ? (
+                paused ? (
+                  <Play size={22} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
+                ) : (
+                  <Pause size={22} color="#000000" fill="#000000" style={{ zIndex: 1 }} />
+                )
+              ) : (
+                <Play size={22} color="#000000" fill="#000000" style={{ marginLeft: 3, zIndex: 1 }} />
+              )}
+            </Pressable>
+            <Pressable onPress={goNext} hitSlop={8}>
+              <RotateCw size={22} color={colors.cream} />
+            </Pressable>
+            {SHOW_MUTE_BUTTON && (
+              <Pressable
+                onPress={toggleMute}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel={muted ? "Unmute background music" : "Mute background music"}
+              >
+                {muted ? (
+                  <VolumeX size={22} color={colors.cream} />
+                ) : (
+                  <Volume2 size={22} color={colors.cream} />
+                )}
+              </Pressable>
+            )}
+          </View>
+        </GlassView>
       </View>
 
       {showEnd && (
@@ -511,7 +622,7 @@ function createStyles(colors: ThemeColors) {
   body: {
     paddingHorizontal: 22,
     paddingTop: 20,
-    paddingBottom: 8,
+    paddingBottom: 130,
   },
   pageLabelRow: {
     flexDirection: "row",
@@ -574,41 +685,38 @@ function createStyles(colors: ThemeColors) {
     color: colors.gold,
     backgroundColor: "rgba(212, 158, 66, 0.10)",
   },
-  progressWrap: {
-    paddingHorizontal: 24,
-    paddingBottom: 6,
+  dockWrap: {
+    position: "absolute",
+    left: 12,
+    right: 12,
+  },
+  dock: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 10,
   },
   track: {
     height: 3,
     borderRadius: 2,
     backgroundColor: colors.ring,
     overflow: "hidden",
+    marginBottom: 10,
   },
   fill: {
     height: 3,
     backgroundColor: colors.gold,
   },
-  progressMeta: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 8,
-  },
-  progressText: {
-    fontFamily: fonts.ui,
-    fontSize: 12,
-    color: colors.mutedDim,
-  },
   controls: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 30,
-    paddingVertical: 8,
+    gap: 26,
+    paddingVertical: 2,
   },
   playBtn: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",

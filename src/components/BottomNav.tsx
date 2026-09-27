@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
-import { Animated, Easing, Platform, Pressable, Text, View, StyleSheet, type ViewStyle } from "react-native";
-import { House, Library, Medal, Settings, type LucideIcon } from "lucide-react-native";
+import { Animated, Easing, Pressable, Text, View, StyleSheet, type ViewStyle } from "react-native";
+import { House, Library, Medal, CalendarDays, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
+import { webBlurStyle } from "./GlassView";
 import { fonts, type ThemeColors } from "../theme";
 
-export type TabId = "home" | "library" | "badges" | "settings";
+export type TabId = "home" | "library" | "badges" | "feasts";
 
 type TabItem = {
   id: TabId;
@@ -17,7 +18,7 @@ const TABS: TabItem[] = [
   { id: "home", label: "Home", icon: House },
   { id: "library", label: "Library", icon: Library },
   { id: "badges", label: "Badges", icon: Medal },
-  { id: "settings", label: "Settings", icon: Settings },
+  { id: "feasts", label: "Feasts", icon: CalendarDays },
 ];
 
 type BottomNavProps = {
@@ -143,8 +144,8 @@ export default function BottomNav({ active, onTab }: BottomNavProps) {
 }
 
 // Backdrop blur is web-only; native falls back to translucency.
-const WEB_BLUR: ViewStyle | null =
-  Platform.OS === "web" ? ({ backdropFilter: "blur(22px) saturate(1.5)" } as ViewStyle) : null;
+// Same recipe as GlassView so the tab bar and story dock match exactly.
+const WEB_BLUR: ViewStyle | null = webBlurStyle();
 
 function createStyles(colors: ThemeColors) {  return StyleSheet.create({
     wrap: {

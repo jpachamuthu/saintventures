@@ -106,7 +106,6 @@ function createStyles(colors: ThemeColors) {
     root: {
       flex: 1,
       backgroundColor: colors.bg,
-      paddingBottom: 120,
     },
     header: {
       flexDirection: "row",
@@ -151,7 +150,7 @@ function createStyles(colors: ThemeColors) {
     grid: {
       paddingHorizontal: 18,
       paddingTop: 14,
-      paddingBottom: 20,
+      paddingBottom: 130,
       flexDirection: "row",
       flexWrap: "wrap",
       justifyContent: "space-between",
