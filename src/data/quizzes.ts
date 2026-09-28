@@ -1249,4 +1249,625 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
   ],
+  "st-joseph": [
+    {
+      question: "What was Joseph's job?",
+      choices: ["A carpenter", "A fisherman", "A baker"],
+      correct: 0,
+    },
+    {
+      question: "What did the angel tell Joseph in his dream?",
+      choices: ["Do not be afraid, take Mary as your wife", "Run away to Rome", "Hide the baby"],
+      correct: 0,
+    },
+    {
+      question: "Where did Joseph take Mary and Jesus to escape Herod?",
+      choices: ["To Egypt", "To Spain", "To the mountains of the moon"],
+      correct: 0,
+    },
+    {
+      question: "What did Joseph teach Jesus?",
+      choices: ["Carpentry and honest work", "How to juggle", "How to sail ships"],
+      correct: 0,
+    },
+    {
+      question: "How many words of Joseph are recorded in the Bible?",
+      choices: ["Not a single one", "A thousand", "Fifty-two"],
+      correct: 0,
+    },
+  ],
+  "st-christopher": [
+    {
+      question: "What did the giant Reprobus want most?",
+      choices: ["To serve the greatest king", "To eat the biggest cake", "To sleep all day"],
+      correct: 0,
+    },
+    {
+      question: "What job did the hermit give Reprobus?",
+      choices: ["Carry travellers across the river", "Count the stars", "Polish the church bells"],
+      correct: 0,
+    },
+    {
+      question: "What happened as Reprobus carried the Child?",
+      choices: ["The Child grew heavier than the world", "The Child sang a song", "The river dried up"],
+      correct: 0,
+    },
+    {
+      question: "Who was the Child, really?",
+      choices: ["Jesus", "A lost prince", "A talking fish"],
+      correct: 0,
+    },
+    {
+      question: "Who is St Christopher the patron saint of?",
+      choices: ["Travellers", "Chefs", "Librarians"],
+      correct: 0,
+    },
+  ],
+  "st-peter-julian": [
+    {
+      question: "What did little Peter Julian love most?",
+      choices: ["Jesus in the Eucharist", "Toy soldiers", "Horse racing"],
+      correct: 0,
+    },
+    {
+      question: "What did Peter Julian found?",
+      choices: ["A circus", "Priests and sisters devoted to the Eucharist", "A football club"],
+      correct: 1,
+    },
+    {
+      question: "What did he invite everyone to do?",
+      choices: ["Come and adore Jesus", "Stay home and sleep", "Ignore the church"],
+      correct: 0,
+    },
+    {
+      question: "What did Peter Julian say the Eucharist is?",
+      choices: ["A nice symbol", "Jesus Himself", "Just bread"],
+      correct: 1,
+    },
+    {
+      question: "What is Peter Julian called?",
+      choices: ["The Apostle of the Eucharist", "The king of France", "The fastest runner"],
+      correct: 0,
+    },
+  ],
+  "st-alphonsus-liguori": [
+    {
+      question: "What was young Alphonsus?",
+      choices: ["A lawyer who never lost", "A fisherman", "A lighthouse keeper"],
+      correct: 0,
+    },
+    {
+      question: "What made him leave the courtroom forever?",
+      choices: ["One terrible mistake that lost his case", "He won too much money", "He got bored of wigs"],
+      correct: 0,
+    },
+    {
+      question: "Who did Alphonsus preach to?",
+      choices: ["The poorest villagers", "Only kings", "Nobody at all"],
+      correct: 0,
+    },
+    {
+      question: "What family did he found?",
+      choices: ["The Redemptorists", "A circus family", "A sailing crew"],
+      correct: 0,
+    },
+    {
+      question: "Who is Alphonsus the patron saint of?",
+      choices: ["Confessors", "Astronauts", "Chefs"],
+      correct: 0,
+    },
+  ],
+  "st-basil": [
+    {
+      question: "What was special about Basil's family?",
+      choices: ["Many of them are saints too", "They owned a circus", "They were all sailors"],
+      correct: 0,
+    },
+    {
+      question: "What did Basil do with his fortune?",
+      choices: ["Gave it to the poor", "Buried it in the desert", "Bought a palace"],
+      correct: 0,
+    },
+    {
+      question: "What did Basil build outside the city?",
+      choices: ["A hospital city for the poor and sick", "A race track", "A giant statue of himself"],
+      correct: 0,
+    },
+    {
+      question: "Who tried to frighten Basil into giving up?",
+      choices: ["The emperor", "A dragon", "His own shadow"],
+      correct: 0,
+    },
+    {
+      question: "What does Basil teach us?",
+      choices: ["Faith without works is just noise", "Money buys happiness", "Hide from the poor"],
+      correct: 0,
+    },
+  ],
+  "st-agnes": [
+    {
+      question: "How old was Agnes?",
+      choices: ["About twelve", "About fifty", "About ninety"],
+      correct: 0,
+    },
+    {
+      question: "Why did Agnes refuse to marry?",
+      choices: ["She belonged to Christ", "She disliked cake", "She wanted to travel"],
+      correct: 0,
+    },
+    {
+      question: "What animal is Agnes always painted with?",
+      choices: ["A lamb", "A lion", "A parrot"],
+      correct: 0,
+    },
+    {
+      question: "What are the blessed lambs' wool used for?",
+      choices: ["Archbishops' scarves", "Winter socks", "Football jerseys"],
+      correct: 0,
+    },
+    {
+      question: "Who is Agnes the patron saint of?",
+      choices: ["Young girls and purity", "Race car drivers", "Deep sea divers"],
+      correct: 0,
+    },
+  ],
+  "st-fabian": [
+    {
+      question: "What was Fabian before becoming pope?",
+      choices: ["An unknown farmer", "A famous general", "A wealthy banker"],
+      correct: 0,
+    },
+    {
+      question: "What landed on Fabian's head?",
+      choices: ["A snow-white dove", "A falling apple", "A paper hat"],
+      correct: 0,
+    },
+    {
+      question: "What did the crowd shout?",
+      choices: ["He is the one! God has chosen him!", "Send him away!", "Louder, please!"],
+      correct: 0,
+    },
+    {
+      question: "What did Fabian do as pope?",
+      choices: ["Organized the Church and sent missionaries", "Built a bigger palace", "Took long holidays"],
+      correct: 0,
+    },
+    {
+      question: "How did Fabian die?",
+      choices: ["Martyred for refusing to deny Christ", "Of old age in bed", "He disappeared at sea"],
+      correct: 0,
+    },
+  ],
+  "st-sebastian": [
+    {
+      question: "What was Sebastian's secret?",
+      choices: ["He was a Christian", "He was afraid of horses", "He couldn't swim"],
+      correct: 0,
+    },
+    {
+      question: "What did the soldiers do to Sebastian?",
+      choices: ["Shot him full of arrows", "Tickled him", "Sent him to bed"],
+      correct: 0,
+    },
+    {
+      question: "Who nursed Sebastian back to health?",
+      choices: ["A widow named Irene", "The emperor himself", "A passing goat"],
+      correct: 0,
+    },
+    {
+      question: "What did Sebastian do once he recovered?",
+      choices: ["Walked back and confronted the emperor", "Hid in a cave", "Sailed to Spain"],
+      correct: 0,
+    },
+    {
+      question: "Who is Sebastian the patron saint of?",
+      choices: ["Soldiers and athletes", "Bakers and chefs", "Librarians"],
+      correct: 0,
+    },
+  ],
+  "st-timothy": [
+    {
+      question: "Who taught Timothy the Scriptures as a boy?",
+      choices: ["His grandmother Lois and mother Eunice", "A travelling circus", "Nobody at all"],
+      correct: 0,
+    },
+    {
+      question: "Which apostle took Timothy on his journeys?",
+      choices: ["Paul", "A pirate captain", "A camel driver"],
+      correct: 0,
+    },
+    {
+      question: "What did Paul call Timothy?",
+      choices: ["My dear child", "My little problem", "My runaway servant"],
+      correct: 0,
+    },
+    {
+      question: "What city did Timothy become bishop of?",
+      choices: ["Ephesus", "Paris", "London"],
+      correct: 0,
+    },
+    {
+      question: "What does Timothy teach us?",
+      choices: ["God loves to use young people", "Only old people matter", "Stay home always"],
+      correct: 0,
+    },
+  ],
+  "st-titus": [
+    {
+      question: "What was Titus's special gift?",
+      choices: ["Making angry people friends again", "Juggling fire", "Talking to fish"],
+      correct: 0,
+    },
+    {
+      question: "Where did Paul send Titus to make peace?",
+      choices: ["Corinth", "The moon", "A bakery"],
+      correct: 0,
+    },
+    {
+      question: "Which wild island did Titus shepherd?",
+      choices: ["Crete", "A floating island", "An island of cats"],
+      correct: 0,
+    },
+    {
+      question: "What did Paul's letter to Titus teach?",
+      choices: ["Be gentle and do good", "Argue louder", "Take long naps"],
+      correct: 0,
+    },
+    {
+      question: "Whose feast day does Titus share?",
+      choices: ["Timothy's", "Nobody's", "A dragon's"],
+      correct: 0,
+    },
+  ],
+  "st-angela-merici": [
+    {
+      question: "What sad thing did Angela notice?",
+      choices: ["Poor girls got no schooling", "Too many holidays", "Not enough cake"],
+      correct: 0,
+    },
+    {
+      question: "What did Angela see in her vision?",
+      choices: ["A ladder of light with singing girls", "A mountain of gold", "A flying ship"],
+      correct: 0,
+    },
+    {
+      question: "What did Angela found in 1535?",
+      choices: ["The Ursulines, to teach girls", "A bakery", "A zoo"],
+      correct: 0,
+    },
+    {
+      question: "How did Angela tell her sisters to govern?",
+      choices: ["With kindness, like mothers", "With strict shouting", "With locked doors"],
+      correct: 0,
+    },
+    {
+      question: "Who is Angela the patron saint of?",
+      choices: ["Teachers and schoolgirls", "Race car drivers", "Astronauts"],
+      correct: 0,
+    },
+  ],
+  "st-thomas-aquinas": [
+    {
+      question: "What rude nickname did classmates give Thomas?",
+      choices: ["The Dumb Ox", "The Noisy Rooster", "The Sleepy Sloth"],
+      correct: 0,
+    },
+    {
+      question: "What did his family do when he joined the Dominicans?",
+      choices: ["Kidnapped and locked him up", "Threw a party", "Ignored him"],
+      correct: 0,
+    },
+    {
+      question: "What did his teacher Albert predict?",
+      choices: ["His bellowing will be heard around the world", "He will fail every test", "He will become a sailor"],
+      correct: 0,
+    },
+    {
+      question: "What is Thomas's greatest book called?",
+      choices: ["The Summa", "The Cookbook", "The Pirate Map"],
+      correct: 0,
+    },
+    {
+      question: "What beautiful song did Thomas write?",
+      choices: ["The Tantum Ergo", "Happy Birthday", "Row Row Row Your Boat"],
+      correct: 0,
+    },
+  ],
+  "st-john-bosco": [
+    {
+      question: "What did John dream at nine years old?",
+      choices: ["Wild boys becoming gentle, and a Lady guiding him", "Flying elephants", "A mountain of homework"],
+      correct: 0,
+    },
+    {
+      question: "How did John attract village boys?",
+      choices: ["Juggling and magic tricks", "Free ice cream", "Loud fireworks"],
+      correct: 0,
+    },
+    {
+      question: "What did Bosco say about hopeless boys?",
+      choices: ["There are none, only unloved ones", "Avoid them all", "Lock them up"],
+      correct: 0,
+    },
+    {
+      question: "What family did Bosco found?",
+      choices: ["The Salesians", "A circus troupe", "A navy"],
+      correct: 0,
+    },
+    {
+      question: "What was Bosco's motto about joy?",
+      choices: ["Serve the Lord with gladness", "Never smile", "Frown more"],
+      correct: 0,
+    },
+  ],
+  "st-agatha": [
+    {
+      question: "Where was Agatha from?",
+      choices: ["Sicily", "Egypt", "Norway"],
+      correct: 0,
+    },
+    {
+      question: "Why did the governor arrest Agatha?",
+      choices: ["She refused to marry him or deny Christ", "She stole his horse", "She sang too loudly"],
+      correct: 0,
+    },
+    {
+      question: "Who appeared to comfort Agatha in prison?",
+      choices: ["St Peter", "A palace guard", "Her pet cat"],
+      correct: 0,
+    },
+    {
+      question: "What miracle is linked to Agatha's veil?",
+      choices: ["It stopped Mount Etna's lava", "It turned into gold", "It flew away"],
+      correct: 0,
+    },
+    {
+      question: "Who is Agatha the patron saint of?",
+      choices: ["Sicily and nurses", "Pilots", "Chess players"],
+      correct: 0,
+    },
+  ],
+  "st-peter-chanel": [
+    {
+      question: "Where did Peter Chanel sail as a missionary?",
+      choices: ["The Pacific islands", "The North Pole", "The moon"],
+      correct: 0,
+    },
+    {
+      question: "What tiny island did he land on?",
+      choices: ["Futuna", "Hawaii", "Atlantis"],
+      correct: 0,
+    },
+    {
+      question: "How did Peter win hearts?",
+      choices: ["Gentleness, language, and serving the sick", "Magic tricks", "Loud shouting"],
+      correct: 0,
+    },
+    {
+      question: "Why did the chief order Peter killed?",
+      choices: ["He feared losing power as people converted", "Peter ate his lunch", "Peter snored"],
+      correct: 0,
+    },
+    {
+      question: "What happened to Futuna after Peter's death?",
+      choices: ["The whole island became Christian", "Everyone forgot him", "It sank into the sea"],
+      correct: 0,
+    },
+  ],
+  "st-catherine-siena": [
+    {
+      question: "What number child was Catherine?",
+      choices: ["The 25th", "The 1st", "The 3rd"],
+      correct: 0,
+    },
+    {
+      question: "What did Catherine do to avoid marriage?",
+      choices: ["Cut off her long hair", "Ran to the forest", "Hid in a barrel"],
+      correct: 0,
+    },
+    {
+      question: "Who did Catherine persuade to return to Rome?",
+      choices: ["The Pope", "A pirate king", "Her neighbour"],
+      correct: 0,
+    },
+    {
+      question: "What book did Catherine dictate?",
+      choices: ["The Dialogue", "A cookbook", "A pirate map"],
+      correct: 0,
+    },
+    {
+      question: "What title was Catherine given?",
+      choices: ["Doctor of the Church", "Queen of Siena", "Captain of ships"],
+      correct: 0,
+    },
+  ],
+  "st-rita": [
+    {
+      question: "What did little Rita dream of becoming?",
+      choices: ["A nun", "A queen", "A sailor"],
+      correct: 0,
+    },
+    {
+      question: "How did Rita change her difficult husband?",
+      choices: ["With patience, kindness, and prayer", "With shouting", "With magic spells"],
+      correct: 0,
+    },
+    {
+      question: "How did Rita finally enter the convent?",
+      choices: ["Her patron saints lifted her over the wall", "She dug a tunnel", "She disguised herself"],
+      correct: 0,
+    },
+    {
+      question: "What miracle happened when Rita was dying?",
+      choices: ["A rose bloomed in the snow", "It rained candy", "Stars fell down"],
+      correct: 0,
+    },
+    {
+      question: "Who is Rita the patron saint of?",
+      choices: ["Impossible causes", "Lost socks", "Flat tyres"],
+      correct: 0,
+    },
+  ],
+  "st-felicitas": [
+    {
+      question: "How many sons did Felicitas have?",
+      choices: ["Seven", "Two", "Twelve"],
+      correct: 0,
+    },
+    {
+      question: "What did the judge order the family to do?",
+      choices: ["Sacrifice to false gods", "Sing a song", "Dance a jig"],
+      correct: 0,
+    },
+    {
+      question: "What did Felicitas cry to her sons?",
+      choices: ["Look up to heaven!", "Run away fast!", "Give up now!"],
+      correct: 0,
+    },
+    {
+      question: "What did Pope Gregory say about Felicitas?",
+      choices: ["She was martyred in her sons and herself", "She was too noisy", "She baked well"],
+      correct: 0,
+    },
+    {
+      question: "What does Felicitas teach mothers?",
+      choices: ["Want heaven for your children most of all", "Keep them home always", "Avoid church"],
+      correct: 0,
+    },
+  ],
+  "st-sharbel": [
+    {
+      question: "Where was Sharbel from?",
+      choices: ["The mountains of Lebanon", "The deserts of Egypt", "The streets of Paris"],
+      correct: 0,
+    },
+    {
+      question: "What name did Youssef take as a monk?",
+      choices: ["Sharbel", "Barnaby", "Felix"],
+      correct: 0,
+    },
+    {
+      question: "How did Sharbel live as a hermit?",
+      choices: ["One meal, hard bed, endless prayer", "Feasts and parties", "Travelling the world"],
+      correct: 0,
+    },
+    {
+      question: "What wonders appeared over his tomb?",
+      choices: ["Mysterious glowing lights", "Fireworks", "Falling snow"],
+      correct: 0,
+    },
+    {
+      question: "What does Sharbel teach us?",
+      choices: ["Silence with God is louder than noise", "Talk constantly", "Avoid mountains"],
+      correct: 0,
+    },
+  ],
+  "st-gertrude": [
+    {
+      question: "Where was little Gertrude raised?",
+      choices: ["The convent school of Helfta", "A pirate ship", "A royal palace"],
+      correct: 0,
+    },
+    {
+      question: "What changed Gertrude at twenty-six?",
+      choices: ["A vision of Jesus", "A new dress", "A lost kitten"],
+      correct: 0,
+    },
+    {
+      question: "What did Gertrude hear in her famous vision?",
+      choices: ["The beating of Jesus' Sacred Heart", "Thunder and lightning", "A choir of frogs"],
+      correct: 0,
+    },
+    {
+      question: "What book did Gertrude write?",
+      choices: ["The Herald of Divine Love", "A book of recipes", "A travel guide"],
+      correct: 0,
+    },
+    {
+      question: "Why is Gertrude called the Great?",
+      choices: ["For her holiness and wisdom", "For her height", "For her wealth"],
+      correct: 0,
+    },
+  ],
+  "st-andrew-dung-lac": [
+    {
+      question: "Where was Andrew Dũng-Lạc from?",
+      choices: ["Vietnam", "Ireland", "Brazil"],
+      correct: 0,
+    },
+    {
+      question: "What did Andrew do when freed from prison?",
+      choices: ["Walked straight back to his people", "Sailed to Rome", "Hid in a cave"],
+      correct: 0,
+    },
+    {
+      question: "How did Andrew die?",
+      choices: ["Beheaded for refusing the cross-trampling", "Of old age", "He moved away"],
+      correct: 0,
+    },
+    {
+      question: "How many martyrs were canonized together in 1988?",
+      choices: ["One hundred and seventeen", "Three", "Ten thousand"],
+      correct: 0,
+    },
+    {
+      question: "What do the martyrs teach us?",
+      choices: ["Faith survives any storm together", "Give up quickly", "Avoid Vietnam"],
+      correct: 0,
+    },
+  ],
+  "st-francis-xavier": [
+    {
+      question: "What question changed Francis's life?",
+      choices: ["What profits a man to gain the world and lose his soul?", "Where is my homework?", "Who ate my lunch?"],
+      correct: 0,
+    },
+    {
+      question: "How did Francis gather children in villages?",
+      choices: ["Ringing a little bell", "Fireworks", "Free toys"],
+      correct: 0,
+    },
+    {
+      question: "Which new land did Francis sail to?",
+      choices: ["Japan", "Antarctica", "The moon"],
+      correct: 0,
+    },
+    {
+      question: "Which country did Francis dream of reaching?",
+      choices: ["China", "Peru", "Iceland"],
+      correct: 0,
+    },
+    {
+      question: "Who is Francis Xavier the patron saint of?",
+      choices: ["Missions", "Surfers", "Chefs"],
+      correct: 0,
+    },
+  ],
+  "st-stephen": [
+    {
+      question: "What was Stephen chosen to do first?",
+      choices: ["Serve food to poor widows", "Build a tower", "Count money"],
+      correct: 0,
+    },
+    {
+      question: "What did Stephen's face shine like?",
+      choices: ["An angel's", "The sun at noon", "A polished shoe"],
+      correct: 0,
+    },
+    {
+      question: "What did Stephen see when he looked up?",
+      choices: ["The heavens opened and Jesus", "A flock of geese", "A thunderstorm"],
+      correct: 0,
+    },
+    {
+      question: "What did Stephen pray as he died?",
+      choices: ["Lord, do not hold this sin against them", "Run away, friends!", "I give up!"],
+      correct: 0,
+    },
+    {
+      question: "Who watched the coats at Stephen's stoning?",
+      choices: ["A young man named Saul", "Nobody at all", "A Roman dog"],
+      correct: 0,
+    },
+  ],
 };

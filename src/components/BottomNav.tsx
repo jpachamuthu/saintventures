@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import { Animated, Easing, Pressable, Text, View, StyleSheet, type ViewStyle } from "react-native";
-import { House, Library, Medal, CalendarDays, type LucideIcon } from "lucide-react-native";
+import { House, Library, Medal, CalendarDays, ListChecks, type LucideIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "./ThemeContext";
 import { webBlurStyle } from "./GlassView";
 import { fonts, type ThemeColors } from "../theme";
 
-export type TabId = "home" | "library" | "badges" | "feasts";
+export type TabId = "home" | "library" | "badges" | "feasts" | "quizzes";
 
 type TabItem = {
   id: TabId;
@@ -19,6 +19,7 @@ const TABS: TabItem[] = [
   { id: "library", label: "Library", icon: Library },
   { id: "badges", label: "Badges", icon: Medal },
   { id: "feasts", label: "Feasts", icon: CalendarDays },
+  { id: "quizzes", label: "Quizzes", icon: ListChecks },
 ];
 
 type BottomNavProps = {

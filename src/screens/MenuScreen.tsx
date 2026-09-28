@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, ChevronRight, FileText, Moon, ShieldCheck, Sun } from "lucide-react-native";
+import { ArrowLeft, ChevronRight, FileText, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import LegalPage, { PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
+import { getStoryMusicVolume, setStoryMusicVolume } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 
 type MenuScreenProps = {
@@ -16,6 +17,13 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
   const toggleAnim = useRef(new Animated.Value(isDark ? 1 : 0)).current;
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [volume, setVolume] = useState(getStoryMusicVolume);
+
+  const changeVolume = (delta: number) => {
+    const next = Math.min(10, Math.max(0, volume + delta));
+    setStoryMusicVolume(next);
+    setVolume(next);
+  };
 
   const handleToggle = () => {
     Animated.timing(toggleAnim, {
@@ -82,6 +90,49 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
           <Text style={styles.hint}>
             Choose the look that suits bedtime best — soft cream by day, deep navy at night.
           </Text>
+        </View>
+
+        <View style={styles.group}>
+          <Text style={styles.groupLabel}>Story music</Text>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <View style={styles.iconWrap}>
+                <Volume2 size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Volume</Text>
+                <Text style={styles.rowSubtitle}>Background music while reading</Text>
+              </View>
+            </View>
+            <View style={styles.stepperRow}>
+              <Pressable
+                onPress={() => changeVolume(-1)}
+                style={[styles.stepBtn, volume === 0 && styles.stepBtnDisabled]}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel="Lower music volume"
+              >
+                <Minus size={16} color={volume === 0 ? colors.mutedDim : colors.cream} />
+              </Pressable>
+              <View style={styles.meter}>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <View
+                    key={i}
+                    style={[styles.meterSeg, i < volume && { backgroundColor: colors.gold }]}
+                  />
+                ))}
+              </View>
+              <Pressable
+                onPress={() => changeVolume(1)}
+                style={[styles.stepBtn, volume === 10 && styles.stepBtnDisabled]}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel="Raise music volume"
+              >
+                <Plus size={16} color={volume === 10 ? colors.mutedDim : colors.cream} />
+              </Pressable>
+            </View>
+          </View>
         </View>
 
         <View style={styles.group}>
@@ -157,8 +208,9 @@ function createStyles(colors: ThemeColors) {
       width: 40,
     },
     title: {
-      fontFamily: fonts.serif,
-      fontSize: 32,
+      fontFamily: fonts.displayBold,
+      fontSize: 30,
+      lineHeight: 32,
       color: colors.cream,
     },
     group: {
@@ -231,6 +283,36 @@ function createStyles(colors: ThemeColors) {
       shadowRadius: 3,
       shadowOffset: { width: 0, height: 1 },
       elevation: 3,
+    },
+    stepperRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+      paddingVertical: 8,
+    },
+    stepBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.bgCardAlt,
+      borderWidth: 1,
+      borderColor: colors.glassBorder,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    stepBtnDisabled: {
+      opacity: 0.5,
+    },
+    meter: {
+      flex: 1,
+      flexDirection: "row",
+      gap: 4,
+    },
+    meterSeg: {
+      flex: 1,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: colors.ring,
     },
     hint: {
       fontFamily: fonts.ui,

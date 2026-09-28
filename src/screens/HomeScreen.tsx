@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Bell, Library, Menu, Play, Clock, Star, UserPlus } from "lucide-react-native";
+import { Bell, Library, Menu, Play, Clock, Star } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
@@ -14,7 +14,7 @@ import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
-import GlassView from "../components/GlassView";
+import { LogoMark } from "../components/Logo";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
@@ -73,29 +73,32 @@ export default function HomeScreen({
 
   return (
     <SafeAreaView style={styles.root}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View style={styles.topBar}>
-          <GlassView corner={999} style={styles.pill}>
-            <UserPlus size={15} color={colors.gold} />
-            <Text style={styles.pillText}>Add your child</Text>
-          </GlassView>
-          <View style={styles.icons}>
-            <View style={styles.iconBtn}>
-              <Bell size={16} color={colors.cream} />
-              <View style={styles.notifDot} />
-            </View>
-            <Pressable
-              onPress={onOpenMenu}
-              style={styles.iconBtn}
-              hitSlop={8}
-              accessibilityRole="button"
-              accessibilityLabel="Open menu"
-            >
-              <Menu size={16} color={colors.cream} />
-            </Pressable>
-          </View>
+      <View style={styles.topBar}>
+        <View style={styles.brand}>
+          <LogoMark size={30} />
+          <Text style={styles.brandName}>
+            <Text style={{ color: colors.cream }}>Saint</Text>
+            <Text style={{ color: colors.gold }}>Ventures</Text>
+          </Text>
         </View>
+        <View style={styles.icons}>
+          <View style={styles.iconBtn}>
+            <Bell size={16} color={colors.cream} />
+            <View style={styles.notifDot} />
+          </View>
+          <Pressable
+            onPress={onOpenMenu}
+            style={styles.iconBtn}
+            hitSlop={8}
+            accessibilityRole="button"
+            accessibilityLabel="Open menu"
+          >
+            <Menu size={16} color={colors.cream} />
+          </Pressable>
+        </View>
+      </View>
 
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.featuredWrap}>
           <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} image={featuredStory.hero} height={330}>
             <View style={styles.featuredOverlay}>
@@ -302,18 +305,16 @@ function createStyles(colors: ThemeColors) {
     paddingHorizontal: 18,
     paddingTop: 8,
     paddingBottom: 12,
+    backgroundColor: colors.bg,
   },
-  pill: {
+  brand: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
   },
-  pillText: {
-    fontFamily: fonts.uiBold,
-    fontSize: 14,
-    color: colors.gold,
+  brandName: {
+    fontFamily: fonts.displayBold,
+    fontSize: 20,
   },
   icons: {
     flexDirection: "row",

@@ -1,20 +1,62 @@
+import { Platform } from "react-native";
 import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from "expo-audio";
 
-const STORY_MUSIC = require("../../assets/audio/story-music.wav");
+const STORY_MUSIC = require("../../assets/audio/story-music.mp3");
 
-const MUSIC_VOLUME = 0.25;
+const VOLUME_KEY = "saintventures:music-volume";
+const VOLUME_MAX = 0.5; // music stays a soft bed under the narration
+const DEFAULT_LEVEL = 3; // turned down two notches from the original 5
 
 let player: AudioPlayer | null = null;
 let modeApplied = false;
 let muted = false;
 
-export function setStoryMusicMuted(m: boolean) {
-  muted = m;
+function readStoredLevel(): number {
   try {
-    if (player) player.volume = m ? 0 : MUSIC_VOLUME;
+    if (Platform.OS === "web" && typeof localStorage !== "undefined") {
+      const n = parseInt(localStorage.getItem(VOLUME_KEY) ?? "", 10);
+      if (Number.isFinite(n)) return Math.min(10, Math.max(0, n));
+    }
+  } catch {
+    // ignore storage errors
+  }
+  return DEFAULT_LEVEL;
+}
+
+let level = readStoredLevel();
+
+function playerVolume(): number {
+  if (muted) return 0;
+  return (level / 10) * VOLUME_MAX;
+}
+
+function applyVolume() {
+  try {
+    if (player) player.volume = playerVolume();
   } catch {
     // ignore
   }
+}
+
+export function getStoryMusicVolume(): number {
+  return level;
+}
+
+export function setStoryMusicVolume(next: number) {
+  level = Math.min(10, Math.max(0, Math.round(next)));
+  try {
+    if (Platform.OS === "web" && typeof localStorage !== "undefined") {
+      localStorage.setItem(VOLUME_KEY, String(level));
+    }
+  } catch {
+    // ignore storage errors
+  }
+  applyVolume();
+}
+
+export function setStoryMusicMuted(m: boolean) {
+  muted = m;
+  applyVolume();
 }
 
 export function isStoryMusicMuted() {
@@ -32,7 +74,7 @@ function getPlayer(): AudioPlayer | null {
     if (!player) {
       player = createAudioPlayer(STORY_MUSIC);
       player.loop = true;
-      player.volume = muted ? 0 : MUSIC_VOLUME;
+      player.volume = playerVolume();
     }
     return player;
   } catch {

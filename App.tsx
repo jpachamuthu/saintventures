@@ -25,6 +25,7 @@ import StoryScreen from "./src/screens/StoryScreen";
 import QuizScreen from "./src/screens/QuizScreen";
 import BadgesScreen from "./src/screens/BadgesScreen";
 import FeastDaysScreen from "./src/screens/FeastDaysScreen";
+import QuizzesScreen from "./src/screens/QuizzesScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import { featuredStory, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
@@ -34,12 +35,13 @@ import { useFavourites } from "./src/hooks/useFavourites";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "feasts" | "menu" | "quiz";
+type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "feasts" | "quizzes" | "menu" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash");
   const [story, setStory] = useState<Story>(featuredStory);
   const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges" | "feasts">("home");
+  const [quizOrigin, setQuizOrigin] = useState<"story" | "quizzes">("story");
 
   const [fontsLoaded] = useFonts({
     Fredoka_600SemiBold,
@@ -70,11 +72,18 @@ export default function App() {
     setScreen("story");
   };
 
+  const openQuiz = (s: Story, origin: "story" | "quizzes") => {
+    setStory(s);
+    setQuizOrigin(origin);
+    setScreen("quiz");
+  };
+
   const handleFooterTab = (tab: TabId) => {
     if (tab === "home") setScreen("home");
     else if (tab === "library") setScreen("library");
     else if (tab === "badges") setScreen("badges");
     else if (tab === "feasts") setScreen("feasts");
+    else if (tab === "quizzes") setScreen("quizzes");
   };
 
   return (
@@ -108,6 +117,14 @@ export default function App() {
               onToggleFavourite={toggleFavourite}
             />
           )}
+          {screen === "quizzes" && (
+            <QuizzesScreen
+              onOpenQuiz={(s) => openQuiz(s, "quizzes")}
+              onFooterTab={handleFooterTab}
+              favouriteIds={favourites}
+              onToggleFavourite={toggleFavourite}
+            />
+          )}
           {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} />}
           {screen === "badges" && (
             <BadgesScreen
@@ -119,11 +136,11 @@ export default function App() {
             <StoryScreen
               story={story}
               onBack={() => setScreen(storyOrigin)}
-              onStartQuiz={() => setScreen("quiz")}
+              onStartQuiz={() => openQuiz(story, "story")}
             />
           )}
           {screen === "quiz" && (
-            <QuizScreen story={story} onExit={() => setScreen("story")} onDone={() => setScreen("home")} />
+            <QuizScreen story={story} onExit={() => setScreen(quizOrigin === "quizzes" ? "quizzes" : "story")} onDone={() => setScreen("home")} />
           )}
         </View>
       </ThemeProvider>
