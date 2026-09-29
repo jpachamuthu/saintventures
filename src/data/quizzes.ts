@@ -1622,8 +1622,8 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
     {
-      question: "Who is Agatha the patron saint of?",
-      choices: ["Sicily and nurses", "Pilots", "Chess players"],
+      question: "Why is Agatha the patron saint of bakers?",
+      choices: ["Her little plate looks like loaves of bread", "She owned a bakery in Rome", "She baked cakes for the emperor"],
       correct: 0,
     },
   ],
@@ -1867,6 +1867,33 @@ export const quizzes: Record<string, Quiz> = {
     {
       question: "Who watched the coats at Stephen's stoning?",
       choices: ["A young man named Saul", "Nobody at all", "A Roman dog"],
+      correct: 0,
+    },
+  ],
+  "st-paul": [
+    {
+      question: "What was Paul's name before he converted?",
+      choices: ["Saul", "Barnaby", "Julius"],
+      correct: 0,
+    },
+    {
+      question: "What knocked Saul off his horse?",
+      choices: ["A flash of blinding heavenly light", "A falling coconut", "A strong sneeze"],
+      correct: 0,
+    },
+    {
+      question: "What did the voice from the light say?",
+      choices: ["Saul, Saul, why are you hurting Me?", "Turn back at once!", "Dinner is ready!"],
+      correct: 0,
+    },
+    {
+      question: "Who baptized Saul in Damascus?",
+      choices: ["Ananias", "The emperor", "A passing shepherd"],
+      correct: 0,
+    },
+    {
+      question: "How many of Paul's letters are in our Bible?",
+      choices: ["Thirteen", "Two", "One hundred"],
       correct: 0,
     },
   ],

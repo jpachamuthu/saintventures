@@ -35,6 +35,19 @@ function splitWords(text: string): string[] {
   return text.trim().split(/\s+/);
 }
 
+// TTS engines spell out ALL-CAPS words letter by letter ("NO" -> "N-O").
+// Lowercase them for speech only — display text is untouched, and because
+// lowercasing never changes string length, boundary/highlight timing still lines up.
+// Roman numerals (II, XI, …) are left alone: they already read correctly.
+const ROMAN = new Set([
+  "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+  "XI", "XII", "XIII", "XIV", "XV", "XX",
+]);
+
+function spokenText(text: string): string {
+  return text.replace(/\b[A-Z]{2,}\b/g, (w) => (ROMAN.has(w) ? w : w.toLowerCase()));
+}
+
 function wordDurationMs(word: string): number {
   const letters = word.replace(/[^A-Za-z0-9'-]/g, "");
   let ms = BASE_WORD_MS + Math.max(0, letters.length - 1) * CHAR_MS;
@@ -223,7 +236,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     speechStartRef.current = Date.now();
     consumedRef.current = 0;
 
-    Speech.speak(story.pages[p], {
+    Speech.speak(spokenText(story.pages[p]), {
       language: "en",
       voice,
       rate: RATE,

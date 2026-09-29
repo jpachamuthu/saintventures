@@ -8,17 +8,20 @@ import {
 } from "react-native";
 import { Bell, Library, Menu, Play, Clock, Star } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import BottomNav, { type TabId } from "../components/BottomNav";
 import { LogoMark } from "../components/Logo";
+import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
+
+const TOP_BLUR = webBlurStyle();
 
 export default function HomeScreen({
   onOpenStory,
@@ -34,6 +37,7 @@ export default function HomeScreen({
   onToggleFavourite: (id: string) => void;
 }) {
   const { colors, isDark } = useTheme();
+  const insets = useSafeAreaInsets();
   const { average: avgRating } = useRatings();
   const styles = createStyles(colors);
   const latest = [...stories].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, 10);
@@ -73,7 +77,7 @@ export default function HomeScreen({
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.topBar}>
+      <View style={[styles.topBar, { top: insets.top }, TOP_BLUR]}>
         <View style={styles.brand}>
           <LogoMark size={30} />
           <Text style={styles.brandName}>
@@ -296,16 +300,23 @@ function createStyles(colors: ThemeColors) {
     backgroundColor: colors.bg,
   },
   scroll: {
+    paddingTop: 70,
     paddingBottom: 130,
   },
   topBar: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    zIndex: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 18,
     paddingTop: 8,
     paddingBottom: 12,
-    backgroundColor: colors.bg,
+    backgroundColor: colors.glassFill,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.glassBorder,
   },
   brand: {
     flexDirection: "row",
