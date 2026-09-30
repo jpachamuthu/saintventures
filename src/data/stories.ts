@@ -17,6 +17,16 @@ export type Story = {
   pages: string[];
 };
 
+/**
+ * Full text of a page. The last page closes with an invocation,
+ * e.g. "St Angela Merici, pray for us."
+ */
+export function storyPageText(story: Story, page: number): string {
+  const text = story.pages[page];
+  if (page === story.pages.length - 1) return `${text} ${story.saint}, pray for us.`;
+  return text;
+}
+
 export const stories: Story[] = [
   {
     id: "st-anthony",
@@ -1288,6 +1298,8 @@ export const stories: Story[] = [
     publishedAt: "2027-04-24",
     palette: "ember",
     art: "saint",
+    hero: require("../../assets/St Alphonsus_Hero.jpg"),
+    imageSmall: require("../../assets/St Alphonsus_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Naples, Italy, a boy named Alphonsus Liguori was born into a noble family. He was so brilliant that he became a lawyer at sixteen — and for years, he NEVER lost a single case!",
@@ -1338,6 +1350,8 @@ export const stories: Story[] = [
     publishedAt: "2027-05-08",
     palette: "rose",
     art: "rose",
+    hero: require("../../assets/St Agnes_Hero.jpg"),
+    imageSmall: require("../../assets/St Agnes_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Rome, there lived a beautiful young girl named Agnes. She was only about twelve years old — but she had already given her whole heart to Jesus, and nothing could take it back.",
@@ -1463,6 +1477,8 @@ export const stories: Story[] = [
     publishedAt: "2027-06-12",
     palette: "rose",
     art: "saint",
+    hero: require("../../assets/St Angela Merici_Hero.png"),
+    imageSmall: require("../../assets/St Angela Merici_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Italy, a girl named Angela Merici was born. When she was still young, both her parents died — but Angela held onto Jesus tightly, and He never let her go.",
@@ -1715,6 +1731,8 @@ export const stories: Story[] = [
     publishedAt: "2027-08-21",
     palette: "rose",
     art: "sword",
+    hero: require("../../assets/St Andrew and Companions_Hero.jpg"),
+    imageSmall: require("../../assets/St Andrew and Companions_Tile.jpg"),
     source: "Vatican biography (public domain)",
     pages: [
       "Long ago in Vietnam, a poor boy named Andrew Dũng-Lạc was born. His family was so poor that they moved to the city to find work — where a kind priest took Andrew in, taught him, and helped him become a priest himself.",

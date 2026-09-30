@@ -11,7 +11,7 @@ import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
 import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic, setStoryMusicMuted } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
-import type { Story } from "../data/stories";
+import { storyPageText, type Story } from "../data/stories";
 
 type StoryScreenProps = {
   story: Story;
@@ -120,8 +120,9 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
 
   const total = story.pages.length;
   const pct = Math.round(((page + 1) / total) * 100);
-  const firstChar = story.pages[page].charAt(0);
-  const rest = story.pages[page].slice(1);
+  const fullText = storyPageText(story, page);
+  const firstChar = fullText.charAt(0);
+  const rest = fullText.slice(1);
 
   const words = useMemo(() => splitWords(rest), [rest]);
 
@@ -229,14 +230,15 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
     const session = ++sessionRef.current;
     pageRef.current = p;
     boundaryModeRef.current = false;
-    offsetsRef.current = buildWordOffsets(story.pages[p]);
-    durationsRef.current = buildDurations(splitWords(story.pages[p]), calibRef.current);
+    const text = storyPageText(story, p);
+    offsetsRef.current = buildWordOffsets(text);
+    durationsRef.current = buildDurations(splitWords(text), calibRef.current);
     advancedRef.current = false;
     cancelledRef.current = false;
     speechStartRef.current = Date.now();
     consumedRef.current = 0;
 
-    Speech.speak(spokenText(story.pages[p]), {
+    Speech.speak(spokenText(text), {
       language: "en",
       voice,
       rate: RATE,
