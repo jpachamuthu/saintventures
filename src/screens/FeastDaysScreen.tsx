@@ -9,9 +9,9 @@ import {
   View,
 } from "react-native";
 import { Search, ArrowUp, ArrowDown, Calendar, X } from "lucide-react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import BottomNav, { type TabId } from "../components/BottomNav";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
+import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { fonts, radius, type ThemeColors } from "../theme";
 import {
@@ -22,20 +22,21 @@ import {
 } from "../data/feastDays";
 import type { Story } from "../data/stories";
 
+const TOP_BLUR = webBlurStyle();
+
 type SortDirection = "asc" | "desc";
 
 export default function FeastDaysScreen({
   onOpenStory,
-  onTab,
   favouriteIds,
   onToggleFavourite,
 }: {
   onOpenStory: (story: Story) => void;
-  onTab: (tab: TabId) => void;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors), [colors]);
 
   const [query, setQuery] = useState("");
@@ -76,6 +77,8 @@ export default function FeastDaysScreen({
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={[styles.headerPanel, { top: insets.top }, TOP_BLUR]}>
+        <View style={styles.panelInner}>
       <View style={styles.header}>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>Saints</Text>
@@ -117,6 +120,8 @@ export default function FeastDaysScreen({
           )}
           <Text style={styles.sortPillText}>Month</Text>
         </Pressable>
+      </View>
+        </View>
       </View>
 
       <ScrollView
@@ -171,9 +176,10 @@ export default function FeastDaysScreen({
             ))}
           </View>
         ))}
+        <Text style={styles.sourceNote}>
+          Feast dates follow the General Roman Calendar and the Roman Martyrology. See Credits & Attribution in the Menu for details.
+        </Text>
       </ScrollView>
-
-      <BottomNav active="feasts" onTab={onTab} />
     </SafeAreaView>
   );
 }
@@ -183,6 +189,17 @@ function makeStyles(colors: ThemeColors) {
     root: {
       flex: 1,
       backgroundColor: colors.bg,
+    },
+    headerPanel: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      backgroundColor: colors.glassFill,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.glassBorder,
+    },
+    panelInner: {
       paddingHorizontal: 18,
     },
     header: {
@@ -274,6 +291,8 @@ function makeStyles(colors: ThemeColors) {
       flex: 1,
     },
     listContent: {
+      paddingHorizontal: 18,
+      paddingTop: 127,
       paddingBottom: 130,
     },
     monthLabel: {
@@ -356,6 +375,15 @@ function makeStyles(colors: ThemeColors) {
       alignItems: "center",
       justifyContent: "center",
       flexShrink: 0,
+    },
+    sourceNote: {
+      fontFamily: fonts.ui,
+      fontSize: 11,
+      lineHeight: 16,
+      color: colors.mutedDim,
+      textAlign: "center",
+      paddingHorizontal: 20,
+      marginTop: 22,
     },
   });
 }

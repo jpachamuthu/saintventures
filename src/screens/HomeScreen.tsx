@@ -13,7 +13,7 @@ import SaintIllustration from "../components/SaintIllustration";
 import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
-import BottomNav, { type TabId } from "../components/BottomNav";
+import type { TabId } from "../components/BottomNav";
 import { LogoMark } from "../components/Logo";
 import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
@@ -27,12 +27,16 @@ export default function HomeScreen({
   onOpenStory,
   onFooterTab,
   onOpenMenu,
+  hasNew,
+  onBellPress,
   favouriteIds,
   onToggleFavourite,
 }: {
   onOpenStory: (story: Story) => void;
   onFooterTab: (tab: TabId) => void;
   onOpenMenu: () => void;
+  hasNew: boolean;
+  onBellPress: () => void;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
@@ -85,11 +89,17 @@ export default function HomeScreen({
             <Text style={{ color: colors.gold }}>Ventures</Text>
           </Text>
         </View>
-        <View style={styles.icons}>
-          <View style={styles.iconBtn}>
-            <Bell size={16} color={colors.cream} />
-            <View style={styles.notifDot} />
-          </View>
+          <View style={styles.icons}>
+            <Pressable
+              onPress={onBellPress}
+              style={styles.iconBtn}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="New stories"
+            >
+              <Bell size={16} color={colors.cream} />
+              {hasNew && <View style={styles.notifDot} />}
+            </Pressable>
           <Pressable
             onPress={onOpenMenu}
             style={styles.iconBtn}
@@ -287,8 +297,6 @@ export default function HomeScreen({
           </Pressable>
         </View>
       )}
-
-      <BottomNav active="home" onTab={onFooterTab} />
     </SafeAreaView>
   );
 }

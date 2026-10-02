@@ -85,6 +85,33 @@ export const TERMS_SECTIONS: LegalSection[] = [
   },
 ];
 
+export const CREDITS_SECTIONS: LegalSection[] = [
+  {
+    heading: "Created with Grok",
+    body: "The saint artwork in SaintVentures was created with Grok, the AI assistant by xAI, in accordance with xAI's Brand Guidelines.",
+  },
+  {
+    heading: "Image credits & acknowledgements",
+    body: "Some illustrations in Saint Adventures were created with the assistance of OpenAI's ChatGPT image-generation tools and have been adapted for this app.",
+  },
+  {
+    heading: "Why these pictures exist",
+    body: "The illustrations are intended to help children discover the lives, faith, and stories of the saints in an engaging and accessible way.",
+  },
+  {
+    heading: "Independent project",
+    body: "Saint Adventures is an independent project and is not officially affiliated with or endorsed by the Vatican or any religious institution unless expressly stated.",
+  },
+  {
+    heading: "How feast days were obtained",
+    body: "Feast dates follow the General Roman Calendar of the Catholic Church. Apostles and companions who share a day (such as Sts Philip and James on May 3rd, or the three Archangels on September 29th) are listed together, and local saints and blesseds are dated from the Roman Martyrology and traditional calendars.",
+  },
+  {
+    heading: "Stories and narration",
+    body: "Saint stories are original child-friendly retellings written for SaintVentures. Facts are drawn from public-domain works such as Butler's Lives of the Saints, the Golden Legend, the Bible, and Vatican biographies; a few details come from Wikipedia (CC BY-SA), as credited on each individual story.",
+  },
+];
+
 function createStyles(colors: ThemeColors) {
   return StyleSheet.create({
     root: {

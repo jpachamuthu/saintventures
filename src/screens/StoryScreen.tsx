@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, Settings, Star, Volume2, VolumeX } from "lucide-react-native";
+import { ArrowLeft, Menu, Pause, Play, RotateCcw, RotateCw, Star, Volume2, VolumeX } from "lucide-react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
@@ -17,6 +17,7 @@ type StoryScreenProps = {
   story: Story;
   onBack: () => void;
   onStartQuiz: () => void;
+  onOpenMenu: () => void;
 };
 
 const RATE = 0.98;
@@ -81,7 +82,7 @@ function wordIndexFromChar(charIndex: number, offsets: number[]): number {
   return offsets.length - 1;
 }
 
-export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenProps) {
+export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: StoryScreenProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
@@ -454,8 +455,14 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
           <ArrowLeft size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
-        <Pressable style={styles.headerBtn} hitSlop={8}>
-          <Settings size={17} color={colors.cream} />
+        <Pressable
+          onPress={onOpenMenu}
+          style={styles.headerBtn}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Open menu"
+        >
+          <Menu size={17} color={colors.cream} />
         </Pressable>
       </View>
 
@@ -505,6 +512,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz }: StoryScreenP
             </Text>
           ))}
         </Text>
+        <Text style={styles.source}>Source: {story.source}</Text>
       </ScrollView>
 
       <View style={[styles.dockWrap, { bottom: Math.max(insets.bottom, 4) }]}>
@@ -699,6 +707,12 @@ function createStyles(colors: ThemeColors) {
   activeWordPaused: {
     color: colors.gold,
     backgroundColor: "rgba(212, 158, 66, 0.10)",
+  },
+  source: {
+    fontFamily: fonts.ui,
+    fontSize: 10.5,
+    color: colors.mutedDim,
+    marginTop: 14,
   },
   dockWrap: {
     position: "absolute",

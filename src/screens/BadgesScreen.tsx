@@ -2,17 +2,18 @@ import React, { useMemo } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Medal } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
-import BottomNav, { type TabId } from "../components/BottomNav";
+import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useBadges } from "../hooks/useBadges";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
 
+const TOP_BLUR = webBlurStyle();
+
 type BadgesScreenProps = {
   onOpenStory: (story: Story) => void;
-  onFooterTab: (tab: TabId) => void;
 };
 
 const MONTHS = [
@@ -27,8 +28,9 @@ function formatDate(ts: number): string {
 
 type BadgeEntry = { earnedAt: number; story: Story };
 
-export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenProps) {
+export default function BadgesScreen({ onOpenStory }: BadgesScreenProps) {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
   const { list } = useBadges();
 
@@ -42,6 +44,7 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={[styles.headerPanel, { top: insets.top }, TOP_BLUR]}>
       <View style={styles.header}>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>Badges</Text>
@@ -53,6 +56,7 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
           <Medal size={15} color={colors.gold} fill={colors.gold} />
           <Text style={styles.countText}>{badgeItems.length}</Text>
         </View>
+      </View>
       </View>
 
       {badgeItems.length === 0 ? (
@@ -96,7 +100,6 @@ export default function BadgesScreen({ onOpenStory, onFooterTab }: BadgesScreenP
         </ScrollView>
       )}
 
-      <BottomNav active="badges" onTab={onFooterTab} />
     </SafeAreaView>
   );
 }
@@ -106,6 +109,15 @@ function createStyles(colors: ThemeColors) {
     root: {
       flex: 1,
       backgroundColor: colors.bg,
+    },
+    headerPanel: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      backgroundColor: colors.glassFill,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.glassBorder,
     },
     header: {
       flexDirection: "row",
@@ -149,7 +161,7 @@ function createStyles(colors: ThemeColors) {
     },
     grid: {
       paddingHorizontal: 18,
-      paddingTop: 14,
+      paddingTop: 73,
       paddingBottom: 130,
       flexDirection: "row",
       flexWrap: "wrap",
@@ -229,6 +241,7 @@ function createStyles(colors: ThemeColors) {
       alignItems: "center",
       justifyContent: "center",
       paddingHorizontal: 24,
+      marginTop: 61,
       paddingBottom: 80,
     },
     emptyTitle: {

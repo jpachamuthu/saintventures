@@ -378,6 +378,7 @@ export const stories: Story[] = [
     publishedAt: "2026-08-15",
     palette: "dawn",
     art: "birds",
+    hero: require("../../assets/St Christina the Astonishing_Hero.jpg"),
     source: "Wikipedia (CC BY-SA 4.0); Butler's Lives of the Saints (public domain)",
     pages: [
       "A very, very long time ago, in a little town called Sint-Truiden in Belgium, there lived a girl named Christina. Her family was poor and kind, and when her parents died, young Christina went to look after the sheep in the green fields. She loved the quiet hills and the wide sky.",
@@ -484,6 +485,8 @@ export const stories: Story[] = [
     publishedAt: "2026-09-12",
     palette: "sea",
     art: "saint",
+    hero: require("../../assets/St Andrew The Apostle_Hero.png"),
+    imageSmall: require("../../assets/St Andrew the Apostle_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, by the sparkling blue Sea of Galilee, two brothers grew up together in the little town of Bethsaida. Their names were Andrew and Simon, and they were fishermen — strong, cheerful men who pulled big nets of silvery fish out of the water every single day.",
@@ -584,6 +587,7 @@ export const stories: Story[] = [
     publishedAt: "2026-10-10",
     palette: "forest",
     art: "saint",
+    hero: require("../../assets/St Bartholomew_Hero.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in a little village, there lived a quiet, honest man named Nathanael. Friends also knew him as Bartholomew. He loved to pray and to think, and he knew the holy books of his people by heart.",
@@ -1325,6 +1329,8 @@ export const stories: Story[] = [
     publishedAt: "2027-05-01",
     palette: "forest",
     art: "saint",
+    hero: require("../../assets/St Basil the Great_Hero.jpg"),
+    imageSmall: require("../../assets/St Basil the Great_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Cappadocia, in what is now Turkey, a boy named Basil was born into an extraordinary family. His grandmother, his mother, his sister, and two of his brothers are ALL saints too!",
@@ -1606,6 +1612,8 @@ export const stories: Story[] = [
     publishedAt: "2027-07-17",
     palette: "dawn",
     art: "saint",
+    hero: require("../../assets/St Catherine of Siena_Hero.jpg"),
+    imageSmall: require("../../assets/St Catherine of Siena_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Siena, Italy, a baby girl named Catherine was born — the 25th child of a poor cloth-dyer! Nobody expected anything special from her. Nobody, except heaven.",

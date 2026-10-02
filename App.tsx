@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
@@ -27,11 +27,13 @@ import BadgesScreen from "./src/screens/BadgesScreen";
 import FeastDaysScreen from "./src/screens/FeastDaysScreen";
 import QuizzesScreen from "./src/screens/QuizzesScreen";
 import MenuScreen from "./src/screens/MenuScreen";
-import { featuredStory, type Story } from "./src/data/stories";
+import { featuredStory, stories, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
 import { ThemeProvider } from "./src/components/ThemeContext";
+import BottomNav from "./src/components/BottomNav";
 import type { TabId } from "./src/components/BottomNav";
 import { useFavourites } from "./src/hooks/useFavourites";
+import { useSeen } from "./src/hooks/useSeen";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -42,6 +44,7 @@ export default function App() {
   const [story, setStory] = useState<Story>(featuredStory);
   const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges" | "feasts">("home");
   const [quizOrigin, setQuizOrigin] = useState<"story" | "quizzes">("story");
+  const [menuOrigin, setMenuOrigin] = useState<"home" | "story">("home");
 
   const [fontsLoaded] = useFonts({
     Fredoka_600SemiBold,
@@ -55,6 +58,15 @@ export default function App() {
   });
 
   const { favourites, isFavourite, toggleFavourite } = useFavourites();
+  const { seen, markSeen, markAllSeen } = useSeen();
+
+  const unseen = useMemo(
+    () =>
+      stories
+        .filter((s) => !seen.includes(s.id))
+        .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
+    [seen]
+  );
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -69,6 +81,7 @@ export default function App() {
   const openStory = (s: Story, origin: "home" | "library" | "badges" | "feasts") => {
     setStory(s);
     setStoryOrigin(origin);
+    markSeen(s.id);
     setScreen("story");
   };
 
@@ -76,6 +89,17 @@ export default function App() {
     setStory(s);
     setQuizOrigin(origin);
     setScreen("quiz");
+  };
+
+  const openMenu = (origin: "home" | "story") => {
+    setMenuOrigin(origin);
+    setScreen("menu");
+  };
+
+  const handleBell = () => {
+    if (unseen.length === 0) return;
+    markAllSeen(unseen.map((s) => s.id));
+    openStory(unseen[0], "home");
   };
 
   const handleFooterTab = (tab: TabId) => {
@@ -96,7 +120,9 @@ export default function App() {
             <HomeScreen
               onOpenStory={(s) => openStory(s, "home")}
               onFooterTab={handleFooterTab}
-              onOpenMenu={() => setScreen("menu")}
+              onOpenMenu={() => openMenu("home")}
+              hasNew={unseen.length > 0}
+              onBellPress={handleBell}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
@@ -104,7 +130,6 @@ export default function App() {
           {screen === "library" && (
             <LibraryScreen
               onOpenStory={(s) => openStory(s, "library")}
-              onFooterTab={handleFooterTab}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
@@ -112,7 +137,6 @@ export default function App() {
           {screen === "feasts" && (
             <FeastDaysScreen
               onOpenStory={(s) => openStory(s, "feasts")}
-              onTab={handleFooterTab}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
@@ -120,16 +144,14 @@ export default function App() {
           {screen === "quizzes" && (
             <QuizzesScreen
               onOpenQuiz={(s) => openQuiz(s, "quizzes")}
-              onFooterTab={handleFooterTab}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
           )}
-          {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} />}
+          {screen === "menu" && <MenuScreen onBack={() => setScreen(menuOrigin)} />}
           {screen === "badges" && (
             <BadgesScreen
               onOpenStory={(s) => openStory(s, "badges")}
-              onFooterTab={handleFooterTab}
             />
           )}
           {screen === "story" && (
@@ -137,10 +159,14 @@ export default function App() {
               story={story}
               onBack={() => setScreen(storyOrigin)}
               onStartQuiz={() => openQuiz(story, "story")}
+              onOpenMenu={() => openMenu("story")}
             />
           )}
           {screen === "quiz" && (
             <QuizScreen story={story} onExit={() => setScreen(quizOrigin === "quizzes" ? "quizzes" : "story")} onDone={() => setScreen("home")} />
+          )}
+          {(screen === "home" || screen === "library" || screen === "badges" || screen === "feasts" || screen === "quizzes") && (
+            <BottomNav active={screen} onTab={handleFooterTab} />
           )}
         </View>
       </ThemeProvider>

@@ -9,25 +9,27 @@ import {
   View,
 } from "react-native";
 import { ArrowUpDown, Heart, Search, X } from "lucide-react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import GoldGradient from "../components/GoldGradient";
-import BottomNav, { type TabId } from "../components/BottomNav";
+import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
 import { quizzes } from "../data/quizzes";
 
+const TOP_BLUR = webBlurStyle();
+
 type QuizzesScreenProps = {
   onOpenQuiz: (story: Story) => void;
-  onFooterTab: (tab: TabId) => void;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 };
 
-export default function QuizzesScreen({ onOpenQuiz, onFooterTab, favouriteIds, onToggleFavourite }: QuizzesScreenProps) {
+export default function QuizzesScreen({ onOpenQuiz, favouriteIds, onToggleFavourite }: QuizzesScreenProps) {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
   const [query, setQuery] = useState("");
   const [asc, setAsc] = useState(true);
@@ -49,6 +51,8 @@ export default function QuizzesScreen({ onOpenQuiz, onFooterTab, favouriteIds, o
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={[styles.headerPanel, { top: insets.top }, TOP_BLUR]}>
+        <View style={styles.panelInner}>
       <View style={styles.header}>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>Quizzes</Text>
@@ -105,6 +109,8 @@ export default function QuizzesScreen({ onOpenQuiz, onFooterTab, favouriteIds, o
           </Pressable>
         </View>
       </View>
+        </View>
+      </View>
 
       {items.length === 0 ? (
         <View style={styles.empty}>
@@ -144,7 +150,6 @@ export default function QuizzesScreen({ onOpenQuiz, onFooterTab, favouriteIds, o
         </ScrollView>
       )}
 
-      <BottomNav active="quizzes" onTab={onFooterTab} />
     </SafeAreaView>
   );
 }
@@ -154,6 +159,17 @@ function createStyles(colors: ThemeColors) {
     root: {
       flex: 1,
       backgroundColor: colors.bg,
+    },
+    headerPanel: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      backgroundColor: colors.glassFill,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.glassBorder,
+    },
+    panelInner: {
       paddingHorizontal: 18,
     },
     header: {
@@ -245,6 +261,8 @@ function createStyles(colors: ThemeColors) {
       color: colors.cream,
     },
     list: {
+      paddingHorizontal: 18,
+      paddingTop: 124,
       paddingBottom: 130,
       gap: 4,
     },
@@ -298,6 +316,7 @@ function createStyles(colors: ThemeColors) {
     empty: {
       alignItems: "center",
       paddingHorizontal: 24,
+      marginTop: 112,
       paddingTop: 56,
     },
     emptyGlyph: {

@@ -10,19 +10,20 @@ import {
 } from "react-native";
 import { ArrowUpDown, Clock, Heart, Search, Star, X } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import GoldGradient from "../components/GoldGradient";
-import BottomNav, { type TabId } from "../components/BottomNav";
+import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
 
+const TOP_BLUR = webBlurStyle();
+
 type LibraryScreenProps = {
   onOpenStory: (story: Story) => void;
-  onFooterTab: (tab: TabId) => void;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 };
@@ -41,8 +42,9 @@ function Highlighted({ text, query, style }: { text: string; query: string; styl
   );
 }
 
-export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, onToggleFavourite }: LibraryScreenProps) {
+export default function LibraryScreen({ onOpenStory, favouriteIds, onToggleFavourite }: LibraryScreenProps) {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const { average: avgRating } = useRatings();
   const styles = createStyles(colors);
   const [query, setQuery] = useState("");
@@ -63,6 +65,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={[styles.headerPanel, { top: insets.top }, TOP_BLUR]}>
       <View style={styles.header}>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>Library</Text>
@@ -119,6 +122,7 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
           </Pressable>
         </View>
       </View>
+      </View>
 
       {items.length === 0 ? (
         <View style={styles.empty}>
@@ -166,7 +170,6 @@ export default function LibraryScreen({ onOpenStory, onFooterTab, favouriteIds, 
         </ScrollView>
       )}
 
-      <BottomNav active="library" onTab={onFooterTab} />
     </SafeAreaView>
   );
 }
@@ -176,6 +179,15 @@ function createStyles(colors: ThemeColors) {
   root: {
     flex: 1,
     backgroundColor: colors.bg,
+  },
+  headerPanel: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    backgroundColor: colors.glassFill,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.glassBorder,
   },
   header: {
     flexDirection: "row",
@@ -275,6 +287,7 @@ function createStyles(colors: ThemeColors) {
   },
   grid: {
     paddingHorizontal: 18,
+    paddingTop: 125,
     paddingBottom: 130,
     flexDirection: "row",
     flexWrap: "wrap",
@@ -363,6 +376,7 @@ function createStyles(colors: ThemeColors) {
   empty: {
     alignItems: "center",
     paddingHorizontal: 24,
+    marginTop: 113,
     paddingTop: 56,
   },
   emptyGlyph: {
