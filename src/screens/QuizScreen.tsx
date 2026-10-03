@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
-import { Medal, X } from "lucide-react-native";
+import { Medal, Star, X } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import GoldGradient from "../components/GoldGradient";
 import SaintIllustration from "../components/SaintIllustration";
+import PrayerModal from "../components/PrayerModal";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
@@ -16,9 +17,10 @@ type QuizScreenProps = {
   story: Story;
   onExit: () => void;
   onDone: () => void;
+  onRecordStars: (id: string, stars: number) => void;
 };
 
-export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
+export default function QuizScreen({ story, onExit, onDone, onRecordStars }: QuizScreenProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const questions = useMemo(() => quizzes[story.id] ?? [], [story.id]);
@@ -27,6 +29,9 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
   const [result, setResult] = useState<"idle" | "correct" | "wrong">("idle");
   const [fire, setFire] = useState(0);
   const [done, setDone] = useState(false);
+  const [showPrayer, setShowPrayer] = useState(false);
+  const [starsEarned, setStarsEarned] = useState(0);
+  const wrongTotalRef = useRef(0);
   const advanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const throb = useRef(new Animated.Value(1)).current;
@@ -41,6 +46,11 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
     },
     []
   );
+
+  useEffect(() => {
+    wrongTotalRef.current = 0;
+    setStarsEarned(0);
+  }, [story.id]);
 
   useEffect(() => {
     if (!done) return;
@@ -67,11 +77,15 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
           setResult("idle");
         } else {
           setDone(true);
+          const stars = wrongTotalRef.current === 0 ? 3 : wrongTotalRef.current <= 2 ? 2 : 1;
+          setStarsEarned(stars);
+          onRecordStars(story.id, stars);
           if (!has(story.id)) earn(story.id);
         }
       }, 1800);
     } else {
       setWrong((w) => [...w, i]);
+      wrongTotalRef.current += 1;
       setResult("wrong");
       sayTryAgain();
       resetRef.current = setTimeout(() => setResult("idle"), 900);
@@ -122,6 +136,16 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
               <Medal size={22} color={colors.onGold} fill={colors.onGold} />
             </Animated.View>
           </View>
+          <View style={styles.starsRow}>
+            {[1, 2, 3].map((n) => (
+              <Star
+                key={n}
+                size={22}
+                color={n <= starsEarned ? colors.gold : colors.ring}
+                fill={n <= starsEarned ? colors.gold : "transparent"}
+              />
+            ))}
+          </View>
           <Text style={styles.badgeTitle}>Well done!</Text>
           <Text style={styles.badgeText}>You earned the {story.saint} badge</Text>
           <View style={styles.badgeCountPill}>
@@ -136,9 +160,14 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
           </Pressable>
           <View style={styles.actionRow}>
             <Pressable style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}>
-              <Text style={styles.actionBtnLabel}>Fun facts about the Saint</Text>
+              <Text style={styles.actionBtnLabel}>Download story</Text>
             </Pressable>
-            <Pressable style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}>
+            <Pressable
+              style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}
+              onPress={() => setShowPrayer(true)}
+              accessibilityRole="button"
+              accessibilityLabel="Read a prayer"
+            >
               <Text style={styles.actionBtnLabel}>Prayer</Text>
             </Pressable>
           </View>
@@ -206,6 +235,11 @@ export default function QuizScreen({ story, onExit, onDone }: QuizScreenProps) {
           {result === "wrong" && <Text style={styles.tryAgain}>Try again — you can do it!</Text>}
         </>
       )}
+      <PrayerModal
+        visible={showPrayer}
+        story={story}
+        onClose={() => setShowPrayer(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -367,6 +401,11 @@ function createStyles(colors: ThemeColors) {
       shadowRadius: 8,
       shadowOffset: { width: 0, height: 3 },
       elevation: 6,
+    },
+    starsRow: {
+      flexDirection: "row",
+      gap: 8,
+      marginBottom: 12,
     },
     badgeTitle: {
       fontFamily: fonts.displayBold,

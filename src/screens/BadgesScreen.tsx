@@ -14,6 +14,9 @@ const TOP_BLUR = webBlurStyle();
 
 type BadgesScreenProps = {
   onOpenStory: (story: Story) => void;
+  starsTotal: number;
+  streakCount: number;
+  streakBest: number;
 };
 
 const MONTHS = [
@@ -28,7 +31,7 @@ function formatDate(ts: number): string {
 
 type BadgeEntry = { earnedAt: number; story: Story };
 
-export default function BadgesScreen({ onOpenStory }: BadgesScreenProps) {
+export default function BadgesScreen({ onOpenStory, starsTotal, streakCount, streakBest }: BadgesScreenProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
@@ -41,6 +44,7 @@ export default function BadgesScreen({ onOpenStory }: BadgesScreenProps) {
         .filter((item): item is BadgeEntry => Boolean(item.story)),
     [list]
   );
+  const pct = Math.round((badgeItems.length / stories.length) * 100);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -55,7 +59,16 @@ export default function BadgesScreen({ onOpenStory }: BadgesScreenProps) {
         <View style={styles.countBadge}>
           <Medal size={15} color={colors.gold} fill={colors.gold} />
           <Text style={styles.countText}>{badgeItems.length}</Text>
+      </View>
+      </View>
+
+      <View style={styles.progressWrap}>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: `${pct}%` }]} />
         </View>
+        <Text style={styles.progressText}>
+          {badgeItems.length} of {stories.length} badges · {starsTotal} stars · {streakCount}-day streak (best {streakBest})
+        </Text>
       </View>
       </View>
 
@@ -159,9 +172,30 @@ function createStyles(colors: ThemeColors) {
       fontSize: 13,
       color: colors.cream,
     },
+    progressWrap: {
+      paddingHorizontal: 18,
+      marginTop: 10,
+      paddingBottom: 12,
+    },
+    progressBar: {
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: colors.ring,
+      overflow: "hidden",
+    },
+    progressFill: {
+      height: 4,
+      backgroundColor: colors.gold,
+    },
+    progressText: {
+      fontFamily: fonts.ui,
+      fontSize: 11,
+      color: colors.mutedDim,
+      marginTop: 6,
+    },
     grid: {
       paddingHorizontal: 18,
-      paddingTop: 73,
+      paddingTop: 120,
       paddingBottom: 130,
       flexDirection: "row",
       flexWrap: "wrap",
@@ -241,7 +275,7 @@ function createStyles(colors: ThemeColors) {
       alignItems: "center",
       justifyContent: "center",
       paddingHorizontal: 24,
-      marginTop: 61,
+      marginTop: 108,
       paddingBottom: 80,
     },
     emptyTitle: {

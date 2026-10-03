@@ -11,6 +11,8 @@ import {
 import { Search, ArrowUp, ArrowDown, Calendar, X } from "lucide-react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
+import PrayerModal from "../components/PrayerModal";
+import PrayingHands from "../components/PrayingHands";
 import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { fonts, radius, type ThemeColors } from "../theme";
@@ -41,6 +43,7 @@ export default function FeastDaysScreen({
 
   const [query, setQuery] = useState("");
   const [direction, setDirection] = useState<SortDirection>("asc");
+  const [prayerFor, setPrayerFor] = useState<Story | null>(null);
   const scrollRef = useRef<ScrollView>(null);
   const monthOffsets = useRef<Record<number, number>>({});
 
@@ -159,6 +162,18 @@ export default function FeastDaysScreen({
                         <Text style={styles.rowName} numberOfLines={1}>
                           {f.story.saint}
                         </Text>
+                        <Pressable
+                          onPress={(e) => {
+                            e.stopPropagation();
+                            setPrayerFor(f.story);
+                          }}
+                          style={styles.prayerBtn}
+                          hitSlop={8}
+                          accessibilityRole="button"
+                          accessibilityLabel={`Prayer to ${f.story.saint}`}
+                        >
+                          <PrayingHands size={14} color={colors.gold} />
+                        </Pressable>
                         <AnimatedHeartButton
                           active={favouriteIds.includes(f.story.id)}
                           onPress={() => onToggleFavourite(f.story.id)}
@@ -180,6 +195,11 @@ export default function FeastDaysScreen({
           Feast dates follow the General Roman Calendar and the Roman Martyrology. See Credits & Attribution in the Menu for details.
         </Text>
       </ScrollView>
+      <PrayerModal
+        visible={prayerFor !== null}
+        story={prayerFor}
+        onClose={() => setPrayerFor(null)}
+      />
     </SafeAreaView>
   );
 }
@@ -372,6 +392,17 @@ function makeStyles(colors: ThemeColors) {
       height: 30,
       borderRadius: 15,
       backgroundColor: colors.bgCardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+    },
+    prayerBtn: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: colors.bgCardAlt,
+      borderWidth: 1,
+      borderColor: colors.glassBorder,
       alignItems: "center",
       justifyContent: "center",
       flexShrink: 0,

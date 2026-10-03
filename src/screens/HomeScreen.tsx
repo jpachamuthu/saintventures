@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Bell, Library, Menu, Play, Clock, Star } from "lucide-react-native";
+import { Bell, Flame, Library, Menu, Play, Clock, Sparkles, Star } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
@@ -15,6 +15,7 @@ import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import type { TabId } from "../components/BottomNav";
 import { LogoMark } from "../components/Logo";
+import LegalPage from "../components/LegalPage";
 import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
@@ -29,14 +30,22 @@ export default function HomeScreen({
   onOpenMenu,
   hasNew,
   onBellPress,
+  continueStory,
+  continuePage,
+  todayFeast,
+  streakCount,
   favouriteIds,
   onToggleFavourite,
 }: {
-  onOpenStory: (story: Story) => void;
+  onOpenStory: (story: Story, page?: number) => void;
   onFooterTab: (tab: TabId) => void;
   onOpenMenu: () => void;
   hasNew: boolean;
   onBellPress: () => void;
+  continueStory: Story | null;
+  continuePage: number;
+  todayFeast: Story | null;
+  streakCount: number;
   favouriteIds: string[];
   onToggleFavourite: (id: string) => void;
 }) {
@@ -51,6 +60,7 @@ export default function HomeScreen({
     () => stories[Math.floor(Math.random() * stories.length)]
   );
   const [removed, setRemoved] = useState<Story | null>(null);
+  const [showStreak, setShowStreak] = useState(false);
   const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleToggle = (s: Story) => {
@@ -90,7 +100,18 @@ export default function HomeScreen({
           </Text>
         </View>
           <View style={styles.icons}>
-            <Pressable
+            {streakCount > 0 && (
+              <Pressable
+                onPress={() => setShowStreak(true)}
+                style={styles.streakPill}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel={`${streakCount} day streak. Learn more.`}
+              >
+                <Flame size={15} color={colors.gold} fill={colors.gold} />
+                <Text style={styles.streakText}>{streakCount}</Text>
+              </Pressable>
+            )}            <Pressable
               onPress={onBellPress}
               style={styles.iconBtn}
               hitSlop={8}
@@ -113,6 +134,34 @@ export default function HomeScreen({
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        {todayFeast && (
+          <Pressable
+            onPress={() => onOpenStory(todayFeast)}
+            style={({ pressed }) => [styles.todayCard, pressed && styles.pressed]}
+          >
+            <GoldGradient style={StyleSheet.absoluteFill} />
+            <Sparkles size={16} color={colors.onGold} style={{ zIndex: 1 }} />
+            <Text style={styles.todayText} numberOfLines={1}>
+              Today · Feast of {todayFeast.saint}
+            </Text>
+          </Pressable>
+        )}
+        {continueStory && (
+          <Pressable
+            onPress={() => onOpenStory(continueStory, continuePage)}
+            style={({ pressed }) => [styles.continueCard, pressed && styles.pressed]}
+          >
+            <View style={styles.continuePlay}>
+              <Play size={14} color="#000000" fill="#000000" style={{ marginLeft: 2 }} />
+            </View>
+            <View style={styles.continueText}>
+              <Text style={styles.continueEyebrow}>Continue reading</Text>
+              <Text style={styles.continueTitle} numberOfLines={1}>
+                {continueStory.saint} · Page {continuePage + 1} of {continueStory.pages.length}
+              </Text>
+            </View>
+          </Pressable>
+        )}
         <View style={styles.featuredWrap}>
           <SaintIllustration palette={featuredStory.palette} art={featuredStory.art} image={featuredStory.hero} height={330}>
             <View style={styles.featuredOverlay}>
@@ -297,6 +346,22 @@ export default function HomeScreen({
           </Pressable>
         </View>
       )}
+
+      <LegalPage
+        visible={showStreak}
+        title="Reading streak"
+        sections={[
+          {
+            heading: `Your flame: ${streakCount} day${streakCount === 1 ? "" : "s"}`,
+            body: "Finish at least one story every day to keep your flame burning and grow the number.",
+          },
+          {
+            heading: "How it works",
+            body: "The first story you finish each day extends your streak. Reading more stories the same day won't raise it further — but come back tomorrow! Missing a day resets the flame to 1.",
+          },
+        ]}
+        onClose={() => setShowStreak(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -310,6 +375,63 @@ function createStyles(colors: ThemeColors) {
   scroll: {
     paddingTop: 70,
     paddingBottom: 130,
+  },
+  todayCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    marginHorizontal: 18,
+    marginBottom: 12,
+    borderRadius: radius.pill,
+    paddingVertical: 13,
+    paddingHorizontal: 20,
+    overflow: "hidden",
+  },
+  todayText: {
+    fontFamily: fonts.uiBold,
+    fontSize: 14,
+    color: colors.onGold,
+    zIndex: 1,
+    flexShrink: 1,
+  },
+  continueCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginHorizontal: 18,
+    marginBottom: 16,
+    backgroundColor: colors.glassFill,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    borderRadius: radius.card,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  continuePlay: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: colors.gold,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  continueText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  continueEyebrow: {
+    fontFamily: fonts.uiBold,
+    fontSize: 10.5,
+    letterSpacing: 1,
+    color: colors.gold,
+    textTransform: "uppercase",
+  },
+  continueTitle: {
+    fontFamily: fonts.card,
+    fontSize: 15,
+    color: colors.cream,
+    marginTop: 2,
   },
   topBar: {
     position: "absolute",
@@ -337,7 +459,24 @@ function createStyles(colors: ThemeColors) {
   },
   icons: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 10,
+  },
+  streakPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: colors.glassFill,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    paddingHorizontal: 12,
+  },
+  streakText: {
+    fontFamily: fonts.uiBold,
+    fontSize: 13,
+    color: colors.gold,
   },
   iconBtn: {
     width: 38,

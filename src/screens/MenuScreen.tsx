@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Award, ChevronRight, FileText, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
+import { ArrowLeft, Award, BookOpen, ChevronRight, FileText, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
-import LegalPage, { CREDITS_SECTIONS, PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
+import LegalPage, { CREDITS_SECTIONS, HOWTO_SECTIONS, PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
 import { getStoryMusicVolume, setStoryMusicVolume } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 
@@ -18,6 +18,7 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
+  const [showHowTo, setShowHowTo] = useState(false);
   const [volume, setVolume] = useState(getStoryMusicVolume);
 
   const changeVolume = (delta: number) => {
@@ -137,6 +138,22 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
         </View>
 
         <View style={styles.group}>
+          <Text style={styles.groupLabel}>Help</Text>
+          <View style={styles.card}>
+            <Pressable style={styles.row} onPress={() => setShowHowTo(true)}>
+              <View style={styles.iconWrap}>
+                <BookOpen size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>How to use the app</Text>
+                <Text style={styles.rowSubtitle}>Stories, quizzes, badges and more</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.group}>
           <Text style={styles.groupLabel}>About</Text>
           <View style={styles.card}>
             <Pressable style={styles.row} onPress={() => setShowPrivacy(true)}>
@@ -189,6 +206,12 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
         title="Credits & Attribution"
         sections={CREDITS_SECTIONS}
         onClose={() => setShowCredits(false)}
+      />
+      <LegalPage
+        visible={showHowTo}
+        title="How to use the app"
+        sections={HOWTO_SECTIONS}
+        onClose={() => setShowHowTo(false)}
       />
     </SafeAreaView>
   );

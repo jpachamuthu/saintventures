@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Menu, Pause, Play, RotateCcw, RotateCw, Star, Volume2, VolumeX } from "lucide-react-native";
+import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, SkipForward, Star, Volume2, VolumeX } from "lucide-react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
@@ -15,9 +15,13 @@ import { storyPageText, type Story } from "../data/stories";
 
 type StoryScreenProps = {
   story: Story;
+  initialPage?: number;
+  upNext: Story | null;
   onBack: () => void;
   onStartQuiz: () => void;
-  onOpenMenu: () => void;
+  onPlayNext: () => void;
+  onSavePage: (id: string, page: number) => void;
+  onFinishReading: (id: string, page: number) => void;
 };
 
 const RATE = 0.98;
@@ -82,11 +86,11 @@ function wordIndexFromChar(charIndex: number, offsets: number[]): number {
   return offsets.length - 1;
 }
 
-export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: StoryScreenProps) {
+export default function StoryScreen({ story, initialPage = 0, upNext, onBack, onStartQuiz, onPlayNext, onSavePage, onFinishReading }: StoryScreenProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(initialPage);
   const [reading, setReading] = useState(false);
   const [paused, setPaused] = useState(false);
   const [activeWord, setActiveWord] = useState<number | null>(null);
@@ -95,7 +99,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
   const [myRating, setMyRating] = useState(0);
   const [muted, setMuted] = useState(false);
 
-  const pageRef = useRef(0);
+  const pageRef = useRef(initialPage);
   const readingRef = useRef(false);
   const durationsRef = useRef<number[]>([]);
   const offsetsRef = useRef<number[]>([]);
@@ -132,7 +136,8 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
     wordYRef.current = [];
     scrollYRef.current = 0;
     scrollRef.current?.scrollTo({ y: 0, animated: false });
-  }, [page]);
+    onSavePage(story.id, page);
+  }, [page, story.id, onSavePage]);
 
   // Follow the narrated word, but only step in when it is about to slide
   // under the floating dock — one decisive glide per screenful, no jitter.
@@ -324,6 +329,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
     setReading(false);
     setPaused(false);
     stopStoryMusic();
+    onFinishReading(story.id, pageRef.current);
     if (endTimerRef.current) {
       clearTimeout(endTimerRef.current);
       endTimerRef.current = null;
@@ -333,6 +339,17 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
       showEndPanel();
     }, delayMs);
   }
+
+  // Fresh story loaded in place (e.g. autoplay up-next): reset everything.
+  useEffect(() => {
+    stopReading();
+    pageRef.current = 0;
+    setPage(0);
+    setShowEnd(false);
+    setMyRating(0);
+    setActiveWord(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [story.id]);
 
   function startReading() {
     clearMute();
@@ -455,15 +472,7 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
           <ArrowLeft size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
-        <Pressable
-          onPress={onOpenMenu}
-          style={styles.headerBtn}
-          hitSlop={8}
-          accessibilityRole="button"
-          accessibilityLabel="Open menu"
-        >
-          <Menu size={17} color={colors.cream} />
-        </Pressable>
+        <View style={styles.headerSpacer} />
       </View>
 
       <View style={styles.artWrap}>
@@ -604,6 +613,14 @@ export default function StoryScreen({ story, onBack, onStartQuiz, onOpenMenu }: 
               <Play size={16} color={colors.gold} fill={colors.gold} />
               <Text style={styles.quizLabel}>Start quiz</Text>
             </Pressable>
+            {upNext && (
+              <Pressable style={styles.quizBtn} onPress={onPlayNext}>
+                <SkipForward size={16} color={colors.gold} fill={colors.gold} />
+                <Text style={styles.quizLabel} numberOfLines={1}>
+                  Up next: {upNext.saint}
+                </Text>
+              </Pressable>
+            )}
           </View>
         </Animated.View>
       )}
@@ -631,6 +648,9 @@ function createStyles(colors: ThemeColors) {
     backgroundColor: colors.bgCard,
     alignItems: "center",
     justifyContent: "center",
+  },
+  headerSpacer: {
+    width: 40,
   },
   headerTitle: {
     fontFamily: fonts.displayBold,

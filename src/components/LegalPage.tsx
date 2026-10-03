@@ -87,12 +87,8 @@ export const TERMS_SECTIONS: LegalSection[] = [
 
 export const CREDITS_SECTIONS: LegalSection[] = [
   {
-    heading: "Created with Grok",
-    body: "The saint artwork in SaintVentures was created with Grok, the AI assistant by xAI, in accordance with xAI's Brand Guidelines.",
-  },
-  {
     heading: "Image credits & acknowledgements",
-    body: "Some illustrations in Saint Adventures were created with the assistance of OpenAI's ChatGPT image-generation tools and have been adapted for this app.",
+    body: "Some illustrations in Saint Adventures were created with the assistance of OpenAI's ChatGPT image-generation tools, xAI's Grok, and Google's Gemini, and have been adapted for this app. Created with Grok, in accordance with xAI's Brand Guidelines.",
   },
   {
     heading: "Why these pictures exist",
@@ -109,6 +105,37 @@ export const CREDITS_SECTIONS: LegalSection[] = [
   {
     heading: "Stories and narration",
     body: "Saint stories are original child-friendly retellings written for SaintVentures. Facts are drawn from public-domain works such as Butler's Lives of the Saints, the Golden Legend, the Bible, and Vatican biographies; a few details come from Wikipedia (CC BY-SA), as credited on each individual story.",
+  },
+];
+
+export const HOWTO_SECTIONS: LegalSection[] = [
+  {
+    heading: "Reading stories",
+    body: "Tap any saint to open their story. Press play to hear it read aloud — words light up as they are spoken, and the page follows along automatically. Every story ends with a short prayer.",
+  },
+  {
+    heading: "Quizzes and stars",
+    body: "After a story, take its quiz of 5 questions. No mistakes earns 3 stars, and your best score is always saved — replay any quiz to turn 2 stars into 3.",
+  },
+  {
+    heading: "Prayers and sharing",
+    body: "Every saint has a prayer. Open one from the Prayer button after a quiz, or the hands button on any feast day row. On the prayer card, tap the download arrow to save a beautiful prayer image, or the share button to send it to friends and family through WhatsApp and your other apps.",
+  },
+  {
+    heading: "Badges",
+    body: "Finishing a quiz earns that saint's badge. Watch your collection grow toward all 70 saints on the Badges tab.",
+  },
+  {
+    heading: "Keep the flame alive",
+    body: "The flame counts consecutive days with a finished story. The first story you finish each day extends it; reading more the same day won't raise it further. Miss a day and the flame resets — so come back tomorrow!",
+  },
+  {
+    heading: "Feasts and new stories",
+    body: "The Feasts tab lists every saint's feast day for the year. When new stories arrive, the gold bell on Home lights up — tap it to read the newest one.",
+  },
+  {
+    heading: "Favourites and music",
+    body: "Tap the heart on any story, quiz, or feast to keep it in your favourites. Story music volume can be adjusted anytime in this menu, under Story music.",
   },
 ];
 

@@ -12,9 +12,14 @@ function readStored(): string[] {
         const parsed = JSON.parse(raw as string) as unknown;
         if (Array.isArray(parsed)) return parsed.filter((x): x is string => typeof x === "string");
       } else {
-        // First launch: everything currently bundled counts as seen, so the
-        // bell only lights up for stories that arrive afterwards.
-        return stories.map((s) => s.id);
+        // First launch: everything currently bundled counts as seen — except
+        // the single newest story, so first-time readers get pointed at it.
+        // The seed MUST be persisted, otherwise every launch would reseed to
+        // current stories and newly arrived ones could never be detected.
+        const fresh = [...stories].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+        const seed = fresh.slice(1).map((s) => s.id);
+        writeStored(seed);
+        return seed;
       }
     }
   } catch {

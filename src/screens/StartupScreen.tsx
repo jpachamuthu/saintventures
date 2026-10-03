@@ -1,9 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Easing, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ArrowRight } from "lucide-react-native";
-import Svg, { Defs, LinearGradient, Rect, Stop } from "react-native-svg";
-import DawnSky from "../components/DawnSky";
 import LegalPage, { PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
 import { fonts } from "../theme";
 
@@ -12,26 +10,7 @@ type StartupScreenProps = {
 };
 
 const INK = "#2A1605";
-const PAPER = "#FFFFFF";
-const PAPER_SOFT = "rgba(255, 255, 255, 0.82)";
 const PAPER_FAINT = "rgba(255, 255, 255, 0.68)";
-
-function GoldCross({ size = 30 }: { size?: number }) {
-  const w = size;
-  const h = (size * 46) / 30;
-  return (
-    <Svg width={w} height={h} viewBox="0 0 30 46">
-      <Defs>
-        <LinearGradient id="crossGold" x1="0" y1="0" x2="1" y2="1">
-          <Stop offset="0" stopColor="#F9D06C" />
-          <Stop offset="1" stopColor="#E3A63C" />
-        </LinearGradient>
-      </Defs>
-      <Rect x="11.5" y="2" width="7" height="42" rx="3.5" fill="url(#crossGold)" />
-      <Rect x="3" y="12" width="24" height="7" rx="3.5" fill="url(#crossGold)" />
-    </Svg>
-  );
-}
 
 export default function StartupScreen({ onStart }: StartupScreenProps) {
   const styles = createStyles();
@@ -39,30 +18,42 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   const [showTerms, setShowTerms] = useState(false);
   const exiting = useRef(false);
 
-  const heroDy = useRef(new Animated.Value(0)).current;
-  const heroSc = useRef(new Animated.Value(1)).current;
-  const bodyOp = useRef(new Animated.Value(0)).current;
+  const imgOp = useRef(new Animated.Value(0)).current;
+  const ctaOp = useRef(new Animated.Value(0)).current;
+  const ctaDy = useRef(new Animated.Value(18)).current;
+  const skySc = useRef(new Animated.Value(1.06)).current;
+  const nudge = useRef(new Animated.Value(0)).current;
   const exitOp = useRef(new Animated.Value(1)).current;
   const exitSc = useRef(new Animated.Value(1)).current;
   const exitDy = useRef(new Animated.Value(0)).current;
-  const launched = useRef(false);
 
-  const onHeroLayout = (e: any) => {
-    if (launched.current) return;
-    launched.current = true;
-    const { y, height } = e.nativeEvent.layout;
-    const win = Dimensions.get("window").height;
-    const desiredTop = win / 2 - height / 2;
-    heroDy.setValue(desiredTop - y);
-    heroSc.setValue(1.5);
+  useEffect(() => {
+    // Cinematic open: fade in while settling from a slight zoom. One shot —
+    // no looping drift, so the full-screen artwork never repaints and stays smooth.
     Animated.parallel([
-      Animated.spring(heroDy, { toValue: 0, friction: 8, tension: 60, useNativeDriver: true }),
-      Animated.spring(heroSc, { toValue: 1, friction: 8, tension: 60, useNativeDriver: true }),
+      Animated.timing(imgOp, { toValue: 1, duration: 900, useNativeDriver: true }),
+      Animated.timing(skySc, { toValue: 1, duration: 1600, easing: Easing.out(Easing.cubic), useNativeDriver: true }),
     ]).start();
-    setTimeout(() => {
-      Animated.timing(bodyOp, { toValue: 1, duration: 450, useNativeDriver: true }).start();
-    }, 620);
-  };
+    // Gentle nudge on the CTA arrow.
+    const nudgeLoop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(nudge, { toValue: 4, duration: 800, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+        Animated.timing(nudge, { toValue: 0, duration: 800, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+      ])
+    );
+    nudgeLoop.start();
+    // CTA rises in after the artwork lands.
+    const c = setTimeout(() => {
+      Animated.parallel([
+        Animated.timing(ctaOp, { toValue: 1, duration: 450, useNativeDriver: true }),
+        Animated.timing(ctaDy, { toValue: 0, duration: 450, easing: Easing.out(Easing.cubic), useNativeDriver: true }),
+      ]).start();
+    }, 950);
+    return () => {
+      clearTimeout(c);
+      nudgeLoop.stop();
+    };
+  }, [imgOp, skySc, nudge, ctaOp, ctaDy]);
 
   const handleStart = () => {
     if (exiting.current) return;
@@ -77,24 +68,16 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   return (
     <View style={styles.root}>
       <StatusBar style="light" />
-      <DawnSky />
+      <Animated.View style={[StyleSheet.absoluteFill, { opacity: imgOp, transform: [{ scale: skySc }] }]}>
+        <Image
+          source={require("../../assets/SaintVentures Splash.png")}
+          style={[StyleSheet.absoluteFill, { width: "100%", height: "100%" }]}
+          resizeMode="cover"
+        />
+      </Animated.View>
       <Animated.View style={[styles.screen, { opacity: exitOp, transform: [{ scale: exitSc }, { translateY: exitDy }] }]}>
-        <Animated.View
-          onLayout={onHeroLayout}
-          style={[styles.heroWrap, { transform: [{ translateY: heroDy }, { scale: heroSc }] }]}
-        >
-          <GoldCross size={30} />
-          <Text style={styles.title}>Saint{"\n"}Adventures</Text>
-        </Animated.View>
-
         <View style={styles.body}>
-          <Animated.View style={{ opacity: bodyOp }}>
-            <Text style={styles.eyebrow}>Real people. Extraordinary faith.</Text>
-            <Text style={styles.copy}>
-              Discover the inspiring stories of the saints and how they can guide your journey
-              today.
-            </Text>
-
+          <Animated.View style={{ opacity: ctaOp, transform: [{ translateY: ctaDy }] }}>
             <Pressable
               onPress={handleStart}
               style={({ pressed }) => [styles.startBtn, pressed && styles.pressed]}
@@ -102,7 +85,9 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
               accessibilityLabel="Get Started"
             >
               <Text style={styles.startBtnText}>Get Started</Text>
-              <ArrowRight size={19} color={INK} strokeWidth={2.4} />
+              <Animated.View style={{ transform: [{ translateX: nudge }] }}>
+                <ArrowRight size={19} color={INK} strokeWidth={2.4} />
+              </Animated.View>
             </Pressable>
 
             <Text style={styles.footnote}>No account needed.{"\n"}Tap in and explore the saints.</Text>
@@ -145,50 +130,11 @@ function createStyles() {
     screen: {
       flex: 1,
     },
-    heroWrap: {
-      position: "absolute",
-      top: 92,
-      left: 0,
-      right: 0,
-      alignItems: "center",
-    },
-    title: {
-      fontFamily: fonts.serif,
-      fontSize: 52,
-      lineHeight: 56,
-      letterSpacing: 0.5,
-      color: PAPER,
-      textAlign: "center",
-      marginTop: 14,
-      textShadowColor: "rgba(10, 10, 40, 0.45)",
-      textShadowOffset: { width: 0, height: 2 },
-      textShadowRadius: 10,
-    },
     body: {
       flex: 1,
       justifyContent: "flex-end",
       paddingHorizontal: 34,
       paddingBottom: 118,
-    },
-    eyebrow: {
-      fontFamily: fonts.metaBold,
-      fontSize: 12.5,
-      letterSpacing: 3.2,
-      color: PAPER_SOFT,
-      textAlign: "center",
-      textTransform: "uppercase",
-    },
-    copy: {
-      fontFamily: fonts.ui,
-      fontSize: 16,
-      lineHeight: 24,
-      color: PAPER_SOFT,
-      textAlign: "center",
-      marginTop: 12,
-      paddingHorizontal: 8,
-      textShadowColor: "rgba(10, 10, 40, 0.5)",
-      textShadowOffset: { width: 0, height: 1 },
-      textShadowRadius: 6,
     },
     startBtn: {
       flexDirection: "row",

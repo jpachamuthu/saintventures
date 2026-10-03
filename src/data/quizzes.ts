@@ -15,13 +15,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What surprised everyone when Anthony first preached?",
-      choices: ["He ran away", "His voice was clear, warm, and wise", "He could not speak at all"],
-      correct: 1,
+      choices: ["He could not speak at all", "He ran away", "His voice was clear, warm, and wise"],
+      correct: 2,
     },
     {
       question: "Who came to visit Anthony while he prayed at night?",
-      choices: ["A king on a horse", "A fish wearing a crown", "A little child glowing with light"],
-      correct: 2,
+      choices: ["A fish wearing a crown", "A little child glowing with light", "A king on a horse"],
+      correct: 1,
     },
     {
       question: "Why did Anthony's stomach flip when he was asked to preach?",
@@ -30,20 +30,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "When people lose something, they often say a prayer to…",
-      choices: ["Ask St Anthony to help find it", "Ride off on a horse", "Wait until spring"],
-      correct: 0,
+      choices: ["Wait until spring", "Ask St Anthony to help find it", "Ride off on a horse"],
+      correct: 1,
     },
   ],
   "st-joan": [
     {
       question: "What job was Joan given?",
-      choices: ["Build a new castle", "Feed all the sheep in France", "Help the young prince become king"],
-      correct: 2,
+      choices: ["Help the young prince become king", "Build a new castle", "Feed all the sheep in France"],
+      correct: 0,
     },
     {
       question: "What did Joan carry instead of a weapon?",
-      choices: ["A wooden flute", "A white banner covered in flowers", "A golden shield"],
-      correct: 1,
+      choices: ["A white banner covered in flowers", "A golden shield", "A wooden flute"],
+      correct: 0,
     },
     {
       question: "Where was the prince crowned king?",
@@ -52,20 +52,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What great city was surrounded by enemies?",
-      choices: ["Reims", "Orleans", "Domremy"],
-      correct: 1,
+      choices: ["Domremy", "Reims", "Orleans"],
+      correct: 2,
     },
     {
       question: "What did Joan say about hurting anyone?",
-      choices: ["I will never hurt anyone", "I will fight with a sword", "I will hide from the soldiers"],
-      correct: 0,
+      choices: ["I will fight with a sword", "I will hide from the soldiers", "I will never hurt anyone"],
+      correct: 2,
     },
   ],
   "st-clare": [
     {
       question: "What did Clare's family have?",
-      choices: ["A very big ship", "Lots of money and fine clothes", "A whole zoo of animals"],
-      correct: 1,
+      choices: ["Lots of money and fine clothes", "A whole zoo of animals", "A very big ship"],
+      correct: 0,
     },
     {
       question: "What sign did Francis give Clare for her new life?",
@@ -74,13 +74,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What happened when the soldiers came to San Damiano?",
-      choices: ["They turned and ran away", "They asked for bread", "They broke the door down"],
-      correct: 0,
+      choices: ["They broke the door down", "They turned and ran away", "They asked for bread"],
+      correct: 1,
     },
     {
       question: "What were Clare's sisters called?",
-      choices: ["The Poor Ladies", "The Bright Stars", "The Royal Singers"],
-      correct: 0,
+      choices: ["The Bright Stars", "The Royal Singers", "The Poor Ladies"],
+      correct: 2,
     },
     {
       question: "St Clare is the patron saint of…",
@@ -96,13 +96,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What was Padre Pio's favorite place?",
-      choices: ["The kitchen", "The garden", "The confessional"],
-      correct: 2,
+      choices: ["The confessional", "The kitchen", "The garden"],
+      correct: 0,
     },
     {
       question: "What did Padre Pio keep saying over and over?",
-      choices: ["Always be first", "Pray, hope, and don't worry", "Work hard every day"],
-      correct: 1,
+      choices: ["Pray, hope, and don't worry", "Work hard every day", "Always be first"],
+      correct: 0,
     },
     {
       question: "What did Padre Pio's mother say about him when he was born?",
@@ -111,20 +111,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Padre Pio build for the sick people?",
-      choices: ["A big hospital", "A tower of bells", "A garden of roses"],
-      correct: 0,
+      choices: ["A garden of roses", "A big hospital", "A tower of bells"],
+      correct: 1,
     },
   ],
   "st-francis": [
     {
       question: "What did Francis do when he saw a poor man shivering in the cold?",
-      choices: ["Gave him his warm cloak", "Rode away quickly", "Called his friends"],
-      correct: 0,
+      choices: ["Called his friends", "Gave him his warm cloak", "Rode away quickly"],
+      correct: 1,
     },
     {
       question: "Who did Francis talk to in a field one day?",
-      choices: ["A choir of monks", "A group of knights", "A flock of birds"],
-      correct: 2,
+      choices: ["A group of knights", "A flock of birds", "A choir of monks"],
+      correct: 1,
     },
     {
       question: "What did Francis call the sun?",
@@ -133,20 +133,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Francis call the moon?",
-      choices: ["Auntie", "Sister", "Grandma"],
-      correct: 1,
+      choices: ["Grandma", "Auntie", "Sister"],
+      correct: 2,
     },
     {
       question: "What happened to the hungry wolf when Francis spoke to it gently?",
-      choices: ["It ran away forever", "It became gentle like a puppy", "It grew huge and scary"],
-      correct: 1,
+      choices: ["It became gentle like a puppy", "It grew huge and scary", "It ran away forever"],
+      correct: 0,
     },
   ],
   "st-therese": [
     {
       question: "What did Therese's family call her?",
-      choices: ["The little one", "The brave one", "The quiet one"],
-      correct: 0,
+      choices: ["The brave one", "The quiet one", "The little one"],
+      correct: 2,
     },
     {
       question: "What did Therese call her secret way of growing closer to God?",
@@ -155,13 +155,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Therese promise to send down from heaven?",
-      choices: ["A happy song", "A shower of roses", "A cup of tea"],
-      correct: 1,
+      choices: ["A cup of tea", "A happy song", "A shower of roses"],
+      correct: 2,
     },
     {
       question: "Who did Therese travel all the way to Rome to ask?",
-      choices: ["The king", "The Pope", "Her grandmother"],
-      correct: 1,
+      choices: ["The Pope", "Her grandmother", "The king"],
+      correct: 0,
     },
     {
       question: "What did Therese say when she was too ill to leave her bed?",
@@ -177,13 +177,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What were people always mixing Jude up with?",
-      choices: ["Another apostle also named Judas", "A shepherd boy", "A great king"],
-      correct: 0,
+      choices: ["A great king", "Another apostle also named Judas", "A shepherd boy"],
+      correct: 1,
     },
     {
       question: "What is St Jude the patron saint of?",
-      choices: ["Hopeless causes", "Safe travels", "Good weather"],
-      correct: 0,
+      choices: ["Safe travels", "Good weather", "Hopeless causes"],
+      correct: 2,
     },
     {
       question: "What did Jude write that is still in the Bible today?",
@@ -192,20 +192,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What brave question did Jude ask Jesus at the last supper?",
-      choices: ["Why are we eating fish?", "Lord, why do you show yourself to us?", "When will we get new sandals?"],
-      correct: 1,
+      choices: ["When will we get new sandals?", "Why are we eating fish?", "Lord, why do you show yourself to us?"],
+      correct: 2,
     },
   ],
   "st-john-baptist": [
     {
       question: "What did John wear while he lived in the wilderness?",
-      choices: ["Clothes made of camel hair", "A golden crown", "A royal robe"],
-      correct: 0,
+      choices: ["A royal robe", "Clothes made of camel hair", "A golden crown"],
+      correct: 1,
     },
     {
       question: "Where did John baptize people?",
-      choices: ["The ocean", "The River Jordan", "A garden pond"],
-      correct: 1,
+      choices: ["The River Jordan", "A garden pond", "The ocean"],
+      correct: 0,
     },
     {
       question: "What came down from the sky when Jesus was baptized?",
@@ -214,20 +214,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What happened to Zechariah when he could not believe the angel?",
-      choices: ["He could not speak", "He lost his hat", "He fell fast asleep"],
-      correct: 0,
+      choices: ["He fell fast asleep", "He could not speak", "He lost his hat"],
+      correct: 1,
     },
     {
       question: "What did John say about the one coming after him?",
-      choices: ["I am the greatest", "Someone much greater is coming after me", "Nobody else is coming"],
-      correct: 1,
+      choices: ["Someone much greater is coming after me", "Nobody else is coming", "I am the greatest"],
+      correct: 0,
     },
   ],
   "st-mary-magdalene": [
     {
       question: "What happened to the big stone at Jesus' tomb?",
-      choices: ["It was rolled away", "It grew bigger", "It turned to gold"],
-      correct: 0,
+      choices: ["It grew bigger", "It turned to gold", "It was rolled away"],
+      correct: 2,
     },
     {
       question: "Who was the very first person to see Jesus alive?",
@@ -236,13 +236,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What is Mary Magdalene called?",
-      choices: ["Queen of the hills", "Apostle to the apostles", "Keeper of the keys"],
-      correct: 1,
+      choices: ["Keeper of the keys", "Queen of the hills", "Apostle to the apostles"],
+      correct: 2,
     },
     {
       question: "What did Mary carry to the tomb to care for Jesus' body?",
-      choices: ["Spices", "Flowers", "A lantern"],
-      correct: 0,
+      choices: ["Flowers", "A lantern", "Spices"],
+      correct: 2,
     },
     {
       question: "What special job did Jesus give Mary after she saw him alive?",
@@ -258,13 +258,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who taught young Fulgentius to speak Greek?",
-      choices: ["His father", "His mother", "His king"],
-      correct: 1,
+      choices: ["His king", "His father", "His mother"],
+      correct: 2,
     },
     {
       question: "What did Fulgentius give up to follow God?",
-      choices: ["His rich, easy life", "His friends' games", "His pet donkey"],
-      correct: 0,
+      choices: ["His friends' games", "His pet donkey", "His rich, easy life"],
+      correct: 2,
     },
     {
       question: "What did Fulgentius do when the faraway king sent him to an island?",
@@ -273,20 +273,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did the people hold over Fulgentius' head when he came home?",
-      choices: ["A big umbrella", "Their cloaks", "A golden roof"],
-      correct: 1,
+      choices: ["A golden roof", "A big umbrella", "Their cloaks"],
+      correct: 2,
     },
   ],
   "st-macarius": [
     {
       question: "What did Macarius sell at his stall in Alexandria?",
-      choices: ["Fish", "Fruit", "Blankets"],
-      correct: 1,
+      choices: ["Blankets", "Fish", "Fruit"],
+      correct: 2,
     },
     {
       question: "What was the desert place called where Macarius lived?",
-      choices: ["The Cells", "The City", "The Vineyard"],
-      correct: 0,
+      choices: ["The City", "The Vineyard", "The Cells"],
+      correct: 2,
     },
     {
       question: "What happened to the bunch of grapes Macarius gave away?",
@@ -295,20 +295,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Macarius do when a proud thought told him to show off?",
-      choices: ["He carried a heavy basket of sand to stay humble", "He went to Rome to be admired", "He stopped praying"],
-      correct: 0,
+      choices: ["He stopped praying", "He carried a heavy basket of sand to stay humble", "He went to Rome to be admired"],
+      correct: 1,
     },
     {
       question: "What did Macarius do for the blind little hyena cub?",
-      choices: ["He chased it away", "He prayed and touched its eyes so it could see", "He fed it grapes"],
-      correct: 1,
+      choices: ["He prayed and touched its eyes so it could see", "He fed it grapes", "He chased it away"],
+      correct: 0,
     },
   ],
   "st-genevieve": [
     {
       question: "Where was Genevieve born?",
-      choices: ["Nanterre", "Rome", "Lisbon"],
-      correct: 0,
+      choices: ["Rome", "Lisbon", "Nanterre"],
+      correct: 2,
     },
     {
       question: "What did Bishop Germanus give Genevieve?",
@@ -317,13 +317,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "When Attila's army was coming, what did Genevieve tell the people to do?",
-      choices: ["Run away quickly", "Stay and pray", "Hide in the hills"],
-      correct: 1,
+      choices: ["Hide in the hills", "Run away quickly", "Stay and pray"],
+      correct: 2,
     },
     {
       question: "What happened to Genevieve's candle in the storm?",
-      choices: ["It went out forever", "It lit by itself and kept burning", "It turned into a star"],
-      correct: 1,
+      choices: ["It lit by itself and kept burning", "It turned into a star", "It went out forever"],
+      correct: 0,
     },
     {
       question: "When famine came, how did Genevieve help feed Paris?",
@@ -339,13 +339,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who took Mariam in when her parents died?",
-      choices: ["The king", "A big sister", "A kind uncle"],
-      correct: 2,
+      choices: ["A kind uncle", "The king", "A big sister"],
+      correct: 0,
     },
     {
       question: "Who did Mariam believe the gentle lady in blue was?",
-      choices: ["A fairy princess", "Mary, the mother of Jesus", "Her own aunt"],
-      correct: 1,
+      choices: ["Mary, the mother of Jesus", "Her own aunt", "A fairy princess"],
+      correct: 0,
     },
     {
       question: "What new name did Mariam take when she became a nun?",
@@ -354,20 +354,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "In which town did Mariam help start a new monastery?",
-      choices: ["Rome", "London", "Bethlehem"],
-      correct: 2,
+      choices: ["Bethlehem", "Rome", "London"],
+      correct: 0,
     },
   ],
   "st-christina": [
     {
       question: "What did Christina do to help her family after her parents died?",
-      choices: ["She looked after the sheep", "She opened a shop", "She joined the army"],
-      correct: 0,
+      choices: ["She joined the army", "She looked after the sheep", "She opened a shop"],
+      correct: 1,
     },
     {
       question: "What happened in the middle of Christina's funeral?",
-      choices: ["The sky turned green", "She sat up and floated to the rafters", "The church filled with doves"],
-      correct: 1,
+      choices: ["She sat up and floated to the rafters", "The church filled with doves", "The sky turned green"],
+      correct: 0,
     },
     {
       question: "Which sad place did God show Christina?",
@@ -376,20 +376,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Why did Christina wear rags and live with no home?",
-      choices: ["Because she lost everything", "To help souls and turn hearts back to God", "Because she loved adventures"],
-      correct: 1,
+      choices: ["Because she loved adventures", "Because she lost everything", "To help souls and turn hearts back to God"],
+      correct: 2,
     },
     {
       question: "What did Christina do every day for the souls and for sinners?",
-      choices: ["She prayed for them", "She collected coins", "She hid in the hills"],
-      correct: 0,
+      choices: ["She collected coins", "She hid in the hills", "She prayed for them"],
+      correct: 2,
     },
   ],
   "st-mary-mackillop": [
     {
       question: "Where was Mary MacKillop born?",
-      choices: ["Melbourne, Australia", "Rome, Italy", "Dublin, Ireland"],
-      correct: 0,
+      choices: ["Rome, Italy", "Dublin, Ireland", "Melbourne, Australia"],
+      correct: 2,
     },
     {
       question: "What did Mary love doing for the children of the bush?",
@@ -398,13 +398,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Where did the very first St Joseph's school open?",
-      choices: ["In a golden church", "In a dusty old stable", "In a big castle"],
-      correct: 1,
+      choices: ["In a big castle", "In a golden church", "In a dusty old stable"],
+      correct: 2,
     },
     {
       question: "What did the Sisters of St Joseph promise to be?",
-      choices: ["Poor like Jesus", "Rich and famous", "Brave knights"],
-      correct: 0,
+      choices: ["Rich and famous", "Brave knights", "Poor like Jesus"],
+      correct: 2,
     },
     {
       question: "Mary MacKillop became the first saint from which country?",
@@ -420,13 +420,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which of these did Carlo love?",
-      choices: ["Computers, football and his dog", "Collecting shiny coins", "Sleeping all day"],
-      correct: 0,
+      choices: ["Sleeping all day", "Computers, football and his dog", "Collecting shiny coins"],
+      correct: 1,
     },
     {
       question: "What did Carlo write a famous website about?",
-      choices: ["Videos", "Miracles of the Eucharist", "Football matches"],
-      correct: 1,
+      choices: ["Miracles of the Eucharist", "Football matches", "Videos"],
+      correct: 0,
     },
     {
       question: "What did Carlo say about being on his phone?",
@@ -435,20 +435,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What happened in 2025?",
-      choices: ["Wake-up server", "The Pope made Carlo a saint", "Carlo started a band"],
-      correct: 1,
+      choices: ["Carlo started a band", "Wake-up server", "The Pope made Carlo a saint"],
+      correct: 2,
     },
   ],
   "st-peter": [
     {
       question: "What was Peter's job before he followed Jesus?",
-      choices: ["He was a fisherman", "He was a baker", "He was a soldier"],
-      correct: 0,
+      choices: ["He was a soldier", "He was a fisherman", "He was a baker"],
+      correct: 1,
     },
     {
       question: "What did Jesus name Simon?",
-      choices: ["Peter, which means Rock", "David, which means Strong", "John, which means Kind"],
-      correct: 0,
+      choices: ["David, which means Strong", "John, which means Kind", "Peter, which means Rock"],
+      correct: 2,
     },
     {
       question: "What did Peter say when he walked on the water?",
@@ -457,20 +457,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Jesus tell Peter to do when he asked 'Do you love me?'",
-      choices: ["'Feed my sheep'", "'Sell my boat'", "'Build a big tower'"],
-      correct: 0,
+      choices: ["'Build a big tower'", "'Feed my sheep'", "'Sell my boat'"],
+      correct: 1,
     },
     {
       question: "What happened when Peter was captured in Rome?",
-      choices: ["He escaped on a horse", "He asked to be crucified upside down", "He became the king"],
-      correct: 1,
+      choices: ["He asked to be crucified upside down", "He became the king", "He escaped on a horse"],
+      correct: 0,
     },
   ],
   "st-andrew": [
     {
       question: "What was Andrew's job before he followed Jesus?",
-      choices: ["He was a fisherman", "He was a baker", "He was a soldier"],
-      correct: 0,
+      choices: ["He was a baker", "He was a soldier", "He was a fisherman"],
+      correct: 2,
     },
     {
       question: "Who was the very first person to follow Jesus?",
@@ -479,13 +479,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who did Andrew run to fetch when he found Jesus?",
-      choices: ["His brother Simon", "His cousin James", "His uncle Thomas"],
-      correct: 0,
+      choices: ["His uncle Thomas", "His brother Simon", "His cousin James"],
+      correct: 1,
     },
     {
       question: "What shape was the cross Andrew was tied to?",
-      choices: ["A letter X shape", "A round circle", "An upside-down letter V"],
-      correct: 0,
+      choices: ["A round circle", "An upside-down letter V", "A letter X shape"],
+      correct: 2,
     },
     {
       question: "What is Andrew honoured as the patron of?",
@@ -501,13 +501,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What was James and John's father called?",
-      choices: ["Zebedee", "Zechariah", "Zacchaeus"],
-      correct: 0,
+      choices: ["Zacchaeus", "Zebedee", "Zechariah"],
+      correct: 1,
     },
     {
       question: "Who was the first apostle to give his life for Jesus?",
-      choices: ["James the Greater", "Thomas", "Bartholomew"],
-      correct: 0,
+      choices: ["Thomas", "Bartholomew", "James the Greater"],
+      correct: 2,
     },
     {
       question: "Where did people find James' tomb long ago?",
@@ -516,20 +516,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What country is St James the patron of?",
-      choices: ["Spain", "China", "Egypt"],
-      correct: 0,
+      choices: ["Egypt", "Spain", "China"],
+      correct: 1,
     },
   ],
   "st-john": [
     {
       question: "What is John often called?",
-      choices: ["The disciple whom Jesus loved", "The loudest disciple", "The strongest disciple"],
-      correct: 0,
+      choices: ["The strongest disciple", "The disciple whom Jesus loved", "The loudest disciple"],
+      correct: 1,
     },
     {
       question: "Who did John look after when Jesus died on the cross?",
-      choices: ["Mary, the mother of Jesus", "His grandfather", "A poor farmer"],
-      correct: 0,
+      choices: ["His grandfather", "A poor farmer", "Mary, the mother of Jesus"],
+      correct: 2,
     },
     {
       question: "What did John always say to people when he was old?",
@@ -538,20 +538,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which book about visions did John write while on Patmos?",
-      choices: ["Revelation", "The book of maps", "The book of songs"],
-      correct: 0,
+      choices: ["The book of songs", "Revelation", "The book of maps"],
+      correct: 1,
     },
     {
       question: "How did John die?",
-      choices: ["Peacefully as a very old man", "In a great battle", "On a long voyage"],
-      correct: 0,
+      choices: ["In a great battle", "On a long voyage", "Peacefully as a very old man"],
+      correct: 2,
     },
   ],
   "st-philip": [
     {
       question: "What town was Philip from?",
-      choices: ["Bethsaida", "Nazareth", "Jericho"],
-      correct: 0,
+      choices: ["Nazareth", "Jericho", "Bethsaida"],
+      correct: 2,
     },
     {
       question: "What did Jesus say to Philip?",
@@ -560,13 +560,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Philip say to his friend Nathanael?",
-      choices: ["Come and see", "Run away fast", "Stay at home"],
-      correct: 0,
+      choices: ["Stay at home", "Come and see", "Run away fast"],
+      correct: 1,
     },
     {
       question: "What did Philip ask Jesus at the last supper?",
-      choices: ["Show us the Father", "Give us more bread", "Take us back home"],
-      correct: 0,
+      choices: ["Give us more bread", "Take us back home", "Show us the Father"],
+      correct: 2,
     },
     {
       question: "Who did Philip travel far away with?",
@@ -582,13 +582,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Where was Bartholomew sitting when Jesus saw him?",
-      choices: ["Under a fig tree", "On a tall mountain", "By a fast river"],
-      correct: 0,
+      choices: ["By a fast river", "Under a fig tree", "On a tall mountain"],
+      correct: 1,
     },
     {
       question: "What did Jesus say about Bartholomew?",
-      choices: ["A true Israelite with no deceit", "A loud and noisy man", "A sleepy fisherman"],
-      correct: 0,
+      choices: ["A loud and noisy man", "A sleepy fisherman", "A true Israelite with no deceit"],
+      correct: 2,
     },
     {
       question: "What did Bartholomew call Jesus when he believed?",
@@ -597,20 +597,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which far land did Bartholomew preach in?",
-      choices: ["A kingdom in the East", "England", "Australia"],
-      correct: 0,
+      choices: ["Australia", "A kingdom in the East", "England"],
+      correct: 1,
     },
   ],
   "st-thomas": [
     {
       question: "What brave thing did Thomas once say to his friends?",
-      choices: ["Let us also go so we may die with him", "Let us wait until spring", "Let us go fishing instead"],
-      correct: 0,
+      choices: ["Let us go fishing instead", "Let us also go so we may die with him", "Let us wait until spring"],
+      correct: 1,
     },
     {
       question: "Why did Thomas first refuse to believe Jesus rose?",
-      choices: ["He had not seen the nail marks", "He was too sleepy", "He was angry at Peter"],
-      correct: 0,
+      choices: ["He was too sleepy", "He was angry at Peter", "He had not seen the nail marks"],
+      correct: 2,
     },
     {
       question: "What did Thomas cry out when he saw Jesus?",
@@ -619,20 +619,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Where does tradition say Thomas took the good news?",
-      choices: ["India", "Spain", "Norway"],
-      correct: 0,
+      choices: ["Norway", "India", "Spain"],
+      correct: 1,
     },
     {
       question: "What does St Thomas teach us to bring to Jesus?",
-      choices: ["Our honest doubts", "Our heavy bags", "Our biggest crowds"],
-      correct: 0,
+      choices: ["Our heavy bags", "Our biggest crowds", "Our honest doubts"],
+      correct: 2,
     },
   ],
   "st-matthew": [
     {
       question: "What was Matthew's job before he followed Jesus?",
-      choices: ["He collected taxes", "He baked bread", "He shepherded sheep"],
-      correct: 0,
+      choices: ["He baked bread", "He shepherded sheep", "He collected taxes"],
+      correct: 2,
     },
     {
       question: "What did Matthew leave behind when Jesus called him?",
@@ -641,13 +641,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What special book did Matthew write?",
-      choices: ["The Gospel of Matthew", "The book of numbers", "A story about pirates"],
-      correct: 0,
+      choices: ["A story about pirates", "The Gospel of Matthew", "The book of numbers"],
+      correct: 1,
     },
     {
       question: "Who did Matthew invite to his dinner party?",
-      choices: ["Many tax collectors", "Only the king's family", "Only his neighbours' children"],
-      correct: 0,
+      choices: ["Only the king's family", "Only his neighbours' children", "Many tax collectors"],
+      correct: 2,
     },
     {
       question: "What did Jesus say when people complained he ate with sinners?",
@@ -663,13 +663,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which city did James the Less lead the Church in?",
-      choices: ["Jerusalem", "Rome", "Babylon"],
-      correct: 0,
+      choices: ["Babylon", "Jerusalem", "Rome"],
+      correct: 1,
     },
     {
       question: "What did James say faith without good works is like?",
-      choices: ["Something dead", "A bright star", "A deep ocean"],
-      correct: 0,
+      choices: ["A bright star", "A deep ocean", "Something dead"],
+      correct: 2,
     },
     {
       question: "What wise advice is in the letter of James?",
@@ -678,20 +678,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What quality did people admire in James the Less?",
-      choices: ["His humility and holiness", "His loud voice", "His big house"],
-      correct: 0,
+      choices: ["His big house", "His humility and holiness", "His loud voice"],
+      correct: 1,
     },
   ],
   "st-simon-zealot": [
     {
       question: "What group was Simon said to belong to?",
-      choices: ["The Zealots", "The Shepherds", "The Sailors"],
-      correct: 0,
+      choices: ["The Sailors", "The Zealots", "The Shepherds"],
+      correct: 1,
     },
     {
       question: "What change did Jesus make in Simon?",
-      choices: ["From fighting to loving", "From love to anger", "From calm to noise"],
-      correct: 0,
+      choices: ["From love to anger", "From calm to noise", "From fighting to loving"],
+      correct: 2,
     },
     {
       question: "What did Simon learn about Jesus' kingdom?",
@@ -700,20 +700,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which apostle is tradition said Simon travelled with?",
-      choices: ["Jude Thaddeus", "Thomas", "Andrew"],
-      correct: 0,
+      choices: ["Andrew", "Jude Thaddeus", "Thomas"],
+      correct: 1,
     },
     {
       question: "What does St Simon the Zealot show us about our passions?",
-      choices: ["God can turn them into holy love", "We should hide them", "They only cause trouble"],
-      correct: 0,
+      choices: ["We should hide them", "They only cause trouble", "God can turn them into holy love"],
+      correct: 2,
     },
   ],
   "st-matthias": [
     {
       question: "Why was there an empty place among the twelve apostles?",
-      choices: ["Judas had betrayed Jesus", "Peter moved away", "John fell asleep"],
-      correct: 0,
+      choices: ["Peter moved away", "John fell asleep", "Judas had betrayed Jesus"],
+      correct: 2,
     },
     {
       question: "What did the apostles do before choosing the new apostle?",
@@ -722,13 +722,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How did they let God choose the new apostle?",
-      choices: ["By casting lots after praying", "By holding a race", "By asking the king"],
-      correct: 0,
+      choices: ["By asking the king", "By casting lots after praying", "By holding a race"],
+      correct: 1,
     },
     {
       question: "Who was chosen to take the empty place?",
-      choices: ["Matthias", "Barnabas", "Silas"],
-      correct: 0,
+      choices: ["Barnabas", "Silas", "Matthias"],
+      correct: 2,
     },
     {
       question: "What must the new apostle have done all along?",
@@ -744,13 +744,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What is the Gospel of Mark?",
-      choices: ["The shortest of the four Gospels", "The longest book ever written", "A book about farming"],
-      correct: 0,
+      choices: ["A book about farming", "The shortest of the four Gospels", "The longest book ever written"],
+      correct: 1,
     },
     {
       question: "Where did Mark become the first bishop?",
-      choices: ["Alexandria", "Rome", "Bethlehem"],
-      correct: 0,
+      choices: ["Rome", "Bethlehem", "Alexandria"],
+      correct: 2,
     },
     {
       question: "What does the word Evangelist mean?",
@@ -759,20 +759,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who is St Mark the patron of?",
-      choices: ["Writers", "Fishermen", "Bakers"],
-      correct: 0,
+      choices: ["Bakers", "Writers", "Fishermen"],
+      correct: 1,
     },
   ],
   "st-luke": [
     {
       question: "What was Luke's job before he followed Jesus?",
-      choices: ["He was a doctor", "He was a soldier", "He was a shepherd"],
-      correct: 0,
+      choices: ["He was a shepherd", "He was a doctor", "He was a soldier"],
+      correct: 1,
     },
     {
       question: "Who was Luke's dear companion on his travels?",
-      choices: ["St Paul", "St Peter", "St John"],
-      correct: 0,
+      choices: ["St Peter", "St John", "St Paul"],
+      correct: 2,
     },
     {
       question: "Which beautiful story is only found in Luke's Gospel?",
@@ -781,20 +781,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who did Luke is said to have painted pictures of?",
-      choices: ["Mary, the mother of Jesus", "Herod the king", "A village baker"],
-      correct: 0,
+      choices: ["A village baker", "Mary, the mother of Jesus", "Herod the king"],
+      correct: 1,
     },
     {
       question: "What second book did Luke write?",
-      choices: ["The Acts of the Apostles", "A book of medicines", "A map of the world"],
-      correct: 0,
+      choices: ["A book of medicines", "A map of the world", "The Acts of the Apostles"],
+      correct: 2,
     },
   ],
   "st-theresa-calcutta": [
     {
       question: "What was Mother Teresa called before?",
-      choices: ["Agnes", "Anna", "Alice"],
-      correct: 0,
+      choices: ["Anna", "Alice", "Agnes"],
+      correct: 2,
     },
     {
       question: "What is the family of sisters Mother Teresa started called?",
@@ -803,13 +803,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did she open a home for?",
-      choices: ["The sick and dying who had no one", "The king's horses", "People who fish"],
-      correct: 0,
+      choices: ["People who fish", "The sick and dying who had no one", "The king's horses"],
+      correct: 1,
     },
     {
       question: "What was her famous secret of holy life?",
-      choices: ["Do small things with great love", "Do big things loudly", "Do nothing at all"],
-      correct: 0,
+      choices: ["Do big things loudly", "Do nothing at all", "Do small things with great love"],
+      correct: 2,
     },
     {
       question: "In which year was she declared a saint?",
@@ -825,13 +825,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Maria say even while she was hurt?",
-      choices: ["I forgive him and want him in heaven", "I will escape to Rome", "I am too scared to pray"],
-      correct: 0,
+      choices: ["I am too scared to pray", "I forgive him and want him in heaven", "I will escape to Rome"],
+      correct: 1,
     },
     {
       question: "What did Maria do every day?",
-      choices: ["Her chores and her prayers", "She hid in the attic", "She collected coins"],
-      correct: 0,
+      choices: ["She hid in the attic", "She collected coins", "Her chores and her prayers"],
+      correct: 2,
     },
     {
       question: "Who is St Maria the patron saint of?",
@@ -840,20 +840,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What is the message of Maria's story?",
-      choices: ["Love and forgiveness are stronger than hate", "Being rich is best", "Running away is wisest"],
-      correct: 0,
+      choices: ["Running away is wisest", "Love and forgiveness are stronger than hate", "Being rich is best"],
+      correct: 1,
     },
   ],
   "st-augustine": [
     {
       question: "What did Augustine keep saying when told to do the right thing?",
-      choices: ["Later… just not yet", "Yes, right away", "Ask someone else"],
-      correct: 0,
+      choices: ["Ask someone else", "Later… just not yet", "Yes, right away"],
+      correct: 1,
     },
     {
       question: "What did Monica do for seventeen years?",
-      choices: ["Sailed around the world", "Prayed and wept for her son", "Hid in a garden"],
-      correct: 1,
+      choices: ["Prayed and wept for her son", "Hid in a garden", "Sailed around the world"],
+      correct: 0,
     },
     {
       question: "What did the bishop tell Monica?",
@@ -862,20 +862,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What voice did Augustine hear in the garden?",
-      choices: ["A roaring lion", "A child singing, take up and read", "Thunder in the clouds"],
-      correct: 1,
+      choices: ["Thunder in the clouds", "A roaring lion", "A child singing, take up and read"],
+      correct: 2,
     },
     {
       question: "What does Augustine's story teach us?",
-      choices: ["Cleverness is enough", "No one is ever too lost to be found", "Mothers should stop praying"],
-      correct: 1,
+      choices: ["No one is ever too lost to be found", "Mothers should stop praying", "Cleverness is enough"],
+      correct: 0,
     },
   ],
   "st-monica": [
     {
       question: "Who did Monica marry?",
-      choices: ["Patricius, who had a fiery temper", "A quiet fisherman", "The bishop of Milan"],
-      correct: 0,
+      choices: ["A quiet fisherman", "The bishop of Milan", "Patricius, who had a fiery temper"],
+      correct: 2,
     },
     {
       question: "How did Monica answer her husband's anger?",
@@ -884,13 +884,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How long did Monica pray for Augustine?",
-      choices: ["One week", "Seventeen years", "A single night"],
-      correct: 1,
+      choices: ["A single night", "One week", "Seventeen years"],
+      correct: 2,
     },
     {
       question: "What did Monica do when Augustine sailed to Italy?",
-      choices: ["She forgot about him", "She got on a ship and followed him", "She moved to Egypt"],
-      correct: 1,
+      choices: ["She got on a ship and followed him", "She moved to Egypt", "She forgot about him"],
+      correct: 0,
     },
     {
       question: "Who is St Monica the patron saint of?",
@@ -906,13 +906,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Where was Bakhita born?",
-      choices: ["In Italy", "In Sudan", "In France"],
-      correct: 1,
+      choices: ["In France", "In Italy", "In Sudan"],
+      correct: 2,
     },
     {
       question: "Who treated Bakhita with gentleness?",
-      choices: ["Callisto Legnani", "The slave traders", "A circus lion"],
-      correct: 0,
+      choices: ["The slave traders", "A circus lion", "Callisto Legnani"],
+      correct: 2,
     },
     {
       question: "What name did she take when she was baptized?",
@@ -921,20 +921,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Bakhita say about the men who stole her?",
-      choices: ["She would forgive them and kiss their hands", "She would never speak again", "She would sail away forever"],
-      correct: 0,
+      choices: ["She would sail away forever", "She would forgive them and kiss their hands", "She would never speak again"],
+      correct: 1,
     },
   ],
   "st-vincent-de-paul": [
     {
       question: "What job did young Vincent do as a boy?",
-      choices: ["He herded sheep", "He sailed ships", "He baked bread"],
-      correct: 0,
+      choices: ["He baked bread", "He herded sheep", "He sailed ships"],
+      correct: 1,
     },
     {
       question: "What changed Vincent's life?",
-      choices: ["Winning a race", "A dying man's confession", "Finding a gold coin"],
-      correct: 1,
+      choices: ["A dying man's confession", "Finding a gold coin", "Winning a race"],
+      correct: 0,
     },
     {
       question: "Who helped Vincent start the Daughters of Charity?",
@@ -943,20 +943,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Vincent call the poor?",
-      choices: ["A nuisance", "Our masters", "Strangers"],
-      correct: 1,
+      choices: ["Strangers", "A nuisance", "Our masters"],
+      correct: 2,
     },
     {
       question: "Who is St Vincent the patron saint of?",
-      choices: ["Charities", "Astronauts", "Chefs"],
-      correct: 0,
+      choices: ["Astronauts", "Chefs", "Charities"],
+      correct: 2,
     },
   ],
   "st-augustine-zhao-rong": [
     {
       question: "What was Augustine's job before he converted?",
-      choices: ["A baker", "A soldier who guarded prisoners", "A fisherman"],
-      correct: 1,
+      choices: ["A soldier who guarded prisoners", "A fisherman", "A baker"],
+      correct: 0,
     },
     {
       question: "What convinced Augustine to become Christian?",
@@ -965,13 +965,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Augustine become?",
-      choices: ["A sailor", "A Catholic priest", "A palace guard"],
-      correct: 1,
+      choices: ["A palace guard", "A sailor", "A Catholic priest"],
+      correct: 2,
     },
     {
       question: "What happened when the soldiers caught Father Augustine?",
-      choices: ["He gave up his faith at once", "He was thrown in prison but refused to deny Christ", "He ran away to Rome"],
-      correct: 1,
+      choices: ["He was thrown in prison but refused to deny Christ", "He ran away to Rome", "He gave up his faith at once"],
+      correct: 0,
     },
     {
       question: "How many martyrs of China were declared saints with him?",
@@ -987,13 +987,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What was Lawrence's church job as a boy?",
-      choices: ["Ringing the biggest bell", "Altar server", "Polishing the organ"],
-      correct: 1,
+      choices: ["Polishing the organ", "Ringing the biggest bell", "Altar server"],
+      correct: 2,
     },
     {
       question: "Why did Lawrence have to flee?",
-      choices: ["He wanted an adventure", "He was falsely accused of a crime", "He missed his boat"],
-      correct: 1,
+      choices: ["He was falsely accused of a crime", "He missed his boat", "He wanted an adventure"],
+      correct: 0,
     },
     {
       question: "What famous words did Lawrence say?",
@@ -1002,20 +1002,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What makes Lawrence special in history?",
-      choices: ["He was the tallest saint", "He was the first Filipino saint", "He invented fireworks"],
-      correct: 1,
+      choices: ["He invented fireworks", "He was the tallest saint", "He was the first Filipino saint"],
+      correct: 2,
     },
   ],
   "st-michael-archangel": [
     {
       question: "What does the name Michael mean?",
-      choices: ["Who is like God?", "Bringer of lunch", "Keeper of keys"],
-      correct: 0,
+      choices: ["Keeper of keys", "Who is like God?", "Bringer of lunch"],
+      correct: 1,
     },
     {
       question: "Which angel rebelled against God?",
-      choices: ["Gabriel", "Lucifer", "Raphael"],
-      correct: 1,
+      choices: ["Lucifer", "Raphael", "Gabriel"],
+      correct: 0,
     },
     {
       question: "What happened in the war in heaven?",
@@ -1024,20 +1024,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who especially asks St Michael for protection?",
-      choices: ["Soldiers and police officers", "Bakers and chefs", "Fishermen only"],
-      correct: 0,
+      choices: ["Fishermen only", "Soldiers and police officers", "Bakers and chefs"],
+      correct: 1,
     },
     {
       question: "What does St Michael's victory teach us?",
-      choices: ["Evil always wins", "God always wins", "Battles are fun"],
-      correct: 1,
+      choices: ["God always wins", "Battles are fun", "Evil always wins"],
+      correct: 0,
     },
   ],
   "st-gabriel-archangel": [
     {
       question: "What does the name Gabriel mean?",
-      choices: ["God is my strength", "Loud trumpet", "Fast runner"],
-      correct: 0,
+      choices: ["Loud trumpet", "Fast runner", "God is my strength"],
+      correct: 2,
     },
     {
       question: "Who did Gabriel visit in the Temple?",
@@ -1046,13 +1046,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How did Gabriel greet Mary?",
-      choices: ["Hail, full of grace!", "Good luck up there!", "Hide quickly!"],
-      correct: 0,
+      choices: ["Hide quickly!", "Hail, full of grace!", "Good luck up there!"],
+      correct: 1,
     },
     {
       question: "What did Mary answer?",
-      choices: ["Let it be done to me", "Come back tomorrow", "Ask someone else"],
-      correct: 0,
+      choices: ["Come back tomorrow", "Ask someone else", "Let it be done to me"],
+      correct: 2,
     },
     {
       question: "Where do we repeat Gabriel's words today?",
@@ -1068,13 +1068,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who did Raphael guide on a journey?",
-      choices: ["Tobias", "A lost camel", "The king's army"],
-      correct: 0,
+      choices: ["The king's army", "Tobias", "A lost camel"],
+      correct: 1,
     },
     {
       question: "What leaped out of the river at Tobias?",
-      choices: ["A giant fish", "A golden crown", "A singing frog"],
-      correct: 0,
+      choices: ["A golden crown", "A singing frog", "A giant fish"],
+      correct: 2,
     },
     {
       question: "What happened when Tobias used the fish medicine?",
@@ -1083,20 +1083,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who is St Raphael the patron saint of?",
-      choices: ["Travellers", "Librarians", "Blacksmiths"],
-      correct: 0,
+      choices: ["Blacksmiths", "Travellers", "Librarians"],
+      correct: 1,
     },
   ],
   "st-john-paul-ii": [
     {
       question: "What was John Paul II called as a boy, and where was he born?",
-      choices: ["Karol, in Poland", "Giovanni, in Rome", "Patrick, in Ireland"],
-      correct: 0,
+      choices: ["Patrick, in Ireland", "Karol, in Poland", "Giovanni, in Rome"],
+      correct: 1,
     },
     {
       question: "What did he say from the balcony when elected pope?",
-      choices: ["Be not afraid!", "Good night!", "Watch and learn!"],
-      correct: 0,
+      choices: ["Good night!", "Watch and learn!", "Be not afraid!"],
+      correct: 2,
     },
     {
       question: "What happened to the Pope in 1981?",
@@ -1105,20 +1105,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What great gathering did he start?",
-      choices: ["World Youth Day", "A football league", "A cooking contest"],
-      correct: 0,
+      choices: ["A cooking contest", "World Youth Day", "A football league"],
+      correct: 1,
     },
     {
       question: "What was special about his election as pope?",
-      choices: ["He was the first non-Italian pope in 455 years", "He was the youngest ever", "He was elected by children"],
-      correct: 0,
+      choices: ["He was the youngest ever", "He was elected by children", "He was the first non-Italian pope in 455 years"],
+      correct: 2,
     },
   ],
   "st-gregory-the-great": [
     {
       question: "What did Gregory give up to become a monk?",
-      choices: ["His riches and palace", "His pet goat", "His fishing boat"],
-      correct: 0,
+      choices: ["His pet goat", "His fishing boat", "His riches and palace"],
+      correct: 2,
     },
     {
       question: "What humble title did Gregory take?",
@@ -1127,13 +1127,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What church music is named after Gregory?",
-      choices: ["Gregorian chant", "Rock and roll", "Opera"],
-      correct: 0,
+      choices: ["Opera", "Gregorian chant", "Rock and roll"],
+      correct: 1,
     },
     {
       question: "Who did Gregory send to England?",
-      choices: ["A monk named Augustine with forty companions", "An army of knights", "A choir of canaries"],
-      correct: 0,
+      choices: ["An army of knights", "A choir of canaries", "A monk named Augustine with forty companions"],
+      correct: 2,
     },
     {
       question: "What did Gregory say about the English slave boys?",
@@ -1149,13 +1149,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did the Lady wear?",
-      choices: ["A white dress with a blue sash", "A red cloak and boots", "A suit of armour"],
-      correct: 0,
+      choices: ["A suit of armour", "A white dress with a blue sash", "A red cloak and boots"],
+      correct: 1,
     },
     {
       question: "What happened when Bernadette scratched the dirt?",
-      choices: ["Muddy water bubbled up", "Gold coins popped out", "Nothing at all"],
-      correct: 0,
+      choices: ["Gold coins popped out", "Nothing at all", "Muddy water bubbled up"],
+      correct: 2,
     },
     {
       question: "What name did the Lady give?",
@@ -1164,20 +1164,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What does Bernadette's story teach us?",
-      choices: ["God chooses the smallest and poorest for great things", "Only rich people see visions", "Never drink spring water"],
-      correct: 0,
+      choices: ["Never drink spring water", "God chooses the smallest and poorest for great things", "Only rich people see visions"],
+      correct: 1,
     },
   ],
   "st-faustina": [
     {
       question: "What was Faustina's birth name?",
-      choices: ["Helena Kowalska", "Maria Goretti", "Joan of Arc"],
-      correct: 0,
+      choices: ["Joan of Arc", "Helena Kowalska", "Maria Goretti"],
+      correct: 1,
     },
     {
       question: "What streamed from Jesus' Heart in the vision?",
-      choices: ["Two rays, one red and one pale", "A flock of doves", "A shower of stars"],
-      correct: 0,
+      choices: ["A flock of doves", "A shower of stars", "Two rays, one red and one pale"],
+      correct: 2,
     },
     {
       question: "What words did Jesus ask to be written under the image?",
@@ -1186,20 +1186,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who helped Faustina have the painting made?",
-      choices: ["Father Sopoćko", "The mayor", "A travelling artist"],
-      correct: 0,
+      choices: ["A travelling artist", "Father Sopoćko", "The mayor"],
+      correct: 1,
     },
     {
       question: "When is the Feast of Mercy that Jesus asked for?",
-      choices: ["The Sunday after Easter", "Christmas morning", "Every Friday night"],
-      correct: 0,
+      choices: ["Christmas morning", "Every Friday night", "The Sunday after Easter"],
+      correct: 2,
     },
   ],
   "st-jerome": [
     {
       question: "What did young Jerome love more than being good?",
-      choices: ["His books", "His horse", "His stamp collection"],
-      correct: 0,
+      choices: ["His horse", "His stamp collection", "His books"],
+      correct: 2,
     },
     {
       question: "Where did Jerome go to pray and learn?",
@@ -1208,13 +1208,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What hard language did Jerome teach himself?",
-      choices: ["Hebrew", "Pirate talk", "Dolphin clicks"],
-      correct: 0,
+      choices: ["Dolphin clicks", "Hebrew", "Pirate talk"],
+      correct: 1,
     },
     {
       question: "How did Jerome help the lion?",
-      choices: ["He pulled a thorn from its paw", "He gave it a haircut", "He taught it to read"],
-      correct: 0,
+      choices: ["He gave it a haircut", "He taught it to read", "He pulled a thorn from its paw"],
+      correct: 2,
     },
     {
       question: "What great work did Jerome finish in Bethlehem?",
@@ -1230,13 +1230,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How did Maximilian spread love of Mary?",
-      choices: ["With printing presses and magazines", "With skywriting", "With carrier pigeons"],
-      correct: 0,
+      choices: ["With carrier pigeons", "With printing presses and magazines", "With skywriting"],
+      correct: 1,
     },
     {
       question: "Where was Maximilian imprisoned?",
-      choices: ["Auschwitz", "A lighthouse", "A bakery"],
-      correct: 0,
+      choices: ["A lighthouse", "A bakery", "Auschwitz"],
+      correct: 2,
     },
     {
       question: "What did Maximilian say when Franciszek cried out?",
@@ -1245,20 +1245,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What does St Maximilian's story teach us?",
-      choices: ["Love lays down its life for a friend", "Prisons are fun", "Printing is boring"],
-      correct: 0,
+      choices: ["Printing is boring", "Love lays down its life for a friend", "Prisons are fun"],
+      correct: 1,
     },
   ],
   "st-joseph": [
     {
       question: "What was Joseph's job?",
-      choices: ["A carpenter", "A fisherman", "A baker"],
-      correct: 0,
+      choices: ["A baker", "A carpenter", "A fisherman"],
+      correct: 1,
     },
     {
       question: "What did the angel tell Joseph in his dream?",
-      choices: ["Do not be afraid, take Mary as your wife", "Run away to Rome", "Hide the baby"],
-      correct: 0,
+      choices: ["Run away to Rome", "Hide the baby", "Do not be afraid, take Mary as your wife"],
+      correct: 2,
     },
     {
       question: "Where did Joseph take Mary and Jesus to escape Herod?",
@@ -1267,20 +1267,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Joseph teach Jesus?",
-      choices: ["Carpentry and honest work", "How to juggle", "How to sail ships"],
-      correct: 0,
+      choices: ["How to sail ships", "Carpentry and honest work", "How to juggle"],
+      correct: 1,
     },
     {
       question: "How many words of Joseph are recorded in the Bible?",
-      choices: ["Not a single one", "A thousand", "Fifty-two"],
-      correct: 0,
+      choices: ["A thousand", "Fifty-two", "Not a single one"],
+      correct: 2,
     },
   ],
   "st-christopher": [
     {
       question: "What did the giant Reprobus want most?",
-      choices: ["To serve the greatest king", "To eat the biggest cake", "To sleep all day"],
-      correct: 0,
+      choices: ["To eat the biggest cake", "To sleep all day", "To serve the greatest king"],
+      correct: 2,
     },
     {
       question: "What job did the hermit give Reprobus?",
@@ -1289,13 +1289,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What happened as Reprobus carried the Child?",
-      choices: ["The Child grew heavier than the world", "The Child sang a song", "The river dried up"],
-      correct: 0,
+      choices: ["The river dried up", "The Child grew heavier than the world", "The Child sang a song"],
+      correct: 1,
     },
     {
       question: "Who was the Child, really?",
-      choices: ["Jesus", "A lost prince", "A talking fish"],
-      correct: 0,
+      choices: ["A lost prince", "A talking fish", "Jesus"],
+      correct: 2,
     },
     {
       question: "Who is St Christopher the patron saint of?",
@@ -1311,13 +1311,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Peter Julian found?",
-      choices: ["A circus", "Priests and sisters devoted to the Eucharist", "A football club"],
-      correct: 1,
+      choices: ["A football club", "A circus", "Priests and sisters devoted to the Eucharist"],
+      correct: 2,
     },
     {
       question: "What did he invite everyone to do?",
-      choices: ["Come and adore Jesus", "Stay home and sleep", "Ignore the church"],
-      correct: 0,
+      choices: ["Stay home and sleep", "Ignore the church", "Come and adore Jesus"],
+      correct: 2,
     },
     {
       question: "What did Peter Julian say the Eucharist is?",
@@ -1326,20 +1326,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What is Peter Julian called?",
-      choices: ["The Apostle of the Eucharist", "The king of France", "The fastest runner"],
-      correct: 0,
+      choices: ["The fastest runner", "The Apostle of the Eucharist", "The king of France"],
+      correct: 1,
     },
   ],
   "st-alphonsus-liguori": [
     {
       question: "What was young Alphonsus?",
-      choices: ["A lawyer who never lost", "A fisherman", "A lighthouse keeper"],
-      correct: 0,
+      choices: ["A lighthouse keeper", "A lawyer who never lost", "A fisherman"],
+      correct: 1,
     },
     {
       question: "What made him leave the courtroom forever?",
-      choices: ["One terrible mistake that lost his case", "He won too much money", "He got bored of wigs"],
-      correct: 0,
+      choices: ["He won too much money", "He got bored of wigs", "One terrible mistake that lost his case"],
+      correct: 2,
     },
     {
       question: "Who did Alphonsus preach to?",
@@ -1348,20 +1348,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What family did he found?",
-      choices: ["The Redemptorists", "A circus family", "A sailing crew"],
-      correct: 0,
+      choices: ["A sailing crew", "The Redemptorists", "A circus family"],
+      correct: 1,
     },
     {
       question: "Who is Alphonsus the patron saint of?",
-      choices: ["Confessors", "Astronauts", "Chefs"],
-      correct: 0,
+      choices: ["Astronauts", "Chefs", "Confessors"],
+      correct: 2,
     },
   ],
   "st-basil": [
     {
       question: "What was special about Basil's family?",
-      choices: ["Many of them are saints too", "They owned a circus", "They were all sailors"],
-      correct: 0,
+      choices: ["They owned a circus", "They were all sailors", "Many of them are saints too"],
+      correct: 2,
     },
     {
       question: "What did Basil do with his fortune?",
@@ -1370,13 +1370,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Basil build outside the city?",
-      choices: ["A hospital city for the poor and sick", "A race track", "A giant statue of himself"],
-      correct: 0,
+      choices: ["A giant statue of himself", "A hospital city for the poor and sick", "A race track"],
+      correct: 1,
     },
     {
       question: "Who tried to frighten Basil into giving up?",
-      choices: ["The emperor", "A dragon", "His own shadow"],
-      correct: 0,
+      choices: ["A dragon", "His own shadow", "The emperor"],
+      correct: 2,
     },
     {
       question: "What does Basil teach us?",
@@ -1392,13 +1392,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Why did Agnes refuse to marry?",
-      choices: ["She belonged to Christ", "She disliked cake", "She wanted to travel"],
-      correct: 0,
+      choices: ["She wanted to travel", "She belonged to Christ", "She disliked cake"],
+      correct: 1,
     },
     {
       question: "What animal is Agnes always painted with?",
-      choices: ["A lamb", "A lion", "A parrot"],
-      correct: 0,
+      choices: ["A lion", "A parrot", "A lamb"],
+      correct: 2,
     },
     {
       question: "What are the blessed lambs' wool used for?",
@@ -1407,20 +1407,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who is Agnes the patron saint of?",
-      choices: ["Young girls and purity", "Race car drivers", "Deep sea divers"],
-      correct: 0,
+      choices: ["Deep sea divers", "Young girls and purity", "Race car drivers"],
+      correct: 1,
     },
   ],
   "st-fabian": [
     {
       question: "What was Fabian before becoming pope?",
-      choices: ["An unknown farmer", "A famous general", "A wealthy banker"],
-      correct: 0,
+      choices: ["A wealthy banker", "An unknown farmer", "A famous general"],
+      correct: 1,
     },
     {
       question: "What landed on Fabian's head?",
-      choices: ["A snow-white dove", "A falling apple", "A paper hat"],
-      correct: 0,
+      choices: ["A falling apple", "A paper hat", "A snow-white dove"],
+      correct: 2,
     },
     {
       question: "What did the crowd shout?",
@@ -1429,20 +1429,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Fabian do as pope?",
-      choices: ["Organized the Church and sent missionaries", "Built a bigger palace", "Took long holidays"],
-      correct: 0,
+      choices: ["Took long holidays", "Organized the Church and sent missionaries", "Built a bigger palace"],
+      correct: 1,
     },
     {
       question: "How did Fabian die?",
-      choices: ["Martyred for refusing to deny Christ", "Of old age in bed", "He disappeared at sea"],
-      correct: 0,
+      choices: ["Of old age in bed", "He disappeared at sea", "Martyred for refusing to deny Christ"],
+      correct: 2,
     },
   ],
   "st-sebastian": [
     {
       question: "What was Sebastian's secret?",
-      choices: ["He was a Christian", "He was afraid of horses", "He couldn't swim"],
-      correct: 0,
+      choices: ["He was afraid of horses", "He couldn't swim", "He was a Christian"],
+      correct: 2,
     },
     {
       question: "What did the soldiers do to Sebastian?",
@@ -1451,13 +1451,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who nursed Sebastian back to health?",
-      choices: ["A widow named Irene", "The emperor himself", "A passing goat"],
-      correct: 0,
+      choices: ["A passing goat", "A widow named Irene", "The emperor himself"],
+      correct: 1,
     },
     {
       question: "What did Sebastian do once he recovered?",
-      choices: ["Walked back and confronted the emperor", "Hid in a cave", "Sailed to Spain"],
-      correct: 0,
+      choices: ["Hid in a cave", "Sailed to Spain", "Walked back and confronted the emperor"],
+      correct: 2,
     },
     {
       question: "Who is Sebastian the patron saint of?",
@@ -1473,13 +1473,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which apostle took Timothy on his journeys?",
-      choices: ["Paul", "A pirate captain", "A camel driver"],
-      correct: 0,
+      choices: ["A camel driver", "Paul", "A pirate captain"],
+      correct: 1,
     },
     {
       question: "What did Paul call Timothy?",
-      choices: ["My dear child", "My little problem", "My runaway servant"],
-      correct: 0,
+      choices: ["My little problem", "My runaway servant", "My dear child"],
+      correct: 2,
     },
     {
       question: "What city did Timothy become bishop of?",
@@ -1488,20 +1488,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What does Timothy teach us?",
-      choices: ["God loves to use young people", "Only old people matter", "Stay home always"],
-      correct: 0,
+      choices: ["Stay home always", "God loves to use young people", "Only old people matter"],
+      correct: 1,
     },
   ],
   "st-titus": [
     {
       question: "What was Titus's special gift?",
-      choices: ["Making angry people friends again", "Juggling fire", "Talking to fish"],
-      correct: 0,
+      choices: ["Talking to fish", "Making angry people friends again", "Juggling fire"],
+      correct: 1,
     },
     {
       question: "Where did Paul send Titus to make peace?",
-      choices: ["Corinth", "The moon", "A bakery"],
-      correct: 0,
+      choices: ["The moon", "A bakery", "Corinth"],
+      correct: 2,
     },
     {
       question: "Which wild island did Titus shepherd?",
@@ -1510,20 +1510,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Paul's letter to Titus teach?",
-      choices: ["Be gentle and do good", "Argue louder", "Take long naps"],
-      correct: 0,
+      choices: ["Take long naps", "Be gentle and do good", "Argue louder"],
+      correct: 1,
     },
     {
       question: "Whose feast day does Titus share?",
-      choices: ["Timothy's", "Nobody's", "A dragon's"],
-      correct: 0,
+      choices: ["Nobody's", "A dragon's", "Timothy's"],
+      correct: 2,
     },
   ],
   "st-angela-merici": [
     {
       question: "What sad thing did Angela notice?",
-      choices: ["Poor girls got no schooling", "Too many holidays", "Not enough cake"],
-      correct: 0,
+      choices: ["Too many holidays", "Not enough cake", "Poor girls got no schooling"],
+      correct: 2,
     },
     {
       question: "What did Angela see in her vision?",
@@ -1532,13 +1532,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Angela found in 1535?",
-      choices: ["The Ursulines, to teach girls", "A bakery", "A zoo"],
-      correct: 0,
+      choices: ["A zoo", "The Ursulines, to teach girls", "A bakery"],
+      correct: 1,
     },
     {
       question: "How did Angela tell her sisters to govern?",
-      choices: ["With kindness, like mothers", "With strict shouting", "With locked doors"],
-      correct: 0,
+      choices: ["With strict shouting", "With locked doors", "With kindness, like mothers"],
+      correct: 2,
     },
     {
       question: "Who is Angela the patron saint of?",
@@ -1554,13 +1554,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did his family do when he joined the Dominicans?",
-      choices: ["Kidnapped and locked him up", "Threw a party", "Ignored him"],
-      correct: 0,
+      choices: ["Ignored him", "Kidnapped and locked him up", "Threw a party"],
+      correct: 1,
     },
     {
       question: "What did his teacher Albert predict?",
-      choices: ["His bellowing will be heard around the world", "He will fail every test", "He will become a sailor"],
-      correct: 0,
+      choices: ["He will fail every test", "He will become a sailor", "His bellowing will be heard around the world"],
+      correct: 2,
     },
     {
       question: "What is Thomas's greatest book called?",
@@ -1569,20 +1569,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What beautiful song did Thomas write?",
-      choices: ["The Tantum Ergo", "Happy Birthday", "Row Row Row Your Boat"],
-      correct: 0,
+      choices: ["Row Row Row Your Boat", "The Tantum Ergo", "Happy Birthday"],
+      correct: 1,
     },
   ],
   "st-john-bosco": [
     {
       question: "What did John dream at nine years old?",
-      choices: ["Wild boys becoming gentle, and a Lady guiding him", "Flying elephants", "A mountain of homework"],
-      correct: 0,
+      choices: ["A mountain of homework", "Wild boys becoming gentle, and a Lady guiding him", "Flying elephants"],
+      correct: 1,
     },
     {
       question: "How did John attract village boys?",
-      choices: ["Juggling and magic tricks", "Free ice cream", "Loud fireworks"],
-      correct: 0,
+      choices: ["Free ice cream", "Loud fireworks", "Juggling and magic tricks"],
+      correct: 2,
     },
     {
       question: "What did Bosco say about hopeless boys?",
@@ -1591,20 +1591,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What family did Bosco found?",
-      choices: ["The Salesians", "A circus troupe", "A navy"],
-      correct: 0,
+      choices: ["A navy", "The Salesians", "A circus troupe"],
+      correct: 1,
     },
     {
       question: "What was Bosco's motto about joy?",
-      choices: ["Serve the Lord with gladness", "Never smile", "Frown more"],
-      correct: 0,
+      choices: ["Never smile", "Frown more", "Serve the Lord with gladness"],
+      correct: 2,
     },
   ],
   "st-agatha": [
     {
       question: "Where was Agatha from?",
-      choices: ["Sicily", "Egypt", "Norway"],
-      correct: 0,
+      choices: ["Egypt", "Norway", "Sicily"],
+      correct: 2,
     },
     {
       question: "Why did the governor arrest Agatha?",
@@ -1613,13 +1613,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Who appeared to comfort Agatha in prison?",
-      choices: ["St Peter", "A palace guard", "Her pet cat"],
-      correct: 0,
+      choices: ["Her pet cat", "St Peter", "A palace guard"],
+      correct: 1,
     },
     {
       question: "What miracle is linked to Agatha's veil?",
-      choices: ["It stopped Mount Etna's lava", "It turned into gold", "It flew away"],
-      correct: 0,
+      choices: ["It turned into gold", "It flew away", "It stopped Mount Etna's lava"],
+      correct: 2,
     },
     {
       question: "Why is Agatha the patron saint of bakers?",
@@ -1635,13 +1635,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What tiny island did he land on?",
-      choices: ["Futuna", "Hawaii", "Atlantis"],
-      correct: 0,
+      choices: ["Atlantis", "Futuna", "Hawaii"],
+      correct: 1,
     },
     {
       question: "How did Peter win hearts?",
-      choices: ["Gentleness, language, and serving the sick", "Magic tricks", "Loud shouting"],
-      correct: 0,
+      choices: ["Magic tricks", "Loud shouting", "Gentleness, language, and serving the sick"],
+      correct: 2,
     },
     {
       question: "Why did the chief order Peter killed?",
@@ -1650,20 +1650,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What happened to Futuna after Peter's death?",
-      choices: ["The whole island became Christian", "Everyone forgot him", "It sank into the sea"],
-      correct: 0,
+      choices: ["It sank into the sea", "The whole island became Christian", "Everyone forgot him"],
+      correct: 1,
     },
   ],
   "st-catherine-siena": [
     {
       question: "What number child was Catherine?",
-      choices: ["The 25th", "The 1st", "The 3rd"],
-      correct: 0,
+      choices: ["The 3rd", "The 25th", "The 1st"],
+      correct: 1,
     },
     {
       question: "What did Catherine do to avoid marriage?",
-      choices: ["Cut off her long hair", "Ran to the forest", "Hid in a barrel"],
-      correct: 0,
+      choices: ["Ran to the forest", "Hid in a barrel", "Cut off her long hair"],
+      correct: 2,
     },
     {
       question: "Who did Catherine persuade to return to Rome?",
@@ -1672,20 +1672,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What book did Catherine dictate?",
-      choices: ["The Dialogue", "A cookbook", "A pirate map"],
-      correct: 0,
+      choices: ["A pirate map", "The Dialogue", "A cookbook"],
+      correct: 1,
     },
     {
       question: "What title was Catherine given?",
-      choices: ["Doctor of the Church", "Queen of Siena", "Captain of ships"],
-      correct: 0,
+      choices: ["Queen of Siena", "Captain of ships", "Doctor of the Church"],
+      correct: 2,
     },
   ],
   "st-rita": [
     {
       question: "What did little Rita dream of becoming?",
-      choices: ["A nun", "A queen", "A sailor"],
-      correct: 0,
+      choices: ["A queen", "A sailor", "A nun"],
+      correct: 2,
     },
     {
       question: "How did Rita change her difficult husband?",
@@ -1694,13 +1694,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How did Rita finally enter the convent?",
-      choices: ["Her patron saints lifted her over the wall", "She dug a tunnel", "She disguised herself"],
-      correct: 0,
+      choices: ["She disguised herself", "Her patron saints lifted her over the wall", "She dug a tunnel"],
+      correct: 1,
     },
     {
       question: "What miracle happened when Rita was dying?",
-      choices: ["A rose bloomed in the snow", "It rained candy", "Stars fell down"],
-      correct: 0,
+      choices: ["It rained candy", "Stars fell down", "A rose bloomed in the snow"],
+      correct: 2,
     },
     {
       question: "Who is Rita the patron saint of?",
@@ -1716,13 +1716,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did the judge order the family to do?",
-      choices: ["Sacrifice to false gods", "Sing a song", "Dance a jig"],
-      correct: 0,
+      choices: ["Dance a jig", "Sacrifice to false gods", "Sing a song"],
+      correct: 1,
     },
     {
       question: "What did Felicitas cry to her sons?",
-      choices: ["Look up to heaven!", "Run away fast!", "Give up now!"],
-      correct: 0,
+      choices: ["Run away fast!", "Give up now!", "Look up to heaven!"],
+      correct: 2,
     },
     {
       question: "What did Pope Gregory say about Felicitas?",
@@ -1731,20 +1731,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What does Felicitas teach mothers?",
-      choices: ["Want heaven for your children most of all", "Keep them home always", "Avoid church"],
-      correct: 0,
+      choices: ["Avoid church", "Want heaven for your children most of all", "Keep them home always"],
+      correct: 1,
     },
   ],
   "st-sharbel": [
     {
       question: "Where was Sharbel from?",
-      choices: ["The mountains of Lebanon", "The deserts of Egypt", "The streets of Paris"],
-      correct: 0,
+      choices: ["The streets of Paris", "The mountains of Lebanon", "The deserts of Egypt"],
+      correct: 1,
     },
     {
       question: "What name did Youssef take as a monk?",
-      choices: ["Sharbel", "Barnaby", "Felix"],
-      correct: 0,
+      choices: ["Barnaby", "Felix", "Sharbel"],
+      correct: 2,
     },
     {
       question: "How did Sharbel live as a hermit?",
@@ -1753,20 +1753,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What wonders appeared over his tomb?",
-      choices: ["Mysterious glowing lights", "Fireworks", "Falling snow"],
-      correct: 0,
+      choices: ["Falling snow", "Mysterious glowing lights", "Fireworks"],
+      correct: 1,
     },
     {
       question: "What does Sharbel teach us?",
-      choices: ["Silence with God is louder than noise", "Talk constantly", "Avoid mountains"],
-      correct: 0,
+      choices: ["Talk constantly", "Avoid mountains", "Silence with God is louder than noise"],
+      correct: 2,
     },
   ],
   "st-gertrude": [
     {
       question: "Where was little Gertrude raised?",
-      choices: ["The convent school of Helfta", "A pirate ship", "A royal palace"],
-      correct: 0,
+      choices: ["A pirate ship", "A royal palace", "The convent school of Helfta"],
+      correct: 2,
     },
     {
       question: "What changed Gertrude at twenty-six?",
@@ -1775,13 +1775,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Gertrude hear in her famous vision?",
-      choices: ["The beating of Jesus' Sacred Heart", "Thunder and lightning", "A choir of frogs"],
-      correct: 0,
+      choices: ["A choir of frogs", "The beating of Jesus' Sacred Heart", "Thunder and lightning"],
+      correct: 1,
     },
     {
       question: "What book did Gertrude write?",
-      choices: ["The Herald of Divine Love", "A book of recipes", "A travel guide"],
-      correct: 0,
+      choices: ["A book of recipes", "A travel guide", "The Herald of Divine Love"],
+      correct: 2,
     },
     {
       question: "Why is Gertrude called the Great?",
@@ -1797,13 +1797,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Andrew do when freed from prison?",
-      choices: ["Walked straight back to his people", "Sailed to Rome", "Hid in a cave"],
-      correct: 0,
+      choices: ["Hid in a cave", "Walked straight back to his people", "Sailed to Rome"],
+      correct: 1,
     },
     {
       question: "How did Andrew die?",
-      choices: ["Beheaded for refusing the cross-trampling", "Of old age", "He moved away"],
-      correct: 0,
+      choices: ["Of old age", "He moved away", "Beheaded for refusing the cross-trampling"],
+      correct: 2,
     },
     {
       question: "How many martyrs were canonized together in 1988?",
@@ -1812,20 +1812,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What do the martyrs teach us?",
-      choices: ["Faith survives any storm together", "Give up quickly", "Avoid Vietnam"],
-      correct: 0,
+      choices: ["Avoid Vietnam", "Faith survives any storm together", "Give up quickly"],
+      correct: 1,
     },
   ],
   "st-francis-xavier": [
     {
       question: "What question changed Francis's life?",
-      choices: ["What profits a man to gain the world and lose his soul?", "Where is my homework?", "Who ate my lunch?"],
-      correct: 0,
+      choices: ["Who ate my lunch?", "What profits a man to gain the world and lose his soul?", "Where is my homework?"],
+      correct: 1,
     },
     {
       question: "How did Francis gather children in villages?",
-      choices: ["Ringing a little bell", "Fireworks", "Free toys"],
-      correct: 0,
+      choices: ["Fireworks", "Free toys", "Ringing a little bell"],
+      correct: 2,
     },
     {
       question: "Which new land did Francis sail to?",
@@ -1834,20 +1834,20 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "Which country did Francis dream of reaching?",
-      choices: ["China", "Peru", "Iceland"],
-      correct: 0,
+      choices: ["Iceland", "China", "Peru"],
+      correct: 1,
     },
     {
       question: "Who is Francis Xavier the patron saint of?",
-      choices: ["Missions", "Surfers", "Chefs"],
-      correct: 0,
+      choices: ["Surfers", "Chefs", "Missions"],
+      correct: 2,
     },
   ],
   "st-stephen": [
     {
       question: "What was Stephen chosen to do first?",
-      choices: ["Serve food to poor widows", "Build a tower", "Count money"],
-      correct: 0,
+      choices: ["Build a tower", "Count money", "Serve food to poor widows"],
+      correct: 2,
     },
     {
       question: "What did Stephen's face shine like?",
@@ -1856,13 +1856,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What did Stephen see when he looked up?",
-      choices: ["The heavens opened and Jesus", "A flock of geese", "A thunderstorm"],
-      correct: 0,
+      choices: ["A thunderstorm", "The heavens opened and Jesus", "A flock of geese"],
+      correct: 1,
     },
     {
       question: "What did Stephen pray as he died?",
-      choices: ["Lord, do not hold this sin against them", "Run away, friends!", "I give up!"],
-      correct: 0,
+      choices: ["Run away, friends!", "I give up!", "Lord, do not hold this sin against them"],
+      correct: 2,
     },
     {
       question: "Who watched the coats at Stephen's stoning?",
@@ -1878,13 +1878,13 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "What knocked Saul off his horse?",
-      choices: ["A flash of blinding heavenly light", "A falling coconut", "A strong sneeze"],
-      correct: 0,
+      choices: ["A strong sneeze", "A flash of blinding heavenly light", "A falling coconut"],
+      correct: 1,
     },
     {
       question: "What did the voice from the light say?",
-      choices: ["Saul, Saul, why are you hurting Me?", "Turn back at once!", "Dinner is ready!"],
-      correct: 0,
+      choices: ["Turn back at once!", "Dinner is ready!", "Saul, Saul, why are you hurting Me?"],
+      correct: 2,
     },
     {
       question: "Who baptized Saul in Damascus?",
@@ -1893,8 +1893,89 @@ export const quizzes: Record<string, Quiz> = {
     },
     {
       question: "How many of Paul's letters are in our Bible?",
-      choices: ["Thirteen", "Two", "One hundred"],
+      choices: ["Two", "One hundred", "Thirteen"],
+      correct: 2,
+    },
+  ],
+  "st-ignatius-loyola": [
+    {
+      question: "What ended Ignatius's soldiering days?",
+      choices: ["He lost his sword", "He fell off his horse", "A cannonball smashed his legs"],
+      correct: 2,
+    },
+    {
+      question: "What books healed his boredom in bed?",
+      choices: ["Cookbooks", "A Life of Christ and saints' lives", "Pirate adventures"],
+      correct: 1,
+    },
+    {
+      question: "What did Ignatius notice about his daydreams?",
+      choices: ["Holy thoughts left lasting peace", "Knights were boring", "Sleep was best"],
       correct: 0,
+    },
+    {
+      question: "What family did Ignatius found?",
+      choices: ["A circus troupe", "A navy", "The Jesuits"],
+      correct: 2,
+    },
+    {
+      question: "What does the Jesuit motto mean?",
+      choices: ["Run everywhere", "For the greater glory of God", "Never give up lunch"],
+      correct: 1,
+    },
+  ],
+  "st-felicity-perpetua": [
+    {
+      question: "Who were Perpetua and Felicity?",
+      choices: ["Two lighthouse keepers", "Two Christian mothers", "Two Roman queens"],
+      correct: 1,
+    },
+    {
+      question: "What did Perpetua write in prison?",
+      choices: ["A diary of everything that happened", "A cookbook", "A treasure map"],
+      correct: 0,
+    },
+    {
+      question: "What did Perpetua dream about?",
+      choices: ["Flying elephants", "A mountain of cake", "Climbing a ladder to heaven"],
+      correct: 2,
+    },
+    {
+      question: "What happened to Felicity in prison?",
+      choices: ["She became queen", "Her baby girl was born safely", "She escaped at night"],
+      correct: 1,
+    },
+    {
+      question: "When are the two mothers honoured?",
+      choices: ["March 7th", "Christmas Day", "Every Monday"],
+      correct: 0,
+    },
+  ],
+  "st-mariam-vattalil": [
+    {
+      question: "What does the name Rani mean?",
+      choices: ["Little flower", "Brave soldier", "Queen"],
+      correct: 2,
+    },
+    {
+      question: "Which sisters did Mariam join?",
+      choices: ["The Franciscan Clarists", "A sailing crew", "A circus troupe"],
+      correct: 0,
+    },
+    {
+      question: "Who was cheating the poor villagers?",
+      choices: ["Cruel moneylenders", "Travelling merchants", "The village baker"],
+      correct: 0,
+    },
+    {
+      question: "What did Rani Maria do when attacked?",
+      choices: ["She ran away", "She fought back", "She forgave her attacker"],
+      correct: 2,
+    },
+    {
+      question: "What did her family do afterwards?",
+      choices: ["They forgot her", "They forgave the killer", "They moved away"],
+      correct: 1,
     },
   ],
 };

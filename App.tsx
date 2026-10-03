@@ -17,7 +17,6 @@ import {
   Nunito_700Bold,
 } from "@expo-google-fonts/nunito";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import SplashView from "./src/screens/SplashScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LibraryScreen from "./src/screens/LibraryScreen";
@@ -34,17 +33,22 @@ import BottomNav from "./src/components/BottomNav";
 import type { TabId } from "./src/components/BottomNav";
 import { useFavourites } from "./src/hooks/useFavourites";
 import { useSeen } from "./src/hooks/useSeen";
+import { useReadingProgress } from "./src/hooks/useReadingProgress";
+import { useStars } from "./src/hooks/useStars";
+import { useStreak } from "./src/hooks/useStreak";
+import { feastDays } from "./src/data/feastDays";
+import { pickUpNext } from "./src/data/upNext";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "splash" | "startup" | "home" | "story" | "library" | "badges" | "feasts" | "quizzes" | "menu" | "quiz";
+type Screen = "startup" | "home" | "story" | "library" | "badges" | "feasts" | "quizzes" | "menu" | "quiz";
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>("splash");
+  const [screen, setScreen] = useState<Screen>("startup");
   const [story, setStory] = useState<Story>(featuredStory);
+  const [initialPage, setInitialPage] = useState(0);
   const [storyOrigin, setStoryOrigin] = useState<"home" | "library" | "badges" | "feasts">("home");
   const [quizOrigin, setQuizOrigin] = useState<"story" | "quizzes">("story");
-  const [menuOrigin, setMenuOrigin] = useState<"home" | "story">("home");
 
   const [fontsLoaded] = useFonts({
     Fredoka_600SemiBold,
@@ -59,6 +63,9 @@ export default function App() {
 
   const { favourites, isFavourite, toggleFavourite } = useFavourites();
   const { seen, markSeen, markAllSeen } = useSeen();
+  const { progress, savePage, markFinished } = useReadingProgress();
+  const { best: starBest, record: recordStars } = useStars();
+  const { streak, recordDay } = useStreak();
 
   const unseen = useMemo(
     () =>
@@ -68,20 +75,20 @@ export default function App() {
     [seen]
   );
 
+  // TEMP DEBUG: bell verification (removed before commit)
+  console.log(`[bell-test] seen=${seen.length} total=${stories.length} unseen=[${unseen.map((s) => s.id).join(",")}] hasNew=${unseen.length > 0}`);
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync().catch(() => {});
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  const openStory = (s: Story, origin: "home" | "library" | "badges" | "feasts") => {
+  const openStory = (s: Story, origin: "home" | "library" | "badges" | "feasts", page = 0) => {
     setStory(s);
     setStoryOrigin(origin);
     markSeen(s.id);
+    setInitialPage(page);
     setScreen("story");
   };
 
@@ -91,16 +98,56 @@ export default function App() {
     setScreen("quiz");
   };
 
-  const openMenu = (origin: "home" | "story") => {
-    setMenuOrigin(origin);
-    setScreen("menu");
-  };
-
   const handleBell = () => {
     if (unseen.length === 0) return;
     markAllSeen(unseen.map((s) => s.id));
     openStory(unseen[0], "home");
   };
+
+  const handleSavePage = useCallback(
+    (id: string, page: number) => savePage(id, page),
+    [savePage]
+  );
+
+  const handleFinishReading = useCallback(
+    (id: string, page: number) => {
+      markFinished(id, page);
+      recordDay();
+    },
+    [markFinished, recordDay]
+  );
+
+  const handleRecordStars = useCallback(
+    (id: string, stars: number) => recordStars(id, stars),
+    [recordStars]
+  );
+
+  const continueEntry = useMemo(() => {
+    const open = stories
+      .filter((s) => {
+        const p = progress[s.id];
+        return p && !p.finished;
+      })
+      .sort((a, b) => a.publishedAt.localeCompare(b.publishedAt))[0];
+    if (!open) return null;
+    return { story: open, page: Math.min(progress[open.id].page, open.pages.length - 1) };
+  }, [progress]);
+
+  const todayFeast = useMemo(() => {
+    const now = new Date();
+    const f = feastDays.find((d) => d.month === now.getMonth() + 1 && d.day === now.getDate());
+    return f ? f.story : null;
+  }, []);
+
+  const upNext = useMemo(
+    () => (screen === "story" ? pickUpNext(story.id, progress, seen) : null),
+    [screen, story.id, progress, seen]
+  );
+
+  const starsTotal = useMemo(
+    () => Object.values(starBest).reduce((a, b) => a + b, 0),
+    [starBest]
+  );
 
   const handleFooterTab = (tab: TabId) => {
     if (tab === "home") setScreen("home");
@@ -110,19 +157,26 @@ export default function App() {
     else if (tab === "quizzes") setScreen("quizzes");
   };
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <SafeAreaProvider>
       <ThemeProvider>
         <View style={styles.root} onLayout={onLayoutRootView}>
-          {screen === "splash" && <SplashView onDone={() => setScreen("startup")} />}
           {screen === "startup" && <StartupScreen onStart={() => setScreen("home")} />}
           {screen === "home" && (
             <HomeScreen
-              onOpenStory={(s) => openStory(s, "home")}
+              onOpenStory={(s, page) => openStory(s, "home", page)}
               onFooterTab={handleFooterTab}
-              onOpenMenu={() => openMenu("home")}
+              onOpenMenu={() => setScreen("menu")}
               hasNew={unseen.length > 0}
               onBellPress={handleBell}
+              continueStory={continueEntry?.story ?? null}
+              continuePage={continueEntry?.page ?? 0}
+              todayFeast={todayFeast}
+              streakCount={streak.count}
               favouriteIds={favourites}
               onToggleFavourite={toggleFavourite}
             />
@@ -148,22 +202,29 @@ export default function App() {
               onToggleFavourite={toggleFavourite}
             />
           )}
-          {screen === "menu" && <MenuScreen onBack={() => setScreen(menuOrigin)} />}
+          {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} />}
           {screen === "badges" && (
             <BadgesScreen
               onOpenStory={(s) => openStory(s, "badges")}
+              starsTotal={starsTotal}
+              streakCount={streak.count}
+              streakBest={streak.best}
             />
           )}
           {screen === "story" && (
             <StoryScreen
               story={story}
+              initialPage={initialPage}
+              upNext={upNext}
               onBack={() => setScreen(storyOrigin)}
               onStartQuiz={() => openQuiz(story, "story")}
-              onOpenMenu={() => openMenu("story")}
+              onPlayNext={() => upNext && openStory(upNext, storyOrigin)}
+              onSavePage={handleSavePage}
+              onFinishReading={handleFinishReading}
             />
           )}
           {screen === "quiz" && (
-            <QuizScreen story={story} onExit={() => setScreen(quizOrigin === "quizzes" ? "quizzes" : "story")} onDone={() => setScreen("home")} />
+            <QuizScreen story={story} onExit={() => setScreen(quizOrigin === "quizzes" ? "quizzes" : "story")} onDone={() => setScreen("home")} onRecordStars={handleRecordStars} />
           )}
           {(screen === "home" || screen === "library" || screen === "badges" || screen === "feasts" || screen === "quizzes") && (
             <BottomNav active={screen} onTab={handleFooterTab} />
