@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Animated,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -61,6 +62,18 @@ export default function HomeScreen({
   );
   const [removed, setRemoved] = useState<Story | null>(null);
   const [showStreak, setShowStreak] = useState(false);
+  const flamePulse = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(flamePulse, { toValue: 1.18, duration: 600, useNativeDriver: true }),
+        Animated.timing(flamePulse, { toValue: 1, duration: 600, useNativeDriver: true }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [flamePulse]);
   const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleToggle = (s: Story) => {
@@ -108,7 +121,9 @@ export default function HomeScreen({
                 accessibilityRole="button"
                 accessibilityLabel={`${streakCount} day streak. Learn more.`}
               >
-                <Flame size={15} color={colors.gold} fill={colors.gold} />
+                <Animated.View style={{ transform: [{ scale: flamePulse }] }}>
+                  <Flame size={15} color={colors.gold} fill={colors.gold} />
+                </Animated.View>
                 <Text style={styles.streakText}>{streakCount}</Text>
               </Pressable>
             )}            <Pressable
@@ -333,7 +348,7 @@ export default function HomeScreen({
           <Pressable onPress={() => onFooterTab("library")} hitSlop={8} style={({ pressed }) => [styles.goLibrary, pressed && styles.pressed]}>
             <GoldGradient style={StyleSheet.absoluteFill} />
             <Library size={18} color={colors.onGold} style={{ zIndex: 1 }} />
-            <Text style={styles.goLibraryText}>Go to Library for more stories</Text>
+            <Text style={styles.goLibraryText}>More in Library</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -482,9 +497,7 @@ function createStyles(colors: ThemeColors) {
     width: 38,
     height: 38,
     borderRadius: 19,
-    backgroundColor: colors.glassFill,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
   },

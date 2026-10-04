@@ -280,6 +280,7 @@ export const stories: Story[] = [
     publishedAt: "2026-07-18",
     palette: "ember",
     art: "saint",
+    hero: require("../../assets/St Fulgentius_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in a sunny city in North Africa, a baby was born into a grand family. His parents gave him a beautiful name: Fulgentius — which means 'bright' or 'radiant.' He was clever and curious, always asking why, and he loved to learn.",
@@ -330,6 +331,7 @@ export const stories: Story[] = [
     publishedAt: "2026-08-01",
     palette: "forest",
     art: "saint",
+    hero: require("../../assets/St Genevieve_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "In a little village called Nanterre, near the great city of Paris, there lived a girl named Genevieve who watched over the sheep. She was quiet and kind, and while the lambs grazed, she liked to sit and pray.",
@@ -514,6 +516,7 @@ export const stories: Story[] = [
     publishedAt: "2026-09-19",
     palette: "sea",
     art: "saint",
+    hero: require("../../assets/St James the Apostle_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "By the shining Sea of Galilee, a fisherman named Zebedee had two sons: James and his younger brother John. James was big and strong, with a loud laugh and a brave heart. He and John had so much energy that Jesus nicknamed them the Sons of Thunder.",
@@ -666,6 +669,7 @@ export const stories: Story[] = [
     publishedAt: "2026-10-31",
     palette: "dawn",
     art: "lamp",
+    hero: require("../../assets/St James the Less_hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "There were two apostles named James. One was big and bold, called James the Greater. The other, quieter one, was named James the Less. 'Less' meant smaller or younger, and he lived up to his name: gentle, humble and kind.",
@@ -1022,6 +1026,7 @@ export const stories: Story[] = [
     publishedAt: "2027-02-06",
     palette: "dawn",
     art: "birds",
+    hero: require("../../assets/St Gabriel_Hero.jpg"),
     source: "The Bible: Luke 1 (public domain)",
     pages: [
       "God sometimes sends messages to earth, and when the message is very, very important, He sends His special messenger: the Archangel Gabriel.",
@@ -1064,7 +1069,7 @@ export const stories: Story[] = [
   {
     id: "st-john-paul-ii",
     title: "Be Not Afraid",
-    saint: "Pope St John Paul II",
+    saint: "St John Paul II",
     blurb:
       "A football-loving Polish boy survives a war, forgives the man who shot him, and tells millions of young people to never fear becoming saints.",
     minutes: 3.2,
@@ -1091,7 +1096,7 @@ export const stories: Story[] = [
   {
     id: "st-gregory-the-great",
     title: "The Servant of the Servants",
-    saint: "Pope St Gregory the Great",
+    saint: "St Gregory the Great",
     blurb:
       "Rome's richest official trades his palace for a monastery — then feeds a starving city and sends the faith to England.",
     minutes: 3.0,
@@ -1180,6 +1185,7 @@ export const stories: Story[] = [
     publishedAt: "2027-03-20",
     palette: "gold",
     art: "birds",
+    hero: require("../../assets/St Jerome_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, a boy named Jerome was born in a town called Stridon. He was so clever that his father sent him to Rome, the greatest city on earth, to study with the greatest teachers — and Jerome learned FAST.",
@@ -1720,6 +1726,8 @@ export const stories: Story[] = [
     publishedAt: "2027-08-14",
     palette: "azure",
     art: "rose",
+    hero: require("../../assets/St Gertrude_Hero.png"),
+    imageSmall: require("../../assets/St Gertrude_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Germany, a little orphan girl named Gertrude was brought to the convent school of Helfta when she was only five. The nuns raised her — and discovered she was dazzlingly clever!",
@@ -1848,6 +1856,7 @@ export const stories: Story[] = [
     publishedAt: "2027-09-18",
     palette: "ember",
     art: "saint",
+    hero: require("../../assets/St Ignatius_Hero.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Spain, a boy named Ignatius of Loyola was born into a noble family. He grew up tall, handsome, and very proud — dreaming of beautiful ladies, glorious battles, and becoming the most famous knight in the world.",

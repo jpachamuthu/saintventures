@@ -1,14 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Pause, Play, RotateCcw, RotateCw, SkipForward, Star, Volume2, VolumeX } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { ArrowLeft, Download, FileText, Pause, Play, RotateCcw, RotateCw, SkipForward, Star, Volume2, VolumeX } from "lucide-react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import SaintIllustration from "../components/SaintIllustration";
 import GlassView from "../components/GlassView";
+import PrayingHands from "../components/PrayingHands";
 import GoldGradient from "../components/GoldGradient";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
+import { downloadPrayerCard } from "../cards/prayerCard";
+import { downloadStoryBookHtml } from "../cards/storyCard";
 import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic, setStoryMusicMuted } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { storyPageText, type Story } from "../data/stories";
@@ -98,6 +102,10 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
   const [showEnd, setShowEnd] = useState(false);
   const [myRating, setMyRating] = useState(0);
   const [muted, setMuted] = useState(false);
+  const [dlOpen, setDlOpen] = useState(false);
+  const fanProg = useRef(new Animated.Value(0)).current;
+  const fanDrop = fanProg.interpolate({ inputRange: [0, 1], outputRange: [-14, 0] });
+  const fanScale = fanProg.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] });
 
   const pageRef = useRef(initialPage);
   const readingRef = useRef(false);
@@ -120,6 +128,8 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
   const scrollYRef = useRef(0);
   const viewHRef = useRef(0);
   const keepAliveRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const glowOp = useRef(new Animated.Value(0)).current;
+  const glowSc = useRef(new Animated.Value(1)).current;
 
   const { rate } = useRatings();
 
@@ -379,7 +389,6 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
 
   // True when muting interrupted active narration, so unmuting can resume it.
   const muteResumeRef = useRef(false);
-
   // TTS has no volume knob, so muting the voiceover means halting speech.
   // Music is silenced via player volume in the same gesture.
   function clearMute() {
@@ -389,9 +398,23 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
     muteResumeRef.current = false;
   }
 
+  // Sunset golden glow over the artwork when touched before reading begins.
+  function touchGlow() {
+    if (readingRef.current) return;
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(glowOp, { toValue: 1, duration: 250, useNativeDriver: true }),
+        Animated.timing(glowOp, { toValue: 0, duration: 750, useNativeDriver: true }),
+      ]),
+      Animated.sequence([
+        Animated.timing(glowSc, { toValue: 1.03, duration: 250, useNativeDriver: true }),
+        Animated.timing(glowSc, { toValue: 1, duration: 750, useNativeDriver: true }),
+      ]),
+    ]).start();
+  }
+
   function toggleMute() {
-    const next = !muted;
-    setMuted(next);
+    const next = !muted;    setMuted(next);
     setStoryMusicMuted(next);
     if (next) {
       // Mute: halt the voiceover (page position is kept) and silence music.
@@ -402,6 +425,30 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
       muteResumeRef.current = false;
       startReading();
     }
+  }
+
+  function toggleDl() {
+    if (dlOpen) {
+      closeDl();
+      return;
+    }
+    setDlOpen(true);
+    Animated.spring(fanProg, { toValue: 1, friction: 7, tension: 180, useNativeDriver: true }).start();
+  }
+
+  function closeDl() {
+    Animated.spring(fanProg, { toValue: 0, friction: 7, tension: 180, useNativeDriver: true }).start();
+    setTimeout(() => setDlOpen(false), 180);
+  }
+
+  function dlStory() {
+    closeDl();
+    downloadStoryBookHtml(story);
+  }
+
+  function dlPrayer() {
+    closeDl();
+    downloadPrayerCard(story).catch(() => {});
   }
 
   function goNext() {
@@ -472,12 +519,33 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
           <ArrowLeft size={18} color={colors.cream} />
         </Pressable>
         <Text style={styles.headerTitle}>{story.title}</Text>
-        <View style={styles.headerSpacer} />
+        <Pressable
+          onPress={toggleDl}
+          style={styles.headerBtn}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Download options"
+        >
+          <Download size={17} color={colors.cream} />
+        </Pressable>
       </View>
 
-      <View style={styles.artWrap}>
-        <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={240} />
-      </View>
+      <Pressable
+        onPress={touchGlow}
+        accessibilityRole="button"
+        accessibilityLabel="Saint illustration"
+      >
+        <Animated.View style={[styles.artWrap, { transform: [{ scale: glowSc }] }]}>
+          <SaintIllustration palette={story.palette} art={story.art} image={story.hero} height={240}>
+            <Animated.View style={[StyleSheet.absoluteFill, { opacity: glowOp }]}>
+              <LinearGradient
+                colors={["rgba(249, 208, 108, 0)", "rgba(240, 171, 106, 0.35)", "rgba(227, 166, 60, 0.6)"]}
+                style={StyleSheet.absoluteFill}
+              />
+            </Animated.View>
+          </SaintIllustration>
+        </Animated.View>
+      </Pressable>
 
       <ScrollView
         ref={scrollRef}
@@ -624,6 +692,40 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
           </View>
         </Animated.View>
       )}
+      {dlOpen && (
+        <>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={closeDl}
+            accessibilityRole="button"
+            accessibilityLabel="Close download options"
+          />
+          <View style={[styles.fanWrap, { top: insets.top + 64 }]}>
+            <Animated.View style={{ opacity: fanProg, transform: [{ translateY: fanDrop }, { scale: fanScale }] }}>
+              <Pressable
+                style={styles.fanBtn}
+                onPress={dlStory}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel="Download storybook"
+              >
+                <FileText size={18} color={colors.cream} />
+              </Pressable>
+            </Animated.View>
+            <Animated.View style={{ opacity: fanProg, transform: [{ translateY: fanDrop }, { scale: fanScale }] }}>
+              <Pressable
+                style={styles.fanBtn}
+                onPress={dlPrayer}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel="Download prayer card"
+              >
+                <PrayingHands size={18} color={colors.gold} />
+              </Pressable>
+            </Animated.View>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
@@ -649,8 +751,27 @@ function createStyles(colors: ThemeColors) {
     alignItems: "center",
     justifyContent: "center",
   },
-  headerSpacer: {
-    width: 40,
+  fanWrap: {
+    position: "absolute",
+    right: 12,
+    alignItems: "center",
+    gap: 10,
+    zIndex: 40,
+  },
+  fanBtn: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: colors.glassFillStrong,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 8,
   },
   headerTitle: {
     fontFamily: fonts.displayBold,

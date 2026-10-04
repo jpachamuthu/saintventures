@@ -70,7 +70,7 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
       <StatusBar style="light" />
       <Animated.View style={[StyleSheet.absoluteFill, { opacity: imgOp, transform: [{ scale: skySc }] }]}>
         <Image
-          source={require("../../assets/SaintVentures Splash.png")}
+          source={require("../../assets/Splash High Res.jpg")}
           style={[StyleSheet.absoluteFill, { width: "100%", height: "100%" }]}
           resizeMode="cover"
         />

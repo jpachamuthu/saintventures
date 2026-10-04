@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
-import { Medal, Star, X } from "lucide-react-native";
+import { Download, Medal, Star, X } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import GoldGradient from "../components/GoldGradient";
 import SaintIllustration from "../components/SaintIllustration";
 import PrayerModal from "../components/PrayerModal";
+import PrayingHands from "../components/PrayingHands";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
 import Fireworks from "../components/Fireworks";
 import { playCelebrationSound, sayTryAgain } from "../audio/celebrate";
 import { useBadges } from "../hooks/useBadges";
+import { downloadStoryBookHtml } from "../cards/storyCard";
 
 type QuizScreenProps = {
   story: Story;
@@ -159,7 +161,13 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
             <Text style={styles.replayBtnLabel}>Done</Text>
           </Pressable>
           <View style={styles.actionRow}>
-            <Pressable style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}>
+            <Pressable
+              style={({ pressed }) => [styles.actionBtn, pressed && styles.optPressed]}
+              onPress={() => downloadStoryBookHtml(story)}
+              accessibilityRole="button"
+              accessibilityLabel="Download storybook"
+            >
+              <Download size={14} color={colors.onGold} strokeWidth={2.4} />
               <Text style={styles.actionBtnLabel}>Download story</Text>
             </Pressable>
             <Pressable
@@ -168,6 +176,7 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
               accessibilityRole="button"
               accessibilityLabel="Read a prayer"
             >
+              <PrayingHands size={14} color={colors.onGold} />
               <Text style={styles.actionBtnLabel}>Prayer</Text>
             </Pressable>
           </View>
@@ -458,20 +467,22 @@ function createStyles(colors: ThemeColors) {
     },
     actionBtn: {
       flex: 1,
-      backgroundColor: colors.bgCard,
+      flexDirection: "row",
+      backgroundColor: colors.cta,
       borderWidth: 1,
-      borderColor: colors.ring,
+      borderColor: colors.gold,
       borderRadius: radius.card,
       paddingVertical: 14,
       paddingHorizontal: 10,
       alignItems: "center",
       justifyContent: "center",
+      gap: 7,
     },
     actionBtnLabel: {
       fontFamily: fonts.uiBold,
       fontSize: 12.5,
       lineHeight: 16,
-      color: colors.cream,
+      color: colors.onGold,
       textAlign: "center",
     },
   });

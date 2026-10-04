@@ -119,7 +119,7 @@ export const HOWTO_SECTIONS: LegalSection[] = [
   },
   {
     heading: "Prayers and sharing",
-    body: "Every saint has a prayer. Open one from the Prayer button after a quiz, or the hands button on any feast day row. On the prayer card, tap the download arrow to save a beautiful prayer image, or the share button to send it to friends and family through WhatsApp and your other apps.",
+    body: "Every saint has a prayer. Open one from the Prayer button after a quiz, or the hands button on any feast day row. On the prayer card, tap the download arrow to save a beautiful prayer image, or the share button to send it to friends and family through WhatsApp and your other apps. On a story page, tap the download arrow at the top right for a storybook to keep, or a prayer card to share.",
   },
   {
     heading: "Badges",

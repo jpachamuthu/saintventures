@@ -1,5 +1,6 @@
 import { Image as RNImage, Platform } from "react-native";
 import { prayers } from "../data/prayers";
+import { feastDays, MONTH_NAMES } from "../data/feastDays";
 import type { Story } from "../data/stories";
 
 const W = 1080;
@@ -22,8 +23,7 @@ function loadImage(uri: string): Promise<HTMLImageElement> {
  * and Image.resolveAssetSource is not reliably present on web — so read the
  * uri straight off the asset, falling back to the static resolver on native.
  */
-function assetUri(asset: unknown): string | null {
-  if (asset == null) return null;
+export function assetUri(asset: unknown): string | null {  if (asset == null) return null;
   if (typeof asset === "string") return asset;
   if (typeof asset === "object") {
     const u = (asset as { uri?: unknown }).uri;
@@ -172,7 +172,7 @@ export async function renderPrayerCard(story: Story): Promise<HTMLCanvasElement 
   ctx.fillStyle = GOLD;
   const namePx = shrinkToFit(ctx, story.saint.toUpperCase(), 920, 44, 26, (px) => `700 ${px}px "CormorantGaramond_700Bold", Georgia, serif`);
   void namePx;
-  const nameY = 830;
+  const nameY = 805;
   ctx.fillText(story.saint.toUpperCase(), W / 2, nameY);
   try {
     (ctx as any).letterSpacing = "0px";
@@ -180,10 +180,30 @@ export async function renderPrayerCard(story: Story): Promise<HTMLCanvasElement 
     /* ignore */
   }
 
+  // Feast date beneath the name.
+  const feast = feastDays.find((f) => f.story.id === story.id);
+  let titleY = nameY + 54;
+  if (feast) {
+    ctx.fillStyle = GOLD;
+    ctx.font = '600 28px "Nunito_700Bold", sans-serif';
+    try {
+      (ctx as any).letterSpacing = "5px";
+    } catch {
+      /* ignore */
+    }
+    ctx.fillText(`FEAST · ${feast.day} ${MONTH_NAMES[feast.month - 1].toUpperCase()}`, W / 2, nameY + 44);
+    try {
+      (ctx as any).letterSpacing = "0px";
+    } catch {
+      /* ignore */
+    }
+    titleY = nameY + 92;
+  }
+
   // Story title beneath, soft panel serif.
   ctx.fillStyle = "rgba(255,248,236,0.85)";
-  shrinkToFit(ctx, story.title, 880, 32, 22, (px) => `italic 600 ${px}px "CormorantGaramond_600SemiBold", Georgia, serif`);
-  ctx.fillText(story.title, W / 2, nameY + 54);
+  shrinkToFit(ctx, story.title, 880, 30, 22, (px) => `italic 600 ${px}px "CormorantGaramond_600SemiBold", Georgia, serif`);
+  ctx.fillText(story.title, W / 2, titleY);
 
   // Prayer text in full — the canvas was sized to hold every line.
   ctx.font = `600 ${pfs}px "CormorantGaramond_600SemiBold", Georgia, serif`;
