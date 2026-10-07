@@ -259,6 +259,7 @@ function makeStyles(colors: ThemeColors) {
     },
     searchInput: {
       flex: 1,
+      minWidth: 0,
       fontFamily: fonts.uiMedium,
       fontSize: 13.5,
       color: colors.cream,

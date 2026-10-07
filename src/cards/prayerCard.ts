@@ -130,7 +130,10 @@ export async function renderPrayerCard(story: Story): Promise<HTMLCanvasElement 
         const s = Math.max(W / img.naturalWidth, PH / img.naturalHeight);
         const dw = img.naturalWidth * s;
         const dh = img.naturalHeight * s;
-        ctx.drawImage(img, (W - dw) / 2, (PH - dh) / 2, dw, dh);
+        // Anchor to the top so faces are never cropped; excess falls away
+        // into the dark gradient at the bottom.
+        const dy = dh > PH ? 0 : (PH - dh) / 2;
+        ctx.drawImage(img, (W - dw) / 2, dy, dw, dh);
         painted = true;
       }
     } catch {

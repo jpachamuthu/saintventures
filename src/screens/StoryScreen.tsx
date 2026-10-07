@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ArrowLeft, Download, FileText, Pause, Play, RotateCcw, RotateCw, SkipForward, Star, Volume2, VolumeX } from "lucide-react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -413,6 +413,20 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
     ]).start();
   }
 
+  // Latest page-turners for the swipe gesture (avoids stale closures).
+  const navRef = useRef({ next: goNext, prev: goPrev });
+  navRef.current = { next: goNext, prev: goPrev };
+  const swipeResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dx) > 25 && Math.abs(g.dx) > Math.abs(g.dy),
+      onPanResponderRelease: (_e, g) => {
+        if (g.dx <= -60) navRef.current.next();
+        else if (g.dx >= 60) navRef.current.prev();
+      },
+      onPanResponderTerminate: () => {},
+    })
+  ).current;
+
   function toggleMute() {
     const next = !muted;    setMuted(next);
     setStoryMusicMuted(next);
@@ -552,6 +566,7 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
         contentContainerStyle={styles.body}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
+        {...swipeResponder.panHandlers}
         onScroll={(e) => {
           scrollYRef.current = e.nativeEvent.contentOffset.y;
         }}

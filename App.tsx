@@ -26,6 +26,7 @@ import BadgesScreen from "./src/screens/BadgesScreen";
 import FeastDaysScreen from "./src/screens/FeastDaysScreen";
 import QuizzesScreen from "./src/screens/QuizzesScreen";
 import MenuScreen from "./src/screens/MenuScreen";
+import GalleryScreen from "./src/screens/GalleryScreen";
 import { featuredStory, stories, type Story } from "./src/data/stories";
 import { theme } from "./src/theme";
 import { ThemeProvider } from "./src/components/ThemeContext";
@@ -41,7 +42,7 @@ import { pickUpNext } from "./src/data/upNext";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-type Screen = "startup" | "home" | "story" | "library" | "badges" | "feasts" | "quizzes" | "menu" | "quiz";
+type Screen = "startup" | "home" | "story" | "library" | "badges" | "feasts" | "quizzes" | "menu" | "gallery" | "quiz";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("startup");
@@ -202,7 +203,8 @@ export default function App() {
               onToggleFavourite={toggleFavourite}
             />
           )}
-          {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} />}
+          {screen === "menu" && <MenuScreen onBack={() => setScreen("home")} onGoTab={(t) => setScreen(t)} onOpenGallery={() => setScreen("gallery")} />}
+          {screen === "gallery" && <GalleryScreen onBack={() => setScreen("menu")} favouriteIds={favourites} onToggleFavourite={toggleFavourite} />}
           {screen === "badges" && (
             <BadgesScreen
               onOpenStory={(s) => openStory(s, "badges")}

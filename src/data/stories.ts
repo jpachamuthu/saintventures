@@ -13,6 +13,8 @@ export type Story = {
   art: ArtVariant;
   hero?: number;
   imageSmall?: number;
+  /** Extra tile variants shown in the Gallery alongside hero/tile. */
+  extraImages?: number[];
   source: string;
   pages: string[];
 };
@@ -25,6 +27,11 @@ export function storyPageText(story: Story, page: number): string {
   const text = story.pages[page];
   if (page === story.pages.length - 1) return `${text} ${story.saint}, pray for us.`;
   return text;
+}
+
+/** Sort key for saint names, ignoring title prefixes like St, Bl or Blessed. */
+export function saintSortKey(saint: string): string {
+  return saint.replace(/^(Sts?|Bl|Blessed|Pope|Saint)\.?\s+/i, "");
 }
 
 export const stories: Story[] = [
@@ -40,7 +47,11 @@ export const stories: Story[] = [
     palette: "ember",
     art: "saint",
     hero: require("../../assets/St_Anthony_Hero.png"),
-    imageSmall: require("../../assets/St_Anthony_Tile.png"),
+    imageSmall: require("../../assets/St Anthony_Tile.jpg"),
+    extraImages: [
+      require("../../assets/St Anthony of Padua_Tile2.png"),
+      require("../../assets/St Anthony of Padua_Tile 3.png"),
+    ],
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, in a sunny city called Lisbon, there lived a boy named Fernando. He loved two things more than anything: listening to stories from the Bible, and asking why. Why did the stars stay up at night? Why did birds never get lost? His father was a soldier and hoped Fernando would be one too — but Fernando's heart kept turning, quietly, toward God.",
@@ -201,6 +212,7 @@ export const stories: Story[] = [
     art: "saint",
     hero: require("../../assets/St_Jude_Hero.png"),
     imageSmall: require("../../assets/St_Jude_Tile.jpg"),
+    extraImages: [require("../../assets/St_Jude_Tile.png")],
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago, by the sparkling Sea of Galilee, a boy named Jude grew up in a happy family. He was a cousin of Jesus, and even as a child he loved listening to quiet, kind stories about God. But like everyone, he sometimes felt small and worried.",
@@ -542,6 +554,8 @@ export const stories: Story[] = [
     publishedAt: "2026-09-26",
     palette: "rose",
     art: "lamp",
+    hero: require("../../assets/St John the Apostle_Hero.jpg"),
+    imageSmall: require("../../assets/St John the Apostle_Tile.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "By the calm blue waters of the Sea of Galilee, there lived a young fisherman named John and his big brother James. John was the youngest of the apostles, but his heart was so full of love that people noticed him right away.",
@@ -899,6 +913,7 @@ export const stories: Story[] = [
     publishedAt: "2027-01-02",
     palette: "ember",
     art: "birds",
+    hero: require("../../assets/St Josephine Bakhita_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Sudan, in a village in Darfur, a little girl was born into a happy family. She laughed and played with her brothers and sisters, and had no idea how much her life was about to change.",
@@ -924,6 +939,7 @@ export const stories: Story[] = [
     publishedAt: "2027-01-09",
     palette: "gold",
     art: "saint",
+    hero: require("../../assets/St Vincent de Paul_Hero.jpg"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in France, a boy named Vincent de Paul was born into a poor farming family. His parents worked hard in the fields, and Vincent herded sheep — but he dreamed of a different life.",
@@ -1546,6 +1562,7 @@ export const stories: Story[] = [
     publishedAt: "2027-06-26",
     palette: "azure",
     art: "birds",
+    hero: require("../../assets/St John Bosco_Hero.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Italy, a poor boy named John Bosco was born. His father died when John was only two, and his mother raised him with love — and very little money.",
@@ -1927,6 +1944,90 @@ export const stories: Story[] = [
       "Years later, the repentant killer even came to pray at her tomb. The family that lost a daughter had gained a brother — for forgiveness, they showed, is stronger than any knife.",
       "On November 4th, 2017, in the city of Indore, huge crowds gathered with singing and flowers as the Church declared Rani Maria “Blessed” — the first step toward sainthood. Bells rang across India for the smiling queen of forgiveness.",
       "Today Blessed Rani Maria Vattalil is honoured every February 25th. She shows us the hardest and holiest lesson of all: when someone hurts us, forgiveness wins. Love forgives — always, completely, and with a smile.",
+    ],
+  },
+  {
+    id: "st-beatrice-rome",
+    title: "The Sister Who Buried Her Brothers",
+    saint: "St Beatrice of Rome",
+    blurb:
+      "After laying her martyred brothers to rest, a brave Roman girl refuses to deny Christ — and joins them in heaven.",
+    minutes: 3.4,
+    age: 4,
+    publishedAt: "2027-10-09",
+    palette: "dawn",
+    art: "rose",
+    hero: require("../../assets/St Beatrice_Hero.jpg"),
+    source: "Butler's Lives of the Saints (public domain)",
+    pages: [
+      "Long ago in Rome, there lived a kind Christian girl named Beatrice, with her two brothers, Simplicius and Faustinus. The three loved each other dearly — and they all loved Jesus even more.",
+      "Those were dangerous days to be a Christian. The emperor Diocletian had ordered everyone to worship false gods, and soldiers hunted down anyone who refused.",
+      "One terrible day, soldiers arrested Beatrice's brothers. “Give up your Christ!” they were ordered. Both brothers stood firm and gentle. “We belong to Jesus,” they said — and for those words, they passed away as martyrs.",
+      "Beatrice wept for her beloved brothers. But she did not leave them lying in the dust. Bravely, lovingly, she gathered their bodies and buried them with honour, singing psalms through her tears.",
+      "Someone reported Beatrice to the rulers: “She is a Christian too!” Soldiers came and dragged her before the judge. All alone now, the young girl stood very straight.",
+      "The judge offered her riches, safety, and freedom — if only she would burn a pinch of incense to the false gods. Beatrice looked at the little flame and shook her head. “My brothers did not bend,” she said. “Neither will I.”",
+      "The judge grew angry. He threatened her with prison, with hunger, with every cruelty he could think of. But each threat only made Beatrice's answer calmer and clearer.",
+      "“Do what you like with me,” she told him softly. “My brothers are waiting for me in heaven, and Jesus is holding my hand right now.” Even the guards marvelled at the peaceful girl.",
+      "That night, Beatrice was strangled in her prison cell for refusing to deny Christ. It was around the year 304. She passed away quietly — a virgin and a martyr, faithful to the very end.",
+      "Christians buried Beatrice beside the brothers she had loved so much. Over her tomb they carved a simple message of victory: she had won, because love is stronger than fear.",
+      "Today St Beatrice of Rome is honoured every July 29th, together with her brothers Simplicius and Faustinus. Three siblings, three crowns, one happy family forever.",
+      "St Beatrice shows us that love doesn't end, even when people we love go to heaven first. Be brave, bury others' sorrows with kindness — and trust that Jesus is holding your hand too.",
+    ],
+  },
+  {
+    id: "st-peter-pattarini",
+    title: "The Knight of Mercy",
+    saint: "Blessed Peter Pattarini",
+    blurb:
+      "A famous lawyer loses his city and his home — then picks up a knight's cross and finds a happier life among the sick.",
+    minutes: 3.4,
+    age: 4,
+    publishedAt: "2027-10-16",
+    palette: "gold",
+    art: "sword",
+    hero: require("../../assets/Blessed Peter Pattarini_hero.jpg"),
+    source: "Wikipedia (CC BY-SA 4.0)",
+    pages: [
+      "Long ago in Italy, in a city called Imola, a boy named Peter Pattarini was born into a noble family. His father was the lord of a little castle called Linaro, just outside the city walls.",
+      "Peter grew up to be brilliantly clever with laws. People came from everywhere to ask his advice, and in 1289 the city chose him as one of its magistrates — like a judge and mayor in one!",
+      "Peter loved peace most of all. When two angry groups, the Guelphs and the Ghibellines, quarrelled across the whole region, Peter sat them down and helped them make peace in 1299. Everyone admired the wise peacemaker.",
+      "But peace did not last. In 1311, the Guelphs conquered Imola, and Peter — who belonged to the other side — had to flee for his life. He lost his home, his castle, and his important job, all in a single terrible year.",
+      "Peter arrived in Florence with almost nothing. He could have stayed bitter and angry forever. Instead, he looked around the great city and saw people sicker and poorer than himself — and his heart melted.",
+      "“I spent my first life arguing about laws,” Peter said. “I will spend my second life loving people.” He joined the Knights Hospitallers — knights who fight suffering instead of wars, caring for the sick and the poor.",
+      "Peter worked in the hospital of San Jacopo, ladling soup, bandaging wounds, and sitting with lonely patients so they would not feel forgotten. The sick began to call him their angel.",
+      "The knights noticed his goodness, and in Rome he was even named Grand Prior — a very great honour! But Peter stayed as humble as ever, washing feet and sweeping floors like the youngest helper.",
+      "Peter returned to Florence and lived the rest of his days beside the sick he loved. People whispered that miracles happened around him — fevers fading, sad hearts mending — all because of his gentle prayers.",
+      "On October 5th, 1320, Peter passed away peacefully and was buried in the church of San Jacopo. The whole city of Florence mourned the nobleman who had become their servant.",
+      "Soon the Church in Florence honoured him as Blessed, for the miracles told about him. In his hometown of Imola, artists even painted him beside Mary and baby Jesus — the exiled lawyer, home at last in heaven.",
+      "Blessed Peter Pattarini, honoured every October 5th, shows us that losing everything can be the start of everything. When life takes your castle, God may be handing you a hospital — and a much happier heart.",
+    ],
+  },
+  {
+    id: "st-hugh-genoa",
+    title: "Fifty Years Beside the Sick",
+    saint: "St Hugh of Genoa",
+    blurb:
+      "A crusader knight lays down his sword, picks up a washbasin, and serves in one hospital for more than fifty years.",
+    minutes: 3.4,
+    age: 4,
+    publishedAt: "2027-10-23",
+    palette: "sea",
+    art: "saint",
+    hero: require("../../assets/St Hugh_Hero.jpg"),
+    source: "Wikipedia (CC BY-SA 4.0)",
+    pages: [
+      "Long ago near Alessandria, Italy, a boy named Hugh Canefri was born into a noble family of counts, around the year 1148. He grew up learning to ride, to fight, and to be brave.",
+      "When Hugh was young, he joined the great Third Crusade and sailed across the sea with brave leaders. He was a true knight, with shining armour and a sharp sword.",
+      "But in his early twenties, Hugh's heart began to change. He watched sick and wounded people suffering with no one to help them — and he knew, suddenly, what God wanted him to do.",
+      "Hugh joined the Knights of Malta, the Hospitallers. But instead of fighting battles, he asked for the humblest job of all: caring for the sick in their hospital in Genoa, at a place called San Giovanni di Pré.",
+      "There, Hugh traded his sword for a washbasin. Day after day, year after year, he washed the sick, fed the hungry, and sat beside lonely patients so they would not feel forgotten.",
+      "He did this work for more than FIFTY years! Kings came and went, wars started and ended — but every morning, Brother Hugh was there in the infirmary, smiling, serving, praying.",
+      "Tradition tells us that heaven helped him back: storms calmed when he prayed, and fevers faded at his touch. Even nature itself seemed to obey the gentle knight.",
+      "The people of Genoa loved him like a father. Sailors, poor families, and sick travellers all knew: if you needed help, go to Brother Hugh.",
+      "In 1233, very old and full of peace, Hugh passed away in the hospital he had served for half a century. Genoa wept for its kindest knight.",
+      "Soon the Church declared him Blessed, and later a saint! His feast is kept every October 8th, especially in Alessandria and Genoa, and by the Knights of Malta all over the world.",
+      "Today sailors still remember the knight who traded battles for bandages. Pictures show him in his knight's cloak, holding a lamp of charity instead of a sword.",
+      "St Hugh of Genoa shows us the secret of a happy life: find one good thing to do, and do it with love for fifty years. Faithfulness, day after day, is the quietest miracle of all.",
     ],
   },
 ];

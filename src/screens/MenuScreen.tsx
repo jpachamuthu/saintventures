@@ -1,17 +1,20 @@
 import React, { useRef, useState } from "react";
-import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Award, BookOpen, ChevronRight, FileText, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
+import { Animated, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ArrowLeft, Award, BookOpen, CalendarDays, ChevronRight, FileText, Images, Library, ListChecks, Mail, Medal, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
+import type { TabId } from "../components/BottomNav";
 import LegalPage, { CREDITS_SECTIONS, HOWTO_SECTIONS, PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
 import { getStoryMusicVolume, setStoryMusicVolume } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 
 type MenuScreenProps = {
   onBack: () => void;
+  onGoTab: (tab: TabId) => void;
+  onOpenGallery: () => void;
 };
 
-export default function MenuScreen({ onBack }: MenuScreenProps) {
+export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScreenProps) {
   const { isDark, toggleTheme, colors } = useTheme();
   const styles = createStyles(colors);
   const toggleAnim = useRef(new Animated.Value(isDark ? 1 : 0)).current;
@@ -138,6 +141,62 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
         </View>
 
         <View style={styles.group}>
+          <Text style={styles.groupLabel}>Browse</Text>
+          <View style={styles.card}>
+            <Pressable style={styles.row} onPress={() => onGoTab("library")}>
+              <View style={styles.iconWrap}>
+                <Library size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Library</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("badges")}>
+              <View style={styles.iconWrap}>
+                <Medal size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Badges</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("feasts")}>
+              <View style={styles.iconWrap}>
+                <CalendarDays size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Feast Days</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("quizzes")}>
+              <View style={styles.iconWrap}>
+                <ListChecks size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Quizzes</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={onOpenGallery}>
+              <View style={styles.iconWrap}>
+                <Images size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Gallery</Text>
+                <Text style={styles.rowSubtitle}>All saint artwork</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.group}>
           <Text style={styles.groupLabel}>Help</Text>
           <View style={styles.card}>
             <Pressable style={styles.row} onPress={() => setShowHowTo(true)}>
@@ -147,6 +206,20 @@ export default function MenuScreen({ onBack }: MenuScreenProps) {
               <View style={styles.rowText}>
                 <Text style={styles.rowTitle}>How to use the app</Text>
                 <Text style={styles.rowSubtitle}>Stories, quizzes, badges and more</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable
+              style={styles.row}
+              onPress={() => Linking.openURL(`mailto:juderam@hotmail.com?subject=${encodeURIComponent("SaintVentures - App Feedback")}`)}
+            >
+              <View style={styles.iconWrap}>
+                <Mail size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Send feedback</Text>
+                <Text style={styles.rowSubtitle}>Tell us what you think</Text>
               </View>
               <ChevronRight size={16} color={colors.mutedDim} />
             </Pressable>

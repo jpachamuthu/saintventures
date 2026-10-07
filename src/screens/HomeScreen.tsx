@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { Bell, Flame, Library, Menu, Play, Clock, Sparkles, Star } from "lucide-react-native";
+import { Bell, Flame, Info, Library, Menu, Play, Clock, Sparkles, Star } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import SaintIllustration from "../components/SaintIllustration";
@@ -15,15 +16,18 @@ import GoldGradient from "../components/GoldGradient";
 import AnimatedHeartButton from "../components/AnimatedHeartButton";
 import FadeInView from "../components/FadeInView";
 import type { TabId } from "../components/BottomNav";
-import { LogoMark } from "../components/Logo";
-import LegalPage from "../components/LegalPage";
-import { webBlurStyle } from "../components/GlassView";
+import LegalPage from "../components/LegalPage";import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { useRatings, formatRating } from "../hooks/useRatings";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { stories, type Story } from "../data/stories";
 
 const TOP_BLUR = webBlurStyle();
+// Shown once per app launch, the first time Home appears.
+let greetedThisLaunch = false;
+// Web-only: lock panning to the intended axis so screens can't drift sideways.
+const WEB_LOCK_Y = { touchAction: "pan-y", overscrollBehavior: "none" } as any;
+const WEB_LOCK_XY = { touchAction: "pan-x pan-y" } as any;
 
 export default function HomeScreen({
   onOpenStory,
@@ -62,7 +66,12 @@ export default function HomeScreen({
   );
   const [removed, setRemoved] = useState<Story | null>(null);
   const [showStreak, setShowStreak] = useState(false);
+  const [showNoNews, setShowNoNews] = useState(false);
+  const noNewsRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showNudge, setShowNudge] = useState(false);
   const flamePulse = useRef(new Animated.Value(1)).current;
+  const bellRing = useRef(new Animated.Value(0)).current;
+  const bellSpin = bellRing.interpolate({ inputRange: [-1, 1], outputRange: ["-16deg", "16deg"] });
 
   useEffect(() => {
     const loop = Animated.loop(
@@ -72,8 +81,46 @@ export default function HomeScreen({
       ])
     );
     loop.start();
-    return () => loop.stop();
+    return () => {
+      loop.stop();
+      if (noNewsRef.current) clearTimeout(noNewsRef.current);
+    };
   }, [flamePulse]);
+
+  useEffect(() => {
+    if (greetedThisLaunch) return;
+    greetedThisLaunch = true;
+    setShowNudge(true);
+    const t = setTimeout(() => setShowNudge(false), 4500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleBellPress = () => {
+    if (!hasNew) {
+      setShowNoNews(true);
+      if (noNewsRef.current) clearTimeout(noNewsRef.current);
+      noNewsRef.current = setTimeout(() => setShowNoNews(false), 3000);
+      return;
+    }
+    onBellPress();
+  };
+
+  useEffect(() => {
+    if (!hasNew) {
+      bellRing.setValue(0);
+      return;
+    }
+    const ring = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bellRing, { toValue: 1, duration: 140, useNativeDriver: true }),
+        Animated.timing(bellRing, { toValue: -1, duration: 200, useNativeDriver: true }),
+        Animated.timing(bellRing, { toValue: 0, duration: 160, useNativeDriver: true }),
+        Animated.delay(900),
+      ])
+    );
+    ring.start();
+    return () => ring.stop();
+  }, [hasNew, bellRing]);
   const undoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleToggle = (s: Story) => {
@@ -105,14 +152,22 @@ export default function HomeScreen({
   return (
     <SafeAreaView style={styles.root}>
       <View style={[styles.topBar, { top: insets.top }, TOP_BLUR]}>
-        <View style={styles.brand}>
-          <LogoMark size={30} />
-          <Text style={styles.brandName}>
+        <View style={styles.leftGroup}>
+          <Pressable
+            onPress={onOpenMenu}
+            style={styles.iconBtn}
+            hitSlop={8}
+            accessibilityRole="button"
+            accessibilityLabel="Open menu"
+          >
+            <Menu size={18} color={colors.cream} />
+          </Pressable>
+          <Text style={styles.titleText}>
             <Text style={{ color: colors.cream }}>Saint</Text>
             <Text style={{ color: colors.gold }}>Ventures</Text>
           </Text>
         </View>
-          <View style={styles.icons}>
+        <View style={styles.icons}>
             {streakCount > 0 && (
               <Pressable
                 onPress={() => setShowStreak(true)}
@@ -126,29 +181,23 @@ export default function HomeScreen({
                 </Animated.View>
                 <Text style={styles.streakText}>{streakCount}</Text>
               </Pressable>
-            )}            <Pressable
-              onPress={onBellPress}
+            )}
+            <Pressable
+              onPress={handleBellPress}
               style={styles.iconBtn}
               hitSlop={8}
               accessibilityRole="button"
               accessibilityLabel="New stories"
             >
-              <Bell size={16} color={colors.cream} />
+              <Animated.View style={hasNew ? { transform: [{ rotate: bellSpin }] } : undefined}>
+                <Bell size={16} color={colors.cream} />
+              </Animated.View>
               {hasNew && <View style={styles.notifDot} />}
             </Pressable>
-          <Pressable
-            onPress={onOpenMenu}
-            style={styles.iconBtn}
-            hitSlop={8}
-            accessibilityRole="button"
-            accessibilityLabel="Open menu"
-          >
-            <Menu size={16} color={colors.cream} />
-          </Pressable>
-        </View>
+          </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false} style={Platform.OS === "web" ? WEB_LOCK_Y : undefined}>
         {todayFeast && (
           <Pressable
             onPress={() => onOpenStory(todayFeast)}
@@ -211,6 +260,7 @@ export default function HomeScreen({
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.favRail}
+            style={Platform.OS === "web" ? WEB_LOCK_XY : undefined}
           >
             {topStories.map((s) => (
               <Pressable
@@ -353,6 +403,22 @@ export default function HomeScreen({
         </View>
       </ScrollView>
 
+      {showNoNews && !removed && (
+        <View style={[styles.newsBubble, { top: insets.top + 60 }]}>
+          <Info size={14} color={colors.gold} />
+          <Text style={styles.newsText}>You're all caught up! New stories will appear here.</Text>
+        </View>
+      )}
+      {showNudge && !showNoNews && (
+        <View style={[styles.newsBubble, { top: insets.top + 60 }]}>
+          <Flame size={14} color={colors.gold} fill={colors.gold} />
+          <Text style={styles.newsText}>
+            {streakCount > 0
+              ? `Keep your ${streakCount}-day flame burning — finish a story today!`
+              : "Finish a story today to light your flame!"}
+          </Text>
+        </View>
+      )}
       {removed && (
         <View style={styles.toast}>
           <Text style={styles.toastText}>Removed from favourites</Text>
@@ -463,12 +529,12 @@ function createStyles(colors: ThemeColors) {
     borderBottomWidth: 1,
     borderBottomColor: colors.glassBorder,
   },
-  brand: {
+  leftGroup: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
   },
-  brandName: {
+  titleText: {
     fontFamily: fonts.displayBold,
     fontSize: 20,
   },
@@ -483,9 +549,7 @@ function createStyles(colors: ThemeColors) {
     gap: 5,
     height: 38,
     borderRadius: 19,
-    backgroundColor: colors.glassFill,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
+    backgroundColor: "transparent",
     paddingHorizontal: 12,
   },
   streakText: {
@@ -509,6 +573,33 @@ function createStyles(colors: ThemeColors) {
     height: 6,
     borderRadius: 3,
     backgroundColor: colors.gold,
+  },
+  newsBubble: {
+    position: "absolute",
+    right: 12,
+    zIndex: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    maxWidth: 250,
+    backgroundColor: colors.glassFillStrong,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 8,
+  },
+  newsText: {
+    flexShrink: 1,
+    fontFamily: fonts.uiMedium,
+    fontSize: 12,
+    lineHeight: 17,
+    color: colors.cream,
   },
   featuredWrap: {
     paddingHorizontal: 18,

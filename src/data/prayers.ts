@@ -73,7 +73,7 @@ export const prayers: Record<string, Prayer> = {
     footnote: "After St Mary MacKillop's saying (public domain).",
   },
   "st-carlo-acutis": {
-    text: "Blessed Carlo, who loved Jesus in the Eucharist more than computer games, teach me to put God first. Help me use my talents to tell the world how good He is. Amen.",
+    text: "St Carlo, who loved Jesus in the Eucharist more than computer games, teach me to put God first. Help me use my talents to tell the world how good He is. Amen.",
     footnote: COMPOSED,
   },
   "st-peter": {
@@ -302,6 +302,18 @@ export const prayers: Record<string, Prayer> = {
   },
   "st-mariam-vattalil": {
     text: "Blessed Rani Maria, queen of forgiveness, teach my heart to forgive like yours. When someone hurts me, help me pray for them — and keep smiling. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-beatrice-rome": {
+    text: "St Beatrice, faithful sister, help me love my family fiercely and stand firm gently. When doing right is hard, hold my hand the way Jesus held yours. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-peter-pattarini": {
+    text: "Blessed Peter Pattarini, peacemaker and knight of mercy, turn my losses into love. When life takes something away, show me who I can serve instead. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-hugh-genoa": {
+    text: "St Hugh of Genoa, faithful friend of the sick, teach me to serve quietly for a lifetime. Help me find one good work and do it with love, day after day. Amen.",
     footnote: COMPOSED,
   },
 };

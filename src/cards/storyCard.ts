@@ -1,5 +1,5 @@
 import { storyPageText, type Story } from "../data/stories";
-import { assetUri } from "./prayerCard";
+import { assetUri } from "./prayerCard";import { renderPrayerCard } from "./prayerCard";
 
 function esc(s: string): string {
   return s
@@ -50,8 +50,15 @@ export async function downloadStoryBookHtml(story: Story): Promise<void> {
     const total = pages.length;
     const [heroUrl, tileUrl] = await Promise.all([
       assetDataUrl(story.hero),
-      assetDataUrl(story.imageSmall, 600),
+      assetDataUrl(story.imageSmall ?? story.hero, 600),
     ]);
+    let prayerImg: string | null = null;
+    try {
+      const prayerCard = await renderPrayerCard(story);
+      if (prayerCard) prayerImg = prayerCard.toDataURL("image/png");
+    } catch {
+      /* prayer page is optional */
+    }
 
     const pageHtml = pages
       .map(
@@ -146,8 +153,8 @@ export async function downloadStoryBookHtml(story: Story): Promise<void> {
     letter-spacing: 1px;
   }
   .body {
-    font-size: 13px;
-    line-height: 1.75;
+    font-size: 16px;
+    line-height: 1.8;
   }
   .body::first-letter {
     color: #D9823F;
@@ -167,6 +174,20 @@ export async function downloadStoryBookHtml(story: Story): Promise<void> {
     object-fit: cover;
     border-radius: 18px;
     margin: 6px auto 4px;
+  }
+  .prayercard {
+    max-width: 100%;
+    max-height: 7in;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+  .credit {
+    color: #6D748F;
+    font-family: Verdana, sans-serif;
+    font-size: 8.5px;
+    line-height: 1.6;
+    margin-top: 16px;
   }
   .end-title {
     font-family: Verdana, sans-serif;
@@ -204,10 +225,14 @@ export async function downloadStoryBookHtml(story: Story): Promise<void> {
     <div class="foot">A SAINTVENTURES STORYBOOK</div>
   </section>
 ${pageHtml}
+  ${prayerImg ? `<section class="page">
+    <img class="prayercard" src="${prayerImg}" alt="Prayer card" />
+  </section>` : ""}
   <section class="page">
     ${tileUrl ? `<img class="thumb" src="${tileUrl}" alt="" />` : `<div class="glyph">✦</div>`}
     <div class="end-title">The End</div>
     <div class="thanks">Thank you for reading with us.<br />Find more saints, more stories,<br />and more wonder in the app.</div>
+    <div class="credit">Illustrations created with AI image tools (ChatGPT, Grok, Gemini), adapted for SaintVentures.<br />Story source: ${esc(story.source)}</div>
     <div class="foot brand">SAINTVENTURES.APP</div>
   </section>
 </body>
@@ -218,6 +243,34 @@ ${pageHtml}
     const a = document.createElement("a");
     a.href = url;
     a.download = `${story.id}-storybook.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  } catch {
+    /* download is best-effort */
+  }
+}
+
+/**
+ * Downloads the saint's plain artwork image itself (tile preferred,
+ * otherwise hero), keeping the original file extension.
+ */
+export async function downloadSaintImage(story: Story, image?: number): Promise<void> {
+  try {
+    if (typeof document === "undefined") return;
+    const uri = assetUri(image ?? story.imageSmall ?? story.hero);
+    if (!uri) return;
+    const res = await fetch(encodeURI(uri));
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const clean = uri.split("?")[0].split("#")[0];
+    const dot = clean.lastIndexOf(".");
+    const ext = dot >= 0 ? clean.slice(dot + 1).toLowerCase() : "jpg";
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${story.id}-image.${ext}`;
     document.body.appendChild(a);
     a.click();
     a.remove();

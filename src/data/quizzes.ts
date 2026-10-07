@@ -1978,4 +1978,85 @@ export const quizzes: Record<string, Quiz> = {
       correct: 1,
     },
   ],
+  "st-beatrice-rome": [
+    {
+      question: "Who were Beatrice's brothers?",
+      choices: ["Romulus and Remus", "Hiccup and Sneeze", "Simplicius and Faustinus"],
+      correct: 2,
+    },
+    {
+      question: "What brave thing did Beatrice do for her brothers?",
+      choices: ["She buried them with honour", "She hid their sandals", "She wrote them a letter"],
+      correct: 0,
+    },
+    {
+      question: "What did the judge offer Beatrice?",
+      choices: ["A crown of gold", "Riches and freedom for incense to false gods", "A trip to Egypt"],
+      correct: 1,
+    },
+    {
+      question: "What did Beatrice answer?",
+      choices: ["Maybe tomorrow", "Ask someone else", "My brothers did not bend, neither will I"],
+      correct: 2,
+    },
+    {
+      question: "When is Beatrice honoured with her brothers?",
+      choices: ["Every Friday", "July 29th", "Christmas Day"],
+      correct: 1,
+    },
+  ],
+  "st-peter-pattarini": [
+    {
+      question: "What was Peter's job in Imola?",
+      choices: ["A baker", "A sailor", "A famous lawyer and magistrate"],
+      correct: 2,
+    },
+    {
+      question: "Why did Peter have to flee Imola?",
+      choices: ["The Guelphs conquered the city", "He wanted a holiday", "He lost his keys"],
+      correct: 0,
+    },
+    {
+      question: "Which knights did Peter join?",
+      choices: ["Knights who joust", "The Knights Hospitallers", "Knights of the round table"],
+      correct: 1,
+    },
+    {
+      question: "Where did Peter serve the sick?",
+      choices: ["The hospital of San Jacopo in Florence", "A ship at sea", "A mountain cave"],
+      correct: 0,
+    },
+    {
+      question: "What does Peter's story teach us?",
+      choices: ["Stay bitter forever", "Losing everything can be the start of everything", "Avoid hospitals"],
+      correct: 1,
+    },
+  ],
+  "st-hugh-genoa": [
+    {
+      question: "Where was Hugh born?",
+      choices: ["In Egypt", "Near Alessandria, Italy", "On a ship"],
+      correct: 1,
+    },
+    {
+      question: "What did young Hugh join?",
+      choices: ["A circus", "A navy of pirates", "The Third Crusade"],
+      correct: 2,
+    },
+    {
+      question: "What did Hugh trade his sword for?",
+      choices: ["A washbasin for the sick", "A golden crown", "A faster horse"],
+      correct: 0,
+    },
+    {
+      question: "How long did Hugh serve in the Genoa hospital?",
+      choices: ["One week", "More than fifty years", "A single afternoon"],
+      correct: 1,
+    },
+    {
+      question: "When is St Hugh's feast day?",
+      choices: ["October 8th", "Christmas Day", "Easter Monday"],
+      correct: 0,
+    },
+  ],
 };

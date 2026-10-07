@@ -16,10 +16,12 @@ import GoldGradient from "../components/GoldGradient";
 import { webBlurStyle } from "../components/GlassView";
 import { useTheme } from "../components/ThemeContext";
 import { fonts, radius, type ThemeColors } from "../theme";
-import { stories, type Story } from "../data/stories";
+import { stories, saintSortKey, type Story } from "../data/stories";
 import { quizzes } from "../data/quizzes";
 
 const TOP_BLUR = webBlurStyle();
+// Web-only: lock panning to the vertical axis so the screen can't drift sideways.
+const WEB_LOCK_Y = { touchAction: "pan-y", overscrollBehavior: "none" } as any;
 
 type QuizzesScreenProps = {
   onOpenQuiz: (story: Story) => void;
@@ -40,7 +42,9 @@ export default function QuizzesScreen({ onOpenQuiz, favouriteIds, onToggleFavour
     let list = stories
       .filter((s) => (quizzes[s.id] ?? []).length > 0)
       .sort((a, b) =>
-        asc ? a.saint.localeCompare(b.saint) : b.saint.localeCompare(a.saint)
+        asc
+          ? saintSortKey(a.saint).localeCompare(saintSortKey(b.saint))
+          : saintSortKey(b.saint).localeCompare(saintSortKey(a.saint))
       );
     if (onlyFavs) list = list.filter((s) => favouriteIds.includes(s.id));
     if (q) list = list.filter((s) => s.saint.toLowerCase().includes(q));
@@ -119,7 +123,7 @@ export default function QuizzesScreen({ onOpenQuiz, favouriteIds, onToggleFavour
           <Text style={styles.emptyHint}>Try a different name, like "Clare" or "Francis"</Text>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false} style={Platform.OS === "web" ? WEB_LOCK_Y : undefined}>
           {items.map((s) => (
             <Pressable
               key={s.id}
@@ -209,6 +213,7 @@ function createStyles(colors: ThemeColors) {
     },
     searchInput: {
       flex: 1,
+      minWidth: 0,
       fontFamily: fonts.uiMedium,
       fontSize: 13.5,
       color: colors.cream,

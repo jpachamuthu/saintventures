@@ -134,6 +134,10 @@ export const HOWTO_SECTIONS: LegalSection[] = [
     body: "The Feasts tab lists every saint's feast day for the year. When new stories arrive, the gold bell on Home lights up — tap it to read the newest one.",
   },
   {
+    heading: "Gallery",
+    body: "Menu → Gallery holds every saint portrait: heroes, tiles, and extra variants. Tap any image to view it fullscreen, then download the storybook, the prayer card, or the plain image to share with friends and family.",
+  },
+  {
     heading: "Favourites and music",
     body: "Tap the heart on any story, quiz, or feast to keep it in your favourites. Story music volume can be adjusted anytime in this menu, under Story music.",
   },
