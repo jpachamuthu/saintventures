@@ -321,7 +321,7 @@ export const prayers: Record<string, Prayer> = {
     footnote: "From Fra’ James-Michael von Stroebel; Order of Malta American Association Proprium Breviarii of the Irish Association.",
   },
   "st-gerard-jerusalem": {
-    text: "O God, who exalted Blessed Gerard because of his care for the poor and the sick, and though him founded in Jerusalem The Order of Saint John the Baptist, give us the grace of seeing, as he did, the image of your Son in our brothers and sisters. We ask this through our Lord Jesus Christ your Son, who lives and reigns with you and the Holy Spirit one God, for ever and ever. Amen.",
+    text: "O God, who exalted Blessed Gerard because of his care for the poor and the sick, and through him founded in Jerusalem The Order of Saint John the Baptist, give us the grace of seeing, as he did, the image of your Son in our brothers and sisters. We ask this through our Lord Jesus Christ your Son, who lives and reigns with you and the Holy Spirit one God, for ever and ever. Amen.",
     footnote: "From Fra’ James-Michael von Stroebel; Order of Malta American Association.",
   },
 };
