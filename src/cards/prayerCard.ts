@@ -75,7 +75,7 @@ function shrinkToFit(ctx: CanvasRenderingContext2D, text: string, maxWidth: numb
  * The card height grows to fit the ENTIRE prayer — nothing is ever cut.
  * Returns null on native or when anything is unavailable.
  */
-export async function renderPrayerCard(story: Story): Promise<HTMLCanvasElement | null> {
+export async function renderPrayerCard(story: Story, portraitOverride?: number): Promise<HTMLCanvasElement | null> {
   if (Platform.OS !== "web" || typeof document === "undefined") return null;
   const prayer = prayers[story.id];
   if (!prayer) return null;
@@ -119,8 +119,9 @@ export async function renderPrayerCard(story: Story): Promise<HTMLCanvasElement 
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Portrait: cover-fit the top region.
-  const asset = story.imageSmall ?? story.hero;
+  // Portrait: cover-fit the top region. An explicit portrait (e.g. the exact
+  // Gallery image being viewed) wins over the story default.
+  const asset = portraitOverride ?? story.imageSmall ?? story.hero;
   let painted = false;
   if (asset != null) {
     try {
@@ -281,9 +282,9 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
 }
 
 /** Download the prayer card image (web only). */
-export async function downloadPrayerCard(story: Story): Promise<boolean> {
+export async function downloadPrayerCard(story: Story, portraitOverride?: number): Promise<boolean> {
   try {
-    const canvas = await renderPrayerCard(story);
+    const canvas = await renderPrayerCard(story, portraitOverride);
     if (!canvas) return false;
     const blob = await canvasToBlob(canvas);
     if (!blob) return false;
@@ -298,9 +299,9 @@ export async function downloadPrayerCard(story: Story): Promise<boolean> {
  * Open the standard share sheet with the prayer card image (WhatsApp, etc.).
  * Falls back to downloading where system sharing with files is unavailable.
  */
-export async function sharePrayerCard(story: Story): Promise<boolean> {
+export async function sharePrayerCard(story: Story, portraitOverride?: number): Promise<boolean> {
   try {
-    const canvas = await renderPrayerCard(story);
+    const canvas = await renderPrayerCard(story, portraitOverride);
     if (!canvas) return false;
     const blob = await canvasToBlob(canvas);
     if (!blob) return false;

@@ -208,6 +208,10 @@ export async function downloadStoryBookHtml(story: Story): Promise<void> {
     font-size: 10px;
     letter-spacing: 1px;
   }
+  .brand a {
+    color: #EF9E56;
+    text-decoration: none;
+  }
   @media print {
     .page { margin: 0; max-width: none; }
   }
@@ -233,7 +237,7 @@ ${pageHtml}
     <div class="end-title">The End</div>
     <div class="thanks">Thank you for reading with us.<br />Find more saints, more stories,<br />and more wonder in the app.</div>
     <div class="credit">Illustrations created with AI image tools (ChatGPT, Grok, Gemini), adapted for SaintVentures.<br />Story source: ${esc(story.source)}</div>
-    <div class="foot brand">SAINTVENTURES.APP</div>
+    <div class="foot brand"><a href="https://saintventures.netlify.app">https://saintventures.netlify.app</a></div>
   </section>
 </body>
 </html>`;

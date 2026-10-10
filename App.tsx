@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
@@ -39,6 +39,7 @@ import { useStars } from "./src/hooks/useStars";
 import { useStreak } from "./src/hooks/useStreak";
 import { feastDays } from "./src/data/feastDays";
 import { pickUpNext } from "./src/data/upNext";
+import { refreshFeastNotifications } from "./src/notify/feasts";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -84,6 +85,10 @@ export default function App() {
       await SplashScreen.hideAsync().catch(() => {});
     }
   }, [fontsLoaded]);
+
+  useEffect(() => {
+    refreshFeastNotifications().catch(() => {});
+  }, []);
 
   const openStory = (s: Story, origin: "home" | "library" | "badges" | "feasts", page = 0) => {
     setStory(s);

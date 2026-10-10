@@ -134,6 +134,10 @@ export const HOWTO_SECTIONS: LegalSection[] = [
     body: "The Feasts tab lists every saint's feast day for the year. When new stories arrive, the gold bell on Home lights up — tap it to read the newest one.",
   },
   {
+    heading: "Notifications",
+    body: "Turn on Feast day reminders in Menu → Notifications so the app can send a morning note whenever saints celebrate. Please also keep notifications allowed for SaintVentures in your device settings — without that, reminders cannot reach you. On the web, allow notifications in your browser when asked.",
+  },
+  {
     heading: "Gallery",
     body: "Menu → Gallery holds every saint portrait: heroes, tiles, and extra variants. Tap any image to view it fullscreen, then download the storybook, the prayer card, or the plain image to share with friends and family.",
   },

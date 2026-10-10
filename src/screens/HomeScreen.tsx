@@ -91,7 +91,7 @@ export default function HomeScreen({
     if (greetedThisLaunch) return;
     greetedThisLaunch = true;
     setShowNudge(true);
-    const t = setTimeout(() => setShowNudge(false), 4500);
+    const t = setTimeout(() => setShowNudge(false), 7000);
     return () => clearTimeout(t);
   }, []);
 
@@ -99,7 +99,7 @@ export default function HomeScreen({
     if (!hasNew) {
       setShowNoNews(true);
       if (noNewsRef.current) clearTimeout(noNewsRef.current);
-      noNewsRef.current = setTimeout(() => setShowNoNews(false), 3000);
+      noNewsRef.current = setTimeout(() => setShowNoNews(false), 5000);
       return;
     }
     onBellPress();
@@ -574,26 +574,26 @@ function createStyles(colors: ThemeColors) {
     borderRadius: 3,
     backgroundColor: colors.gold,
   },
-  newsBubble: {
-    position: "absolute",
-    right: 12,
-    zIndex: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    maxWidth: 250,
-    backgroundColor: colors.glassFillStrong,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    borderRadius: 16,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 8,
-  },
+    newsBubble: {
+      position: "absolute",
+      right: 12,
+      zIndex: 30,
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+      maxWidth: 250,
+      backgroundColor: colors.bgCard,
+      borderWidth: 1,
+      borderColor: colors.glassBorder,
+      borderRadius: 16,
+      paddingHorizontal: 14,
+      paddingVertical: 10,
+      shadowColor: "#000",
+      shadowOpacity: 0.4,
+      shadowRadius: 12,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 8,
+    },
   newsText: {
     flexShrink: 1,
     fontFamily: fonts.uiMedium,

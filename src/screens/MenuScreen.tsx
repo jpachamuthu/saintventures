@@ -1,9 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Animated, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Award, BookOpen, CalendarDays, ChevronRight, FileText, Images, Library, ListChecks, Mail, Medal, Minus, Moon, Plus, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
+import { Animated, Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Switch, Text, View } from "react-native";
+import { ArrowLeft, Award, BookOpen, CalendarDays, ChevronRight, FileText, Images, Library, ListChecks, Mail, Medal, Minus, Moon, Plus, Share2, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import type { TabId } from "../components/BottomNav";
+import {
+  cancelFeastNotifications,
+  checkFeastPermission,
+  confirmFeastNotifications,
+  ensureFeastPermission,
+  getFeastNotifyPref,
+  setFeastNotifyPref,
+  webNotifyState,
+} from "../notify/feasts";
 import LegalPage, { CREDITS_SECTIONS, HOWTO_SECTIONS, PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
 import { getStoryMusicVolume, setStoryMusicVolume } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
@@ -22,6 +31,103 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
   const [showTerms, setShowTerms] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
   const [showHowTo, setShowHowTo] = useState(false);
+  const [notify, setNotify] = useState(getFeastNotifyPref);
+  const [notifyBusy, setNotifyBusy] = useState(false);
+  const [notifyMsg, setNotifyMsg] = useState<string | null>(null);
+  const notifyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
+  const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [notifyBlocked, setNotifyBlocked] = useState(
+    () => Platform.OS === "web" && webNotifyState() === "denied"
+  );
+
+  const flashNotifyMsg = (msg: string) => {
+    setNotifyMsg(msg);
+    if (notifyTimer.current) clearTimeout(notifyTimer.current);
+    notifyTimer.current = setTimeout(() => setNotifyMsg(null), 4000);
+  };
+
+  const flipNotify = async () => {
+    if (notifyBusy) return;
+    setNotifyBusy(true);
+    try {
+      if (!notify) {
+        const granted = await ensureFeastPermission();
+        const blocked = Platform.OS === "web" && webNotifyState() === "denied";
+        setNotifyBlocked(blocked);
+        await setFeastNotifyPref(granted);
+        setNotify(granted);
+        if (granted) {
+          await confirmFeastNotifications();
+          flashNotifyMsg("Reminders on — look for the notice!");
+        } else {
+          const still = await checkFeastPermission();
+          if (still) {
+            await setFeastNotifyPref(true);
+            setNotify(true);
+            await confirmFeastNotifications();
+            flashNotifyMsg("Reminders on — look for the notice!");
+          } else if (blocked) {
+            flashNotifyMsg("Browser is blocking notices — allow them first.");
+          } else {
+            flashNotifyMsg("Couldn't enable reminders on this device.");
+          }
+        }
+      } else {
+        await setFeastNotifyPref(false);
+        await cancelFeastNotifications();
+        setNotify(false);
+        flashNotifyMsg("Reminders off.");
+      }
+    } finally {
+      setNotifyBusy(false);
+    }
+  };
+
+  const flashShareMsg = (msg: string) => {
+    setShareMsg(msg);
+    if (shareTimer.current) clearTimeout(shareTimer.current);
+    shareTimer.current = setTimeout(() => setShareMsg(null), 3500);
+  };
+
+  const shareApp = async () => {
+    const url = "https://saintventures.netlify.app";
+    if (Platform.OS === "web") {
+      // System sheet first; anything but an explicit cancel falls through
+      // to clipboard so the tap always produces visible feedback.
+      try {
+        const nav = navigator as any;
+        if (typeof nav.share === "function") {
+          try {
+            await nav.share({ title: "SaintVentures", text: "Saint stories for little hearts", url });
+            flashShareMsg("Shared — thank you!");
+            return;
+          } catch (err: any) {
+            if (!err || err.name !== "AbortError") throw err;
+            return;
+          }
+        }
+        throw new Error("no-share");
+      } catch {
+        try {
+          if (typeof navigator.clipboard?.writeText === "function") {
+            await navigator.clipboard.writeText(url);
+            flashShareMsg("Link copied to clipboard!");
+          } else {
+            flashShareMsg("Sharing is not available in this browser.");
+          }
+        } catch {
+          flashShareMsg("Sharing is not available in this browser.");
+        }
+      }
+      return;
+    }
+    try {
+      await Share.share({ message: `Saint stories for little hearts: ${url}` });
+    } catch {
+      /* ignore */
+    }
+  };
   const [volume, setVolume] = useState(getStoryMusicVolume);
 
   const changeVolume = (delta: number) => {
@@ -58,6 +164,62 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
           </Pressable>
           <Text style={styles.title}>Menu</Text>
           <View style={styles.backBtnSpacer} />
+        </View>
+
+        <View style={styles.group}>
+          <Text style={styles.groupLabel}>Browse</Text>
+          <View style={styles.card}>
+            <Pressable style={styles.row} onPress={() => onGoTab("library")}>
+              <View style={styles.iconWrap}>
+                <Library size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Library</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("badges")}>
+              <View style={styles.iconWrap}>
+                <Medal size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Badges</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("feasts")}>
+              <View style={styles.iconWrap}>
+                <CalendarDays size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Feast Days</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={() => onGoTab("quizzes")}>
+              <View style={styles.iconWrap}>
+                <ListChecks size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Quizzes</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable style={styles.row} onPress={onOpenGallery}>
+              <View style={styles.iconWrap}>
+                <Images size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Gallery</Text>
+                <Text style={styles.rowSubtitle}>All saint artwork</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.group}>
@@ -141,59 +303,32 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
         </View>
 
         <View style={styles.group}>
-          <Text style={styles.groupLabel}>Browse</Text>
+          <Text style={styles.groupLabel}>Notifications</Text>
           <View style={styles.card}>
-            <Pressable style={styles.row} onPress={() => onGoTab("library")}>
+            <View style={styles.row}>
               <View style={styles.iconWrap}>
-                <Library size={18} color={colors.gold} />
+                <Mail size={18} color={colors.gold} />
               </View>
               <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>Library</Text>
+                <Text style={styles.rowTitle}>Feast day reminders</Text>
+                <Text style={styles.rowSubtitle}>{notifyMsg ?? "A morning note when saints celebrate"}</Text>
               </View>
-              <ChevronRight size={16} color={colors.mutedDim} />
-            </Pressable>
-            <View style={styles.divider} />
-            <Pressable style={styles.row} onPress={() => onGoTab("badges")}>
-              <View style={styles.iconWrap}>
-                <Medal size={18} color={colors.gold} />
-              </View>
-              <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>Badges</Text>
-              </View>
-              <ChevronRight size={16} color={colors.mutedDim} />
-            </Pressable>
-            <View style={styles.divider} />
-            <Pressable style={styles.row} onPress={() => onGoTab("feasts")}>
-              <View style={styles.iconWrap}>
-                <CalendarDays size={18} color={colors.gold} />
-              </View>
-              <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>Feast Days</Text>
-              </View>
-              <ChevronRight size={16} color={colors.mutedDim} />
-            </Pressable>
-            <View style={styles.divider} />
-            <Pressable style={styles.row} onPress={() => onGoTab("quizzes")}>
-              <View style={styles.iconWrap}>
-                <ListChecks size={18} color={colors.gold} />
-              </View>
-              <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>Quizzes</Text>
-              </View>
-              <ChevronRight size={16} color={colors.mutedDim} />
-            </Pressable>
-            <View style={styles.divider} />
-            <Pressable style={styles.row} onPress={onOpenGallery}>
-              <View style={styles.iconWrap}>
-                <Images size={18} color={colors.gold} />
-              </View>
-              <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>Gallery</Text>
-                <Text style={styles.rowSubtitle}>All saint artwork</Text>
-              </View>
-              <ChevronRight size={16} color={colors.mutedDim} />
-            </Pressable>
+              <Switch
+                value={notify}
+                onValueChange={flipNotify}
+                disabled={notifyBusy}
+                trackColor={{ false: colors.ring, true: colors.gold }}
+                thumbColor={colors.white}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: notify }}
+                accessibilityLabel="Toggle feast day reminders"
+              />
+            </View>
           </View>
+          <Text style={styles.hint}>
+            Turn this on — and keep notifications allowed for the app on your device — so feast days never slip by unnoticed.
+            {notifyBlocked ? " Notifications are currently blocked for this site: tap the lock icon in the address bar to allow them, then flip this switch again." : ""}
+          </Text>
         </View>
 
         <View style={styles.group}>
@@ -220,6 +355,20 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
               <View style={styles.rowText}>
                 <Text style={styles.rowTitle}>Send feedback</Text>
                 <Text style={styles.rowSubtitle}>Tell us what you think</Text>
+              </View>
+              <ChevronRight size={16} color={colors.mutedDim} />
+            </Pressable>
+            <View style={styles.divider} />
+            <Pressable
+              style={styles.row}
+              onPress={shareApp}
+            >
+              <View style={styles.iconWrap}>
+                <Share2 size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Share SaintVentures</Text>
+                <Text style={styles.rowSubtitle}>{shareMsg ?? "Tell friends and family"}</Text>
               </View>
               <ChevronRight size={16} color={colors.mutedDim} />
             </Pressable>

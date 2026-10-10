@@ -2059,4 +2059,58 @@ export const quizzes: Record<string, Quiz> = {
       correct: 0,
     },
   ],
+  "st-john-xxiii": [
+    {
+      question: "What was John XXIII called as a boy?",
+      choices: ["Angelo Roncalli", "Giovanni Pizza", "Marco Polo"],
+      correct: 0,
+    },
+    {
+      question: "What did Angelo do in the great war?",
+      choices: ["He hid at home", "He was a chaplain to the wounded", "He sailed away"],
+      correct: 1,
+    },
+    {
+      question: "What honour did he receive in 1956?",
+      choices: ["Bailiff in the Order of Malta", "King of Italy", "Captain of a ship"],
+      correct: 0,
+    },
+    {
+      question: "What great meeting did he open in 1962?",
+      choices: ["The Olympic Games", "A cooking contest", "The Second Vatican Council"],
+      correct: 2,
+    },
+    {
+      question: "What was his motto?",
+      choices: ["Obedience and Peace", "Never smile", "Run fast"],
+      correct: 0,
+    },
+  ],
+  "st-gerard-jerusalem": [
+    {
+      question: "What job did Gerard ask for in Jerusalem?",
+      choices: ["Soldier", "Helping the sick in the hospice", "Palace guard"],
+      correct: 1,
+    },
+    {
+      question: "What did Gerard hide in his cloak during the siege?",
+      choices: ["Small loaves of bread", "Gold coins", "Sharp stones"],
+      correct: 0,
+    },
+    {
+      question: "What did the rulers find when they checked?",
+      choices: ["Bread", "Plain stones", "Silver keys"],
+      correct: 1,
+    },
+    {
+      question: "When did the Pope approve Gerard's Order?",
+      choices: ["February 15th, 1113", "Christmas Day", "Easter Monday"],
+      correct: 0,
+    },
+    {
+      question: "What did Gerard call the sick?",
+      choices: ["A nuisance", "Our lords", "Strangers"],
+      correct: 1,
+    },
+  ],
 };

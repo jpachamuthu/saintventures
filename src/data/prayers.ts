@@ -316,4 +316,12 @@ export const prayers: Record<string, Prayer> = {
     text: "St Hugh of Genoa, faithful friend of the sick, teach me to serve quietly for a lifetime. Help me find one good work and do it with love, day after day. Amen.",
     footnote: COMPOSED,
   },
+  "st-john-xxiii": {
+    text: "Almighty and eternal God, who in the Blessed Pope John, you gave the world shining example of the good shepherd, grant that we, through his intercession, may radiate with joy the fullness of Christian love. We ask this through Our Lord Jesus Christ, your Son, who lives and reigns with you and the Holy Spirit, one God, for ever and ever. Amen.",
+    footnote: "From Fra’ James-Michael von Stroebel; Order of Malta American Association Proprium Breviarii of the Irish Association.",
+  },
+  "st-gerard-jerusalem": {
+    text: "O God, who exalted Blessed Gerard because of his care for the poor and the sick, and though him founded in Jerusalem The Order of Saint John the Baptist, give us the grace of seeing, as he did, the image of your Son in our brothers and sisters. We ask this through our Lord Jesus Christ your Son, who lives and reigns with you and the Holy Spirit one God, for ever and ever. Amen.",
+    footnote: "From Fra’ James-Michael von Stroebel; Order of Malta American Association.",
+  },
 };

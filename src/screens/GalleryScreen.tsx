@@ -242,7 +242,7 @@ export default function GalleryScreen({ onBack, favouriteIds, onToggleFavourite 
                 <Animated.View style={{ opacity: fanProg, transform: [{ translateY: fanRise }, { scale: fanScale }] }}>
                   <Pressable
                     style={styles.fanBtn}
-                    onPress={() => runDownload(downloadPrayerCard)}
+                    onPress={() => selected && runDownload((s) => downloadPrayerCard(s, selected.image))}
                     hitSlop={8}
                     accessibilityRole="button"
                     accessibilityLabel="Download prayer card"

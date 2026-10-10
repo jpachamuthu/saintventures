@@ -11,6 +11,7 @@ import { fonts, type ThemeColors } from "../theme";
 type PrayerModalProps = {
   visible: boolean;
   story: Story | null;
+  image?: number;
   onClose: () => void;
 };
 
@@ -18,20 +19,20 @@ type PrayerModalProps = {
 const DEEP_FROST: ViewStyle | null =
   Platform.OS === "web" ? ({ backdropFilter: "blur(30px) saturate(1.8)" } as ViewStyle) : null;
 
-export default function PrayerModal({ visible, story, onClose }: PrayerModalProps) {
+export default function PrayerModal({ visible, story, image, onClose }: PrayerModalProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const prayer = story ? prayers[story.id] : undefined;
 
   const handleDownload = () => {
     if (story) {
-      downloadPrayerCard(story).catch(() => {});
+      downloadPrayerCard(story, image).catch(() => {});
     }
   };
 
   const handleShare = () => {
     if (story) {
-      sharePrayerCard(story).catch(() => {});
+      sharePrayerCard(story, image).catch(() => {});
     }
   };
 
