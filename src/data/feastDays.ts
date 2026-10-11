@@ -87,6 +87,14 @@ const FEAST_DATES: Record<string, { month: number; day: number }> = {
   "st-hugh-genoa": { month: 10, day: 8 },
   "st-john-xxiii": { month: 10, day: 11 },
   "st-gerard-jerusalem": { month: 10, day: 13 },
+  "st-karl-austria": { month: 10, day: 21 },
+  "st-elizabeth-baptist": { month: 11, day: 5 },
+  "st-joachim-anne": { month: 7, day: 26 },
+  "st-ambrose": { month: 12, day: 7 },
+  "st-elizabeth-hungary": { month: 11, day: 17 },
+  "st-catherine-alexandria": { month: 11, day: 25 },
+  "st-juan-diego": { month: 12, day: 9 },
+  "st-mary-mother": { month: 1, day: 1 },
 };
 
 export const feastDays: FeastDay[] = stories

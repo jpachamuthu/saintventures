@@ -98,7 +98,9 @@ export async function renderPrayerCard(story: Story, portraitOverride?: number):
     lines = wrapText(meas, prayer.text, maxW);
   }
   const lh = pfs * 1.45;
-  const prayerStartY = 985;
+  const feastHere = feastDays.find((f) => f.story.id === story.id);
+  const mTitleY = 805 + (feastHere ? 92 : 54);
+  const prayerStartY = mTitleY + (prayer.subtitle ? 96 : 88);
   const prayerEndY = prayerStartY + (lines.length - 1) * lh;
   meas.font = 'italic 24px "Nunito_400Regular", sans-serif';
   const fnLines = wrapText(meas, prayer.footnote, maxW).slice(0, 3);
@@ -208,6 +210,24 @@ export async function renderPrayerCard(story: Story, portraitOverride?: number):
   ctx.fillStyle = "rgba(255,248,236,0.85)";
   shrinkToFit(ctx, story.title, 880, 30, 22, (px) => `italic 600 ${px}px "CormorantGaramond_600SemiBold", Georgia, serif`);
   ctx.fillText(story.title, W / 2, titleY);
+
+  // Optional subtitle (e.g. an honour or title), gold caps.
+  if (prayer.subtitle) {
+    ctx.fillStyle = GOLD;
+    ctx.font = '600 26px "Nunito_700Bold", sans-serif';
+    try {
+      (ctx as any).letterSpacing = "3px";
+    } catch {
+      /* ignore */
+    }
+    shrinkToFit(ctx, prayer.subtitle.toUpperCase(), 880, 26, 18, (px) => `600 ${px}px "Nunito_700Bold", sans-serif`);
+    ctx.fillText(prayer.subtitle.toUpperCase(), W / 2, titleY + 42);
+    try {
+      (ctx as any).letterSpacing = "0px";
+    } catch {
+      /* ignore */
+    }
+  }
 
   // Prayer text in full — the canvas was sized to hold every line.
   ctx.font = `600 ${pfs}px "CormorantGaramond_600SemiBold", Georgia, serif`;

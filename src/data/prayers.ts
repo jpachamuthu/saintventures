@@ -1,6 +1,8 @@
 export type Prayer = {
   text: string;
   footnote: string;
+  /** Optional extra line on the prayer card, beneath the story title. */
+  subtitle?: string;
 };
 
 const COMPOSED = "Original prayer composed for SaintVentures.";
@@ -323,5 +325,38 @@ export const prayers: Record<string, Prayer> = {
   "st-gerard-jerusalem": {
     text: "O God, who exalted Blessed Gerard because of his care for the poor and the sick, and through him founded in Jerusalem The Order of Saint John the Baptist, give us the grace of seeing, as he did, the image of your Son in our brothers and sisters. We ask this through our Lord Jesus Christ your Son, who lives and reigns with you and the Holy Spirit one God, for ever and ever. Amen.",
     footnote: "From Fra’ James-Michael von Stroebel; Order of Malta American Association.",
+  },
+  "st-elizabeth-baptist": {
+    text: "St Elizabeth, who waited and waited without giving up, teach me to keep praying. When God's answer is slow, help me trust like you did — all the way to joy. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-joachim-anne": {
+    text: "Sts Joachim and Anne, grandparents of Jesus, bless all grandparents everywhere. Help our families wait patiently, give generously, and trust God's promises. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-karl-austria": {
+    text: "O God, through the diversities of this world you led Blessed Karl from this earthly realm to the crown reserved for him in heaven. Grant through his intercession that we may so serve your Son and our brothers and sisters that we may become worthy of eternal life. Grant this through our Lord Jesus Christ your Son, Who lives and reigns with you and the Holy Spirit, one God, for ever and ever. Amen.",
+    footnote: "Prayer supplied for this story.",
+    subtitle: "Bailiff Grand Cross of Honour and Devotion of the Order of Malta",
+  },
+  "st-ambrose": {
+    text: "St Ambrose, honey-tongued bishop, fill my words with sweetness and courage. Help me stand up for what is right — even to emperors — and sing God's praises with joy. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-elizabeth-hungary": {
+    text: "St Elizabeth, princess of the poor, open my hands to share. When I see someone in need, help me give quickly and cheerfully — and trust God for the rest. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-catherine-alexandria": {
+    text: "St Catherine, brilliant and brave, sharpen my mind to know the truth. Help me study hard and speak up kindly when it matters most. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-juan-diego": {
+    text: "St Juan Diego, humble messenger, give me trust like yours. When God asks something big, help me say yes — and carry His love to everyone I meet. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-mary-mother": {
+    text: "Holy Mary, Mother of God, hold me close the way you held Jesus. Teach me your little yes, your quiet pondering, and your words at Cana: do whatever He tells you. Amen.",
+    footnote: COMPOSED,
   },
 };

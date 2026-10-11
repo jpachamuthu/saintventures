@@ -2113,4 +2113,220 @@ export const quizzes: Record<string, Quiz> = {
       correct: 1,
     },
   ],
+  "st-ambrose": [
+    {
+      question: "What covered baby Ambrose without stinging?",
+      choices: ["A blanket", "A swarm of bees", "Falling leaves"],
+      correct: 1,
+    },
+    {
+      question: "Who shouted for Ambrose to be bishop?",
+      choices: ["A little child", "The emperor", "A talking parrot"],
+      correct: 0,
+    },
+    {
+      question: "What did Ambrose do with all his riches?",
+      choices: ["Built a palace", "Buried them", "Gave them to the poor"],
+      correct: 2,
+    },
+    {
+      question: "Who did Ambrose stand up to?",
+      choices: ["A hungry lion", "Emperor Theodosius", "His own shadow"],
+      correct: 1,
+    },
+    {
+      question: "Which future saint did Ambrose baptize?",
+      choices: ["A pirate", "Nobody", "Augustine"],
+      correct: 2,
+    },
+  ],
+  "st-elizabeth-hungary": [
+    {
+      question: "What did little Elizabeth love to do?",
+      choices: ["Count her jewels", "Ride elephants", "Feed beggars at the gate"],
+      correct: 2,
+    },
+    {
+      question: "What did Elizabeth find in her apron instead of bread?",
+      choices: ["Frogs", "Beautiful roses", "Snowballs"],
+      correct: 1,
+    },
+    {
+      question: "What did Elizabeth build for the poor?",
+      choices: ["A hospital", "A race track", "A candy shop"],
+      correct: 0,
+    },
+    {
+      question: "What happened when Louis died?",
+      choices: ["She became queen of France", "She sailed away", "Elizabeth was thrown out with nothing"],
+      correct: 2,
+    },
+    {
+      question: "Who is Elizabeth the patron saint of?",
+      choices: ["Astronauts", "Charities and bakers", "Lifeguards"],
+      correct: 1,
+    },
+  ],
+  "st-catherine-alexandria": [
+    {
+      question: "What was Catherine best at?",
+      choices: ["Studying every book", "Juggling", "Horse racing"],
+      correct: 0,
+    },
+    {
+      question: "How many philosophers debated Catherine?",
+      choices: ["Three", "One hundred", "Fifty"],
+      correct: 2,
+    },
+    {
+      question: "What happened to the philosophers?",
+      choices: ["They ran away laughing", "They all believed in Christ", "They fell asleep"],
+      correct: 1,
+    },
+    {
+      question: "What broke the spiked wheels?",
+      choices: ["Fire from heaven", "A strong wind", "Rusty bolts"],
+      correct: 0,
+    },
+    {
+      question: "Where do pilgrims honour Catherine?",
+      choices: ["A beach resort", "The moon", "Mount Sinai monastery"],
+      correct: 2,
+    },
+  ],
+  "st-juan-diego": [
+    {
+      question: "Who appeared to Juan Diego on the hill?",
+      choices: ["A lost tourist", "Our Lady, Mary", "A talking cactus"],
+      correct: 1,
+    },
+    {
+      question: "What did Our Lady ask for?",
+      choices: ["A little church on the hill", "A golden statue", "A paved road"],
+      correct: 0,
+    },
+    {
+      question: "What bloomed in December?",
+      choices: ["Corn stalks", "Ice cubes", "Castilian roses"],
+      correct: 2,
+    },
+    {
+      question: "What appeared on Juan Diego's cloak?",
+      choices: ["A map", "Our Lady's glowing image", "A shopping list"],
+      correct: 1,
+    },
+    {
+      question: "What makes Juan Diego special in history?",
+      choices: ["First indigenous saint of the Americas", "Tallest farmer", "Fastest runner"],
+      correct: 0,
+    },
+  ],
+  "st-mary-mother": [
+    {
+      question: "What did Mary answer the angel?",
+      choices: ["Come back later", "Ask my neighbour", "Let it be done to me"],
+      correct: 2,
+    },
+    {
+      question: "What song did Mary sing?",
+      choices: ["Happy Birthday", "The Magnificat", "Row Your Boat"],
+      correct: 1,
+    },
+    {
+      question: "Where was Jesus born?",
+      choices: ["A stable in Bethlehem", "A palace", "A boat"],
+      correct: 0,
+    },
+    {
+      question: "What did Mary tell the servants at Cana?",
+      choices: ["Bring more bread", "Go home now", "Do whatever He tells you"],
+      correct: 2,
+    },
+    {
+      question: "When is Mary's great feast as Mother of God?",
+      choices: ["Halloween", "January 1st", "Every Tuesday"],
+      correct: 1,
+    },
+  ],
+  "st-elizabeth-baptist": [
+    {
+      question: "What was Elizabeth and Zechariah's great sadness?",
+      choices: ["They lost their house", "They forgot their prayers", "They had no children"],
+      correct: 2,
+    },
+    {
+      question: "Who appeared to Zechariah in the Temple?",
+      choices: ["A palace guard", "The Archangel Gabriel", "A talking parrot"],
+      correct: 1,
+    },
+    {
+      question: "What happened when Mary said hello?",
+      choices: ["The baby leaped for joy", "Everyone fell asleep", "The roof fell in"],
+      correct: 0,
+    },
+    {
+      question: "What name did Elizabeth insist on?",
+      choices: ["Zechariah Junior", "John", "Barnaby"],
+      correct: 1,
+    },
+    {
+      question: "What happened when Zechariah wrote the name?",
+      choices: ["He disappeared", "Nothing at all", "His voice came back"],
+      correct: 2,
+    },
+  ],
+  "st-joachim-anne": [
+    {
+      question: "What did Joachim and Anne pray for?",
+      choices: ["A bigger house", "A faster donkey", "A baby"],
+      correct: 2,
+    },
+    {
+      question: "What did the angels promise them?",
+      choices: ["A bag of gold", "A daughter for the world to be blessed", "A new farm"],
+      correct: 1,
+    },
+    {
+      question: "What did they name their little girl?",
+      choices: ["Mary", "Susan", "Beatrice"],
+      correct: 0,
+    },
+    {
+      question: "Where did they bring three-year-old Mary?",
+      choices: ["A circus", "The seaside", "The Temple in Jerusalem"],
+      correct: 2,
+    },
+    {
+      question: "What did Gerard call the sick?",
+      choices: ["A nuisance", "Our lords", "Strangers"],
+      correct: 1,
+    },
+  ],
+  "st-karl-austria": [
+    {
+      question: "Where was Karl in line for the throne as a boy?",
+      choices: ["Already emperor", "Far down the line", "A sailor at sea"],
+      correct: 1,
+    },
+    {
+      question: "What did Karl secretly try to do during the war?",
+      choices: ["Build a bigger palace", "Start another war", "Make a fair peace"],
+      correct: 2,
+    },
+    {
+      question: "What happened to Karl in 1919?",
+      choices: ["Crowned again", "Forced into exile", "He retired to a farm"],
+      correct: 1,
+    },
+    {
+      question: "Where did the family end up?",
+      choices: ["Madeira island", "Paris", "Rome"],
+      correct: 0,
+    },
+    {
+      question: "Why is Karl's feast on October 21st?",
+      choices: ["His birthday", "Halloween", "His wedding day to Zita"],
+      correct: 2,
+    },
+  ],
 };

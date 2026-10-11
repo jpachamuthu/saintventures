@@ -1,0 +1,31 @@
+{
+  "name": "SaintVentures — Saint Stories for Little Hearts",
+  "short_name": "SaintVentures",
+  "description": "Discover the inspiring stories of the saints and how they can guide your journey today.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12173A",
+  "theme_color": "#12173A",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
