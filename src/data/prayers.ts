@@ -339,6 +339,14 @@ export const prayers: Record<string, Prayer> = {
     footnote: "Prayer supplied for this story.",
     subtitle: "Bailiff Grand Cross of Honour and Devotion of the Order of Malta",
   },
+  "st-teresa-avila": {
+    text: "St Teresa, guide of the interior castle, walk with me room by room toward Jesus. When prayer feels dry, keep me going — until I find Him waiting in the center. Amen.",
+    footnote: COMPOSED,
+  },
+  "st-benedict": {
+    text: "St Benedict, father of monks, teach me your happy rule: pray and work. Bless my chores and my prayers alike, and keep me humble, cheerful, and close to God. Amen.",
+    footnote: COMPOSED,
+  },
   "st-ambrose": {
     text: "St Ambrose, honey-tongued bishop, fill my words with sweetness and courage. Help me stand up for what is right — even to emperors — and sing God's praises with joy. Amen.",
     footnote: COMPOSED,

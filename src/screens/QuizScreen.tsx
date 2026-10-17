@@ -12,6 +12,7 @@ import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
 import Fireworks from "../components/Fireworks";
 import { playCelebrationSound, sayTryAgain } from "../audio/celebrate";
+import { playBadgeMessage } from "../audio/backgroundMusic";
 import { useBadges } from "../hooks/useBadges";
 import { downloadStoryBookHtml } from "../cards/storyCard";
 
@@ -82,6 +83,7 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
           const stars = wrongTotalRef.current === 0 ? 3 : wrongTotalRef.current <= 2 ? 2 : 1;
           setStarsEarned(stars);
           onRecordStars(story.id, stars);
+          playBadgeMessage();
           if (!has(story.id)) earn(story.id);
         }
       }, 1800);

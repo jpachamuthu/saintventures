@@ -2329,4 +2329,58 @@ export const quizzes: Record<string, Quiz> = {
       correct: 2,
     },
   ],
+  "st-teresa-avila": [
+    {
+      question: "Where did little Teresa run away to?",
+      choices: ["To be martyred", "To the circus", "To buy candy"],
+      correct: 0,
+    },
+    {
+      question: "What is the soul like, Teresa taught?",
+      choices: ["A dark cave", "A fast horse", "A crystal castle with seven rooms"],
+      correct: 2,
+    },
+    {
+      question: "What pierced Teresa's heart in a vision?",
+      choices: ["A paper plane", "A fiery golden arrow", "A snowflake"],
+      correct: 1,
+    },
+    {
+      question: "How many reformed convents did Teresa found?",
+      choices: ["Seventeen", "Two", "One hundred"],
+      correct: 0,
+    },
+    {
+      question: "What honour did Teresa receive?",
+      choices: ["Queen of Spain", "Fastest writer", "First woman Doctor of the Church"],
+      correct: 2,
+    },
+  ],
+  "st-benedict": [
+    {
+      question: "Why did Benedict leave Rome?",
+      choices: ["To join the circus", "To avoid becoming bad", "To find gold"],
+      correct: 1,
+    },
+    {
+      question: "Who brought Benedict bread in the cave?",
+      choices: ["A monk named Romanus", "A passing king", "A delivery boy"],
+      correct: 0,
+    },
+    {
+      question: "What did the raven carry away?",
+      choices: ["A love letter", "Benedict's hat", "A poisoned loaf"],
+      correct: 2,
+    },
+    {
+      question: "What is Benedict's motto?",
+      choices: ["Eat and sleep", "Run and hide", "Pray and work"],
+      correct: 2,
+    },
+    {
+      question: "Who was Benedict's twin sister?",
+      choices: ["Cinderella", "Scholastica", "Nobody"],
+      correct: 1,
+    },
+  ],
 };

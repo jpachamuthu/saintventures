@@ -13,7 +13,7 @@ import { useRatings } from "../hooks/useRatings";
 import { getBestVoice } from "../audio/voice";
 import { downloadPrayerCard } from "../cards/prayerCard";
 import { downloadStoryBookHtml } from "../cards/storyCard";
-import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic, setStoryMusicMuted } from "../audio/backgroundMusic";
+import { startStoryMusic, pauseStoryMusic, resumeStoryMusic, stopStoryMusic, releaseStoryMusic, setStoryMusicMuted, isMasterMuted } from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 import { storyPageText, type Story } from "../data/stories";
 
@@ -253,6 +253,13 @@ export default function StoryScreen({ story, initialPage = 0, upNext, onBack, on
     cancelledRef.current = false;
     speechStartRef.current = Date.now();
     consumedRef.current = 0;
+
+    // Master mute: no voiceover — the estimate interval still drives
+    // highlighting and page turns so silent reading keeps working.
+    if (isMasterMuted()) {
+      startEstimateInterval();
+      return;
+    }
 
     Speech.speak(spokenText(text), {
       language: "en",

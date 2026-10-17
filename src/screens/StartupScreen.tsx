@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Easing, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Easing, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { ArrowRight } from "lucide-react-native";
+import { ArrowRight, Volume2 } from "lucide-react-native";
+import { createAudioPlayer, type AudioPlayer } from "expo-audio";
+import { isMasterMuted } from "../audio/backgroundMusic";
 import LegalPage, { PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
 import { fonts } from "../theme";
 
@@ -17,6 +19,7 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const exiting = useRef(false);
+  const voiceRetryRef = useRef<(() => void) | null>(null);
 
   const imgOp = useRef(new Animated.Value(0)).current;
   const ctaOp = useRef(new Animated.Value(0)).current;
@@ -26,6 +29,53 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   const exitOp = useRef(new Animated.Value(1)).current;
   const exitSc = useRef(new Animated.Value(1)).current;
   const exitDy = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Welcome voiceover. Browsers block audio before the first tap, and
+    // expo-audio swallows that rejection where we can't see it — so always
+    // retry on the first gesture as well as attempting immediately.
+    let player: AudioPlayer | null = null;
+    let stopped = false;
+    const attempt = () => {
+      if (!player || stopped) return;
+      try {
+        player.play();
+      } catch {
+        /* blocked or unavailable; gesture retry will follow */
+      }
+    };
+    voiceRetryRef.current = attempt;
+    const armGestureFallback = () => {
+      if (Platform.OS !== "web" || typeof window === "undefined") return;
+      const onGesture = () => {
+        window.removeEventListener("pointerdown", onGesture);
+        window.removeEventListener("keydown", onGesture);
+        attempt();
+      };
+      window.addEventListener("pointerdown", onGesture);
+      window.addEventListener("keydown", onGesture);
+    };
+    (async () => {
+      try {
+        if (isMasterMuted()) return;
+        player = createAudioPlayer(require("../../assets/Welcome to SaintVentures Intro.mp3"));
+        attempt();
+        armGestureFallback();
+      } catch {
+        /* audio unavailable */
+      }
+    })();
+    return () => {
+      stopped = true;
+      voiceRetryRef.current = null;
+      try {
+        player?.pause();
+        player?.remove();
+      } catch {
+        /* ignore */
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Cinematic open: fade in while settling from a slight zoom. One shot —
@@ -91,6 +141,16 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
             </Pressable>
 
             <Text style={styles.footnote}>No account needed.{"\n"}Tap in and explore the saints.</Text>
+            <Pressable
+              onPress={() => voiceRetryRef.current?.()}
+              style={styles.listenBtn}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="Play welcome message"
+            >
+              <Volume2 size={15} color={PAPER_FAINT} />
+              <Text style={styles.listenText}>Hear our welcome</Text>
+            </Pressable>
           </Animated.View>
         </View>
 
@@ -167,6 +227,18 @@ function createStyles() {
       color: PAPER_FAINT,
       textAlign: "center",
       marginTop: 16,
+    },
+    listenBtn: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 7,
+      marginTop: 12,
+    },
+    listenText: {
+      fontFamily: fonts.uiMedium,
+      fontSize: 12.5,
+      color: PAPER_FAINT,
     },
     bottom: {
       position: "absolute",

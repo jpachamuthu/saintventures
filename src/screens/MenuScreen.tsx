@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Animated, Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Switch, Text, View } from "react-native";
-import { ArrowLeft, Award, BookOpen, CalendarDays, ChevronRight, FileText, Images, Library, ListChecks, Mail, Medal, Minus, Moon, Plus, Share2, ShieldCheck, Sun, Volume2 } from "lucide-react-native";
+import { ArrowLeft, Award, BookOpen, CalendarDays, Check, ChevronRight, FileText, Images, Library, ListChecks, Mail, Medal, Mic, Minus, Moon, Music, Plus, Share2, ShieldCheck, Sun, Volume2, VolumeX } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../components/ThemeContext";
 import type { TabId } from "../components/BottomNav";
@@ -14,7 +14,17 @@ import {
   webNotifyState,
 } from "../notify/feasts";
 import LegalPage, { CREDITS_SECTIONS, HOWTO_SECTIONS, PRIVACY_SECTIONS, TERMS_SECTIONS } from "../components/LegalPage";
-import { getStoryMusicVolume, setStoryMusicVolume } from "../audio/backgroundMusic";
+import {
+  MUSIC_TRACKS,
+  getStoryMusicTrack,
+  getStoryMusicVolume,
+  isMasterMuted,
+  isQuizVoiceoverOn,
+  setMasterMuted,
+  setQuizVoiceover,
+  setStoryMusicTrack,
+  setStoryMusicVolume,
+} from "../audio/backgroundMusic";
 import { fonts, radius, type ThemeColors } from "../theme";
 
 type MenuScreenProps = {
@@ -129,11 +139,31 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
     }
   };
   const [volume, setVolume] = useState(getStoryMusicVolume);
+  const [track, setTrack] = useState(getStoryMusicTrack);
+  const [quizVoice, setQuizVoice] = useState(isQuizVoiceoverOn);
+  const [masterMute, setMasterMuteState] = useState(isMasterMuted);
 
   const changeVolume = (delta: number) => {
     const next = Math.min(10, Math.max(0, volume + delta));
     setStoryMusicVolume(next);
     setVolume(next);
+  };
+
+  const changeTrack = (id: string) => {
+    setStoryMusicTrack(id);
+    setTrack(id);
+  };
+
+  const flipQuizVoice = () => {
+    const next = !quizVoice;
+    setQuizVoiceover(next);
+    setQuizVoice(next);
+  };
+
+  const flipMasterMute = () => {
+    const next = !masterMute;
+    setMasterMuted(next);
+    setMasterMuteState(next);
   };
 
   const handleToggle = () => {
@@ -298,6 +328,71 @@ export default function MenuScreen({ onBack, onGoTab, onOpenGallery }: MenuScree
               >
                 <Plus size={16} color={volume === 10 ? colors.mutedDim : colors.cream} />
               </Pressable>
+            </View>
+          </View>
+          <View style={styles.card}>
+            {MUSIC_TRACKS.map((t, idx) => (
+              <View key={t.id}>
+                {idx > 0 && <View style={styles.divider} />}
+                <Pressable
+                  style={styles.row}
+                  onPress={() => changeTrack(t.id)}
+                  accessibilityRole="radio"
+                  accessibilityState={{ selected: track === t.id }}
+                  accessibilityLabel={`${t.title}${track === t.id ? ", selected" : ""}`}
+                >
+                  <View style={styles.iconWrap}>
+                    <Music size={18} color={colors.gold} />
+                  </View>
+                  <View style={styles.rowText}>
+                    <Text style={styles.rowTitle}>{t.title}</Text>
+                  </View>
+                  {track === t.id && <Check size={18} color={colors.gold} />}
+                </Pressable>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.group}>
+          <Text style={styles.groupLabel}>Voiceover</Text>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <View style={styles.iconWrap}>
+                <Mic size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Voiceover after a quiz</Text>
+                <Text style={styles.rowSubtitle}>Congratulatory message when you finish</Text>
+              </View>
+              <Switch
+                value={quizVoice}
+                onValueChange={flipQuizVoice}
+                trackColor={{ false: colors.ring, true: colors.gold }}
+                thumbColor={colors.white}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: quizVoice }}
+                accessibilityLabel="Toggle voiceover after a quiz"
+              />
+            </View>
+            <View style={styles.divider} />
+            <View style={styles.row}>
+              <View style={styles.iconWrap}>
+                <VolumeX size={18} color={colors.gold} />
+              </View>
+              <View style={styles.rowText}>
+                <Text style={styles.rowTitle}>Mute all sounds</Text>
+                <Text style={styles.rowSubtitle}>Music, narration and effects</Text>
+              </View>
+              <Switch
+                value={masterMute}
+                onValueChange={flipMasterMute}
+                trackColor={{ false: colors.ring, true: colors.gold }}
+                thumbColor={colors.white}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: masterMute }}
+                accessibilityLabel="Mute all sounds"
+              />
             </View>
           </View>
         </View>

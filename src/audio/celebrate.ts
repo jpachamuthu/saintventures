@@ -1,7 +1,9 @@
 import { Platform } from "react-native";
 import { speakWithBestVoice } from "./voice";
+import { isMasterMuted } from "./backgroundMusic";
 
 export function playCelebrationSound() {
+  if (isMasterMuted()) return;
   if (
     Platform.OS === "web" &&
     typeof window !== "undefined" &&
@@ -36,5 +38,6 @@ export function playCelebrationSound() {
 }
 
 export function sayTryAgain() {
+  if (isMasterMuted()) return;
   speakWithBestVoice("Try again", { rate: 0.8, pitch: 1.05 });
 }

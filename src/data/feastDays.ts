@@ -88,6 +88,8 @@ const FEAST_DATES: Record<string, { month: number; day: number }> = {
   "st-john-xxiii": { month: 10, day: 11 },
   "st-gerard-jerusalem": { month: 10, day: 13 },
   "st-karl-austria": { month: 10, day: 21 },
+  "st-teresa-avila": { month: 10, day: 15 },
+  "st-benedict": { month: 7, day: 11 },
   "st-elizabeth-baptist": { month: 11, day: 5 },
   "st-joachim-anne": { month: 7, day: 26 },
   "st-ambrose": { month: 12, day: 7 },
