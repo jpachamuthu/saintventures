@@ -142,8 +142,16 @@ export const HOWTO_SECTIONS: LegalSection[] = [
     body: "Menu → Gallery holds every saint portrait: heroes, tiles, and extra variants. Tap any image to view it fullscreen, then download the storybook, the prayer card, or the plain image to share with friends and family.",
   },
   {
-    heading: "Favourites and music",
-    body: "Tap the heart on any story, quiz, or feast to keep it in your favourites. Story music volume can be adjusted anytime in this menu, under Story music.",
+    heading: "Favourites",
+    body: "Tap the heart on any story, quiz, or feast to keep it in your favourites, so the saints you love are always one tap away.",
+  },
+  {
+    heading: "Choose your story music",
+    body: "You can select a music of your choice for the background of every story. Open Menu → Story music and tap any of the six tracks — Gentle Dawn, Peaceful Chapel, Angel's Lullaby, Quiet Waters, Morning Light, or Holy Rest — and the app remembers your pick for next time. Use the volume stepper right above to make it softer or louder.",
+  },
+  {
+    heading: "Voiceover and sounds",
+    body: "Under Menu → Voiceover you can switch the congratulatory voice message after a quiz on or off, and turn Mute all sounds to silence every audio element at once — music, narration and effects.",
   },
 ];
 

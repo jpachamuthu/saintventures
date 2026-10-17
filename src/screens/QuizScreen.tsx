@@ -11,8 +11,8 @@ import { fonts, radius, type ThemeColors } from "../theme";
 import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
 import Fireworks from "../components/Fireworks";
-import { playCelebrationSound, sayTryAgain } from "../audio/celebrate";
-import { playBadgeMessage } from "../audio/backgroundMusic";
+import { playCelebrationSound, sayTryAgain, stopTryAgainSound } from "../audio/celebrate";
+import { playBadgeMessage, stopStoryMusic, releaseStoryMusic } from "../audio/backgroundMusic";
 import { useBadges } from "../hooks/useBadges";
 import { downloadStoryBookHtml } from "../cards/storyCard";
 
@@ -49,6 +49,14 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
     },
     []
   );
+
+  useEffect(() => {
+    return () => {
+      stopTryAgainSound();
+      stopStoryMusic();
+      releaseStoryMusic();
+    };
+  }, []);
 
   useEffect(() => {
     wrongTotalRef.current = 0;

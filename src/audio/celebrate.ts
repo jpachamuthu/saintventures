@@ -1,6 +1,10 @@
 import { Platform } from "react-native";
+import { createAudioPlayer, type AudioPlayer } from "expo-audio";
 import { speakWithBestVoice } from "./voice";
 import { isMasterMuted } from "./backgroundMusic";
+
+const TRY_AGAIN_AUDIO = require("../../assets/audio/Try again.mp3");
+let tryPlayer: AudioPlayer | null = null;
 
 export function playCelebrationSound() {
   if (isMasterMuted()) return;
@@ -39,5 +43,25 @@ export function playCelebrationSound() {
 
 export function sayTryAgain() {
   if (isMasterMuted()) return;
-  speakWithBestVoice("Try again", { rate: 0.8, pitch: 1.05 });
+  try {
+    // Recreate each time so the clip always restarts from the beginning.
+    tryPlayer?.remove();
+    tryPlayer = createAudioPlayer(TRY_AGAIN_AUDIO);
+    tryPlayer.volume = 1;
+    const result = tryPlayer.play() as unknown;
+    if (result && typeof (result as Promise<void>).catch === "function") {
+      (result as Promise<void>).catch(() => {});
+    }
+  } catch {
+    speakWithBestVoice("Try again", { rate: 0.8, pitch: 1.05 });
+  }
+}
+
+export function stopTryAgainSound() {
+  try {
+    tryPlayer?.remove();
+    tryPlayer = null;
+  } catch {
+    // ignore
+  }
 }
