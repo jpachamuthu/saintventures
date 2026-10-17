@@ -2161,6 +2161,8 @@ export const stories: Story[] = [
     publishedAt: "2027-11-27",
     palette: "ember",
     art: "sword",
+    hero: require("../../assets/St Catherine of Alexandria_Hero.png"),
+    imageSmall: require("../../assets/St Catherine of Alexandria_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Alexandria, Egypt, a princess named Catherine was born. She was beautiful, noble — and astonishingly clever. By the time she was a teenager, she had studied every book in the great library!",
@@ -2332,6 +2334,8 @@ export const stories: Story[] = [
     publishedAt: "2028-01-08",
     palette: "dawn",
     art: "lamp",
+    hero: require("../../assets/St Teresa of Avila_Hero.png"),
+    imageSmall: require("../../assets/St Teresa of Avila_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Spain, in a city called Ávila, a lively girl named Teresa was born. When she was only seven, she read stories of martyrs — and ran away from home with her little brother, hoping to be martyred too! An uncle found them and marched them straight back.",
@@ -2359,6 +2363,8 @@ export const stories: Story[] = [
     publishedAt: "2028-01-15",
     palette: "gold",
     art: "birds",
+    hero: require("../../assets/St Benedict_Hero.png"),
+    imageSmall: require("../../assets/St Benedict_Tile.png"),
     source: "Butler's Lives of the Saints (public domain)",
     pages: [
       "Long ago in Italy, in a mountain town called Nursia, twin babies were born: a boy named Benedict and a girl named Scholastica. They would both grow up to be saints — but first, Benedict had to run away!",

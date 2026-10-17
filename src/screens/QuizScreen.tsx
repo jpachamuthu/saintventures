@@ -12,7 +12,7 @@ import { quizzes } from "../data/quizzes";
 import type { Story } from "../data/stories";
 import Fireworks from "../components/Fireworks";
 import { playCelebrationSound, sayTryAgain, stopTryAgainSound } from "../audio/celebrate";
-import { playBadgeMessage, stopStoryMusic, releaseStoryMusic } from "../audio/backgroundMusic";
+import { playBadgeMessage, stopStoryMusic, releaseStoryMusic, unlockBadgeAudio, stopBadgeMessage } from "../audio/backgroundMusic";
 import { useBadges } from "../hooks/useBadges";
 import { downloadStoryBookHtml } from "../cards/storyCard";
 
@@ -52,6 +52,7 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
 
   useEffect(() => {
     return () => {
+      stopBadgeMessage();
       stopTryAgainSound();
       stopStoryMusic();
       releaseStoryMusic();
@@ -81,6 +82,7 @@ export default function QuizScreen({ story, onExit, onDone, onRecordStars }: Qui
       setResult("correct");
       setFire((f) => f + 1);
       playCelebrationSound();
+      unlockBadgeAudio(); // silent gesture unlock so the finish message can play
       advanceRef.current = setTimeout(() => {
         if (qIndex + 1 < questions.length) {
           setQIndex(qIndex + 1);

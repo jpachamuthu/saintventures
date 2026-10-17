@@ -20,6 +20,7 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
   const [showTerms, setShowTerms] = useState(false);
   const exiting = useRef(false);
   const voiceRetryRef = useRef<(() => void) | null>(null);
+  const gestureCleanupRef = useRef<(() => void) | null>(null);
 
   const imgOp = useRef(new Animated.Value(0)).current;
   const ctaOp = useRef(new Animated.Value(0)).current;
@@ -47,13 +48,21 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
     voiceRetryRef.current = attempt;
     const armGestureFallback = () => {
       if (Platform.OS !== "web" || typeof window === "undefined") return;
-      const onGesture = () => {
+      const onGesture = (e: Event) => {
+        // Tapping Get Started must never start the welcome audio.
+        const target = e.target as HTMLElement | null;
+        if (target?.closest?.('[aria-label="Get Started"]')) return;
         window.removeEventListener("pointerdown", onGesture);
         window.removeEventListener("keydown", onGesture);
+        gestureCleanupRef.current = null;
         attempt();
       };
       window.addEventListener("pointerdown", onGesture);
       window.addEventListener("keydown", onGesture);
+      gestureCleanupRef.current = () => {
+        window.removeEventListener("pointerdown", onGesture);
+        window.removeEventListener("keydown", onGesture);
+      };
     };
     (async () => {
       try {
@@ -68,6 +77,8 @@ export default function StartupScreen({ onStart }: StartupScreenProps) {
     return () => {
       stopped = true;
       voiceRetryRef.current = null;
+      gestureCleanupRef.current?.();
+      gestureCleanupRef.current = null;
       try {
         player?.pause();
         player?.remove();

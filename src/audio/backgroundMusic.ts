@@ -212,20 +212,105 @@ export function releaseStoryMusic() {
   }
 }
 
+function ensureBadgePlayer(): AudioPlayer | null {
+  if (badgePlayer) return badgePlayer;
+  try {
+    badgePlayer = createAudioPlayer(BADGE_MESSAGE);
+    badgePlayer.volume = 1;
+    return badgePlayer;
+  } catch {
+    return null;
+  }
+}
+
+let badgeRetryArmed = false;
+
+function armBadgeRetry() {
+  if (badgeRetryArmed || typeof window === "undefined") return;
+  badgeRetryArmed = true;
+  const onGesture = () => {
+    window.removeEventListener("pointerdown", onGesture);
+    window.removeEventListener("keydown", onGesture);
+    badgeRetryArmed = false;
+    playBadgeMessage();
+  };
+  window.addEventListener("pointerdown", onGesture);
+  window.addEventListener("keydown", onGesture);
+}
+
+/**
+ * Call this synchronously from a user gesture (e.g. answering a quiz
+ * question). Browsers only allow an audio element to start on a gesture,
+ * so we silently start-and-pause the badge clip here — that "unlocks"
+ * the element and lets the real play happen later, outside a gesture.
+ */
+export function unlockBadgeAudio() {
+  const p = ensureBadgePlayer();
+  if (!p) return;
+  try {
+    const media = (p as unknown as { media?: HTMLAudioElement }).media;
+    if (media) {
+      media.volume = 0;
+      media.currentTime = 0;
+      const done = () => {
+        try {
+          media.pause();
+          media.currentTime = 0;
+          media.volume = 1;
+        } catch {
+          // ignore
+        }
+      };
+      const result = media.play();
+      if (result && typeof result.then === "function") {
+        result.then(done, done);
+      } else {
+        setTimeout(done, 60);
+      }
+    }
+  } catch {
+    // ignore — native path needs no unlock
+  }
+}
+
+/** Stops the congratulatory voiceover (and any pending gesture retry). */
+export function stopBadgeMessage() {
+  badgeRetryArmed = false;
+  if (typeof window !== "undefined") {
+    // armBadgeRetry's listeners self-remove on fire; nothing else to clean
+  }
+  try {
+    badgePlayer?.pause();
+    const media = (badgePlayer as unknown as { media?: HTMLAudioElement } | null)?.media;
+    if (media) media.currentTime = 0;
+  } catch {
+    // ignore
+  }
+}
+
 /** Plays the congratulatory voiceover when a quiz is finished. */
 export function playBadgeMessage() {
   if (masterMuted || !quizVoiceover) return;
+  ensureAudioMode();
+  const p = ensureBadgePlayer();
+  if (!p) return;
   try {
-    if (!badgePlayer) {
-      badgePlayer = createAudioPlayer(BADGE_MESSAGE);
-      badgePlayer.volume = 1;
-    }
-    ensureAudioMode();
-    const result = badgePlayer.play() as unknown;
-    if (result && typeof (result as Promise<void>).catch === "function") {
-      (result as Promise<void>).catch(() => {});
+    const media = (p as unknown as { media?: HTMLAudioElement }).media;
+    if (media) {
+      media.volume = 1;
+      media.currentTime = 0;
+      const result = media.play();
+      if (result && typeof result.then === "function") {
+        // Autoplay blocked: retry on the user's next tap.
+        result.catch(() => armBadgeRetry());
+      }
+    } else {
+      const result = p.play() as unknown;
+      if (result && typeof (result as Promise<void>).catch === "function") {
+        (result as Promise<void>).catch(() => armBadgeRetry());
+      }
     }
   } catch {
-    // ignore
+    armBadgeRetry();
   }
 }
